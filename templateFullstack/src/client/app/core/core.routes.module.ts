@@ -7,6 +7,7 @@ import { LoadWallComponent } from './load-wall/load-wall.component';
 import { UploadImagesComponent } from './upload-images/upload-images.component';
 import { UploadMaterialsComponent } from './upload-materials/upload-materials.component';
 import { GalleryComponent } from './gallery/gallery.component';
+import { WorkspaceComponent } from './workspace/workspace.component';
 
 const coreRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -14,7 +15,8 @@ const coreRoutes: Routes = [
   { path: 'load-wall', component: LoadWallComponent },
   { path: 'upload-images', component: UploadImagesComponent },
   { path: 'upload-materials', component: UploadMaterialsComponent },
-  { path: 'gallery', component: GalleryComponent }
+  { path: 'gallery', component: GalleryComponent },
+  { path: 'workspace', component: WorkspaceComponent }
 ];
 
 @NgModule({

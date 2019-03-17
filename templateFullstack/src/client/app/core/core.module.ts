@@ -10,6 +10,9 @@ import { LoadWallComponent } from './load-wall/load-wall.component';
 import { UploadImagesComponent } from './upload-images/upload-images.component';
 import { UploadMaterialsComponent } from './upload-materials/upload-materials.component';
 import { GalleryComponent } from './gallery/gallery.component';
+import { WorkspaceComponent } from './workspace/workspace.component';
+import { ToolsComponent } from './tools/tools.component';
+import { EditorComponent } from './editor/editor.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { GalleryComponent } from './gallery/gallery.component';
     LoadWallComponent,
     UploadImagesComponent,
     UploadMaterialsComponent,
-    GalleryComponent
+    GalleryComponent,
+    WorkspaceComponent,
+    ToolsComponent,
+    EditorComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +35,8 @@ import { GalleryComponent } from './gallery/gallery.component';
   exports: [
     CoreRoutingModule,
     NavbarComponent,
-    FooterComponent
+    FooterComponent,
+    WorkspaceComponent
   ]
 })
 export class CoreModule { }
