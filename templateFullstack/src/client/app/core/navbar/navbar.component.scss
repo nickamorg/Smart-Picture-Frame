@@ -1,0 +1,15 @@
+$color-charcoal: #494949;
+$color-white:    #ffffff;
+$color-black:    #000000;
+
+.navbar {
+    background-color: $color-charcoal !important;
+}
+
+.nav a {
+    color: $color-white !important;
+}
+
+.nav .active a {
+    color: $color-black !important;
+}

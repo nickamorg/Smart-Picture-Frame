@@ -9,7 +9,7 @@ import { ServiceXModule } from './serviceX/serviceX.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
