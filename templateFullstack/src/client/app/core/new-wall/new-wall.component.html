@@ -1,1 +1,65 @@
-<h1>New Wall Component here</h1>
+<div id="new_wall_page" class="overlay">
+    <div class="clearfix">
+        <a href="javascript:void(0)" class="closebtn" onclick="stopDisplayNewWall()">&times;</a>
+    </div>
+  
+    <div id="new-wall_overlay_content" class="clearfix">
+        <h3>NEW WALL</h3>
+        
+        <table align="center">
+            <tr>
+                <td><label for="wall_creator">Creator</label></td>
+                <td><div class="form-group">
+                    <select class="form-control" id="wall_creator">
+                        <option>Home</option>
+                        <option>Mom</option>
+                        <option>Dad</option>
+                        <option>Nick</option>
+                    </select>
+                </div></td> 
+            </tr>
+            <tr>
+                <td> <label for="wall_type">Type</label> </td>
+
+                <td>
+                    <div class="form-group">
+                        <select class="form-control" id="wall_type">
+                            <option>General</option>
+                            <option>Special</option>
+                            <option>Personal</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td> <label for="wall_target">Target</label> </td>
+
+                <td>
+                    <div class="form-group">
+                        <select class="form-control" id="wall_target">
+                            <option>Family</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding-right:20px"> <label for="wall_description">Description</label> </td>
+
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="wall_description" placeholder="Description">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td colspan="2" style="padding: 10px 0 30px 0">
+                    <button type="button" class="btn btn-block" style="color:white; background-color:#707070">Create Wall</button>
+                </td>
+            </tr>
+        </table>
+        
+    </div>
+</div>

@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+.overlay {
+    height: 100%;
+    width: 100%;
+    display: none;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+.overlay a {
+    color:#C4C4C4;
+}
+
+.overlay a:hover {
+    text-decoration: none;
+}
+
+.form-control {
+    width:auto !important;
+    display:inline-block !important;
+    }
