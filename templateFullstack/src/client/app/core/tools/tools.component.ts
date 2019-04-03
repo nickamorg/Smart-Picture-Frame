@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ShapesService } from '../../shapes.service';
 
 @Component({
   selector: 'app-tools',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolsComponent implements OnInit {
 
-  constructor() { }
+  case:number = 1;
+  constructor(private shapesService: ShapesService) { }
 
   ngOnInit() {
   }
 
+  testCall() {
+    console.log("TEST");
+  }
 }

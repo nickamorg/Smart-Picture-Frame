@@ -13,6 +13,7 @@ import { GalleryComponent } from './gallery/gallery.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { ToolsComponent } from './tools/tools.component';
 import { EditorComponent } from './editor/editor.component';
+import { ShapesService } from '../shapes.service';
 
 @NgModule({
   declarations: [
@@ -37,6 +38,7 @@ import { EditorComponent } from './editor/editor.component';
     NavbarComponent,
     FooterComponent,
     WorkspaceComponent
-  ]
+  ],
+  providers: [ShapesService]
 })
 export class CoreModule { }

@@ -1,1 +1,3 @@
-<div class="editor"></div>
+<div id="editor"> 
+    <div [ngStyle]="shape.setStyle()" (click)="shapesService.focusShape(shape.id)" *ngFor="let shape of shapesService.shapes" [ngClass]="shape.type"></div>
+</div>
