@@ -6,25 +6,25 @@ class Shape {
     
     padding: number;
     id: number;
-    focus: boolean = true;
     type: string;
     backgroundColor: string;
     top: number;
     left: number;
     width: number;
     height: number;
+    hasBazels: boolean;
 
     constructor(type:string) {
         counter++;
         this.padding = 0;
-        this.focus = true;
         this.top = 50;
         this.left = 10;
         this.width = 100;
         this.height = 100;
-        this.backgroundColor = "#ffddaa";
+        this.backgroundColor = randomColor();
         this.type = type;
         this.id = counter;
+        this.hasBazels = true;
 
         console.log("NEW SHAPE  " + this.id);
     }
@@ -51,13 +51,13 @@ export class ShapesService {
     
     padding: number;
     id: number;
-    focus: boolean = true;
     type: string;
     backgroundColor: string;
     top: number;
     left: number;
     width: number;
     height: number;
+    hasBazels: boolean;
 
     constructor() { 
         this.id = 0;
@@ -66,6 +66,7 @@ export class ShapesService {
         this.left = 10;
         this.width = 100;
         this.height = 100;
+        this.hasBazels = true;
     }
 
     focusShape(id) {
@@ -82,14 +83,14 @@ export class ShapesService {
         this.shapes.push(new Shape(type));
 
         this.padding = 0;
-        this.focus = true;
         this.top = 50;
         this.left = 10;
         this.width = 100;
         this.height = 100;
-        this.backgroundColor = "#ffddaa";
+        this.backgroundColor = randomColor();
         this.type = type;
         this.id = counter;
+        this.hasBazels = true;
     }
 
     setPosX(posX) {
@@ -127,4 +128,14 @@ export class ShapesService {
         this.shapes[this.id].height = height;
         console.log("TEST");
     }
+
+    toggleHasBazels() {
+        this.hasBazels = !this.hasBazels;
+    }
+}
+
+function randomColor():string {
+    return '#' + (function co(lor){   return (lor +=
+        [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'][Math.floor(Math.random()*16)])
+        && (lor.length == 6) ?  lor : co(lor); })('');
 }
