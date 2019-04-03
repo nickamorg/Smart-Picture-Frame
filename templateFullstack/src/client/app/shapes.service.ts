@@ -13,6 +13,7 @@ class Shape {
     width: number;
     height: number;
     hasBazels: boolean;
+    bazelMaterial: string;
 
     constructor(type:string) {
         counter++;
@@ -24,7 +25,8 @@ class Shape {
         this.backgroundColor = randomColor();
         this.type = type;
         this.id = counter;
-        this.hasBazels = true;
+        this.hasBazels = false;
+        this.bazelMaterial = "";
 
         console.log("NEW SHAPE  " + this.id);
     }
@@ -58,6 +60,7 @@ export class ShapesService {
     width: number;
     height: number;
     hasBazels: boolean;
+    bazelMaterial: string;
 
     constructor() { 
         this.id = 0;
@@ -66,7 +69,8 @@ export class ShapesService {
         this.left = 10;
         this.width = 100;
         this.height = 100;
-        this.hasBazels = true;
+        this.hasBazels = false;
+        this.bazelMaterial = "";
     }
 
     focusShape(id) {
@@ -90,7 +94,8 @@ export class ShapesService {
         this.backgroundColor = randomColor();
         this.type = type;
         this.id = counter;
-        this.hasBazels = true;
+        this.hasBazels = false;
+        this.bazelMaterial = "";
     }
 
     setPosX(posX) {
@@ -130,7 +135,13 @@ export class ShapesService {
     }
 
     toggleHasBazels() {
+        this.shapes[this.id].hasBazels = !this.hasBazels;
         this.hasBazels = !this.hasBazels;
+    }
+
+    addMaterial(mat:string) {
+        this.bazelMaterial = mat;
+        this.shapes[this.id].bazelMaterial = mat;
     }
 }
 

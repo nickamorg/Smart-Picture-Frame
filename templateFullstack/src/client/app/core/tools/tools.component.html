@@ -32,19 +32,26 @@
             <div style="padding:10px 10px; border-bottom: 1px solid #E3E2E2">
                 <div data-toggle="collapse" data-target="#frame_bazels" (click)='shapesService.toggleHasBazels()'>
                     <span style="color:#5C5555">BAZELS</span>
-                    <img src="{{shapesService.hasBazels?'/assets/images/add.svg':'/assets/images/remove.svg'}}" style="float:right" >
+                    <img src="{{shapesService.hasBazels?'/assets/images/remove.svg':'/assets/images/add.svg'}}" style="float:right" >
                 </div>
 
                 <div id="frame_bazels" class="collapse">
                     <div class="dropdown" style="padding-top:10px">
-                        <button style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" class="btn dropdown-toggle" type="button" data-toggle="dropdown">Material
-                            <img style="float:right" src="/assets/images/arrow_down.svg">
+                        <button style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                            <ng-template [ngIf]="shapesService.bazelMaterial === ''">
+                                Material
+                                <img style="float:right" src="/assets/images/arrow_down.svg">
+                            </ng-template>
+
+                            <ng-template [ngIf]="shapesService.bazelMaterial !== ''">
+                                <img src="/assets/materials/{{shapesService.bazelMaterial}}.png"> 
+                            </ng-template>
                         </button>
                         <ul class="dropdown-menu" style="width:100%; text-align: center; padding-top: 10px">
-                            <li style="cursor: pointer; padding-bottom: 5px"><img src="/assets/materials/wood.png"> </li>
-                            <li style="cursor: pointer; padding-bottom: 5px"><img src="/assets/materials/aqua.png"> </li>
-                            <li style="cursor: pointer; padding-bottom: 5px"><img src="/assets/materials/iron.png"> </li>
-                            <li style="cursor: pointer; padding-bottom: 5px"><img src="/assets/materials/gold.png"> </li>
+                            <li (click)='shapesService.addMaterial("wood")' style="cursor: pointer; padding-bottom: 5px"><img src="/assets/materials/wood.png"> </li>
+                            <li (click)='shapesService.addMaterial("aqua")' style="cursor: pointer; padding-bottom: 5px"><img src="/assets/materials/aqua.png"> </li>
+                            <li (click)='shapesService.addMaterial("iron")' style="cursor: pointer; padding-bottom: 5px"><img src="/assets/materials/iron.png"> </li>
+                            <li (click)='shapesService.addMaterial("gold")' style="cursor: pointer; padding-bottom: 5px"><img src="/assets/materials/gold.png"> </li>
                         </ul>
                     </div>
                 </div>
