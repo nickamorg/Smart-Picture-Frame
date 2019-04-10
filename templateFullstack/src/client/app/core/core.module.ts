@@ -14,6 +14,7 @@ import { WorkspaceComponent } from './workspace/workspace.component';
 import { ToolsComponent } from './tools/tools.component';
 import { EditorComponent } from './editor/editor.component';
 import { ShapesService } from '../shapes.service';
+import { FrameImagesComponent } from './frame-images/frame-images.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { ShapesService } from '../shapes.service';
     GalleryComponent,
     WorkspaceComponent,
     ToolsComponent,
-    EditorComponent
+    EditorComponent,
+    FrameImagesComponent
   ],
   imports: [
     CommonModule,

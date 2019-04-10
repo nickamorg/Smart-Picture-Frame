@@ -10,3 +10,16 @@
     padding-top: 20px; background-color: #C4C4C4;
     position:relative;
 }
+
+#editor_current_frame_images {
+    height: 250px;
+    width: 63%;
+    z-index: 1;
+    top: 70px;
+    padding-top: 10px !important;
+    margin-left: 16%;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px; background-color: #C4C4C4;
+    position:relative;
+}

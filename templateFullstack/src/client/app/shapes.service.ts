@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
+import { l } from '@angular/core/src/render3';
 
 var counter:number = -1;
+var imageID:number = -1;
 
 class Shape {
     
@@ -14,6 +16,7 @@ class Shape {
     height: number;
     hasBazels: boolean;
     bazelMaterial: string;
+    frameImages: string[];
 
     constructor(type:string) {
         counter++;
@@ -28,6 +31,8 @@ class Shape {
         this.hasBazels = false;
         this.bazelMaterial = "";
 
+        this.frameImages = [];
+
         console.log("NEW SHAPE  " + this.id);
     }
 
@@ -39,6 +44,13 @@ class Shape {
             'width': this.width + 'px',
             'height': this.height + 'px'
         };
+
+        if(this.bazelMaterial !== "") {
+            let bazel_img_url = "/assets/materials/" + this.bazelMaterial + ".png";
+            
+            style["border"] = "10px solid transparent";
+            style["border-image"] = "url('" + bazel_img_url + "') 13";
+        }
         return style;
     }
 
@@ -47,10 +59,25 @@ class Shape {
     }
 }
 
+class FrameImage {
+    src:string;
+    selected:boolean;
+    id: number;
+
+    constructor(src:string) {
+        this.src = src;
+        this.selected = false;
+        this.id = ++imageID;
+    }
+}
+
 @Injectable()
 export class ShapesService {
     shapes: Shape[];
-    
+    frameImages: FrameImage[];
+    selectedImages: number;
+    imagesCol: number;
+
     padding: number;
     id: number;
     type: string;
@@ -61,6 +88,7 @@ export class ShapesService {
     height: number;
     hasBazels: boolean;
     bazelMaterial: string;
+    currFrameImages: string[];
 
     constructor() { 
         this.id = 0;
@@ -71,6 +99,15 @@ export class ShapesService {
         this.height = 100;
         this.hasBazels = false;
         this.bazelMaterial = "";
+        this.currFrameImages = [];
+
+        this.frameImages = [new FrameImage("waterfall1.png"),
+                            new FrameImage("waterfall2.png"),
+                            new FrameImage("waterfall3.png"),
+                            new FrameImage("waterfall4.png")];
+        this.selectedImages = 0;
+        this.imagesCol = 6;
+
     }
 
     focusShape(id) {
@@ -81,6 +118,44 @@ export class ShapesService {
         this.left = this.shapes[id].left;
         this.width = this.shapes[id].width;
         this.height = this.shapes[id].height;
+        this.currFrameImages = this.shapes[id].frameImages;
+        this.selectedImages = this.currFrameImages.length;
+    }
+
+    selectImage(id) {
+        this.frameImages[id].selected = !this.frameImages[id].selected;
+        
+        if(this.frameImages[id].selected) { 
+            const index = this.currFrameImages.indexOf(this.frameImages[id].src, 0);
+            if (index === -1) {
+                this.currFrameImages.push(this.frameImages[id].src);
+            }
+            this.selectedImages++;
+        } else {
+            const index = this.currFrameImages.indexOf(this.frameImages[id].src, 0);
+            if (index > -1) {
+                this.currFrameImages.splice(index, 1);
+            }
+
+            this.selectedImages--;
+        }
+    }
+
+    changeImagesCol(col:number) {
+        this.imagesCol = col;
+    }
+
+    uncheckAllImages() {
+        this.frameImages.forEach(function (value) {
+            value.selected = false;
+        });
+
+        this.selectedImages = 0;
+    }
+
+    addSelectedImages() {
+        this.shapes[this.id].frameImages = this.currFrameImages;
+        console.log(this.currFrameImages);
     }
 
     pushShape(type:string) {
@@ -96,6 +171,7 @@ export class ShapesService {
         this.id = counter;
         this.hasBazels = false;
         this.bazelMaterial = "";
+        this.currFrameImages = [];
     }
 
     setPosX(posX) {

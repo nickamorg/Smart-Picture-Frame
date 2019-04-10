@@ -1,20 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ShapesService } from '../../shapes.service';
 
 @Component({
-  selector: 'app-tools',
-  templateUrl: './tools.component.html',
-  styleUrls: ['./tools.component.scss']
+    selector: 'app-tools',
+    templateUrl: './tools.component.html',
+    styleUrls: ['./tools.component.scss']
 })
 export class ToolsComponent implements OnInit {
+    showChooseFrameImagesModal: boolean = false;
+    case:number = 1;
 
-  case:number = 1;
-  constructor(private shapesService: ShapesService) { }
+    toggleChooseFrameImagesModal(){
+        this.showChooseFrameImagesModal = !this.showChooseFrameImagesModal;
+    }
+    
+    constructor(private shapesService: ShapesService) { }
 
-  ngOnInit() {
-  }
+    ngOnInit() { }
 
-  testCall() {
-    console.log("TEST");
-  }
+    receiveMessage($event) {
+        this.toggleChooseFrameImagesModal();
+        //this.message = $event
+    }
+
 }
