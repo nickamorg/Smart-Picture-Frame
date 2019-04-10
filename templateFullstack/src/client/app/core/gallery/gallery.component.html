@@ -89,28 +89,29 @@
 <div class="gallery_display">
 
     <div style="padding:0 0 10px 15px">
-        <img style="opacity:0.5; padding-right:3px" src="/assets/images/2x1.png" alt="">
-        <img style="padding-right:3px" src="/assets/images/2x2.png" alt="">
-        <img style="opacity:0.5; padding-right:3px" src="/assets/images/3x3.png" alt="">
-        <img style="opacity:0.5; padding-right:3px" src="/assets/images/4x4.png" alt="">
-        <span style="font-weight: 600">37 Images</span>
+        <img [class.gallery_inactive_option]="imagesCol!==12" (click)="changeImagesCol(12)" style="padding-right:3px; cursor:pointer" src="/assets/images/2x1.png" alt="">
+        <img [class.gallery_inactive_option]="imagesCol!==6"  (click)="changeImagesCol(6)"  style="padding-right:3px; cursor:pointer" src="/assets/images/2x2.png" alt="">
+        <img [class.gallery_inactive_option]="imagesCol!==4"  (click)="changeImagesCol(4)"  style="padding-right:3px; cursor:pointer" src="/assets/images/3x3.png" alt="">
+        <img [class.gallery_inactive_option]="imagesCol!==3"  (click)="changeImagesCol(3)"  style="padding-right:3px; cursor:pointer" src="/assets/images/4x4.png" alt="">
+        <span style="font-weight: 600">{{galleryImages.length}} Images</span>
     </div>
 
     <div class="scrollbar" style="height:450px">
-        <div class="col-xs-6" style="padding-bottom:30px">
-            <img class="img-responsive" style="border-radius:6px" src="/assets/images/waterfall3.png" alt="">
+        <div *ngFor="let galleryImage of galleryImages" class="col-xs-{{imagesCol}}" style="padding-bottom:30px; text-align: center">
+            <div class="content">
+                <div class="content-overlay"></div>
+                <img class="content-image img-responsive" src="/assets/images/{{galleryImage.src}}" alt="">
+                <div class="content-details fadeIn-top">
+                    <div>
+                        <img onclick="console.log('a1')" src="/assets/images/preview_image.svg"/>
+                        <img onclick="console.log('a2')" src="/assets/images/delete.svg"/>
+                        <img onclick="console.log('a3')"src="/assets/images/edit.svg"/>
+                    </div>
+                    <h3>{{galleryImage.title}}</h3>
+                    <p>{{galleryImage.description}}</p>
+                </div>    
+            </div>
         </div>
-    
-        <div class="col-xs-6" style="padding-bottom:30px">
-            <img class="img-responsive" style="border-radius:6px" src="/assets/images/waterfall2.png" alt="">
-        </div>
-    
-        <div class="col-xs-6">
-            <img class="img-responsive" style="border-radius:6px" src="/assets/images/waterfall4.png" alt="">
-        </div>
-        
-        <div class="col-xs-6">
-            <img class="img-responsive" style="border-radius:6px" src="/assets/images/waterfall1.png" alt="">
-        </div>
+
     </div>
 </div>
