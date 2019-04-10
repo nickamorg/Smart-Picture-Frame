@@ -112,7 +112,6 @@ export class ShapesService {
 
     focusShape(id) {
         this.id = id;
-        console.log("xaxa  " + id);
         this.shapes[id].top += 10;
         this.top = this.shapes[id].top;
         this.left = this.shapes[id].left;
@@ -120,6 +119,15 @@ export class ShapesService {
         this.height = this.shapes[id].height;
         this.currFrameImages = this.shapes[id].frameImages;
         this.selectedImages = this.currFrameImages.length;
+
+        for (var i = 0; i < this.frameImages.length; i++) {
+            this.frameImages[i].selected = false;
+            for (var j = 0; j < this.currFrameImages.length; j++) {
+                if(this.frameImages[i].src === this.currFrameImages[j]) {
+                    this.frameImages[i].selected = true;
+                }
+            }
+        }
     }
 
     selectImage(id) {
@@ -172,6 +180,12 @@ export class ShapesService {
         this.hasBazels = false;
         this.bazelMaterial = "";
         this.currFrameImages = [];
+
+        this.selectedImages = 0;
+        this.frameImages.forEach(function(value) {
+            value.selected = false;
+        });
+        
     }
 
     setPosX(posX) {
