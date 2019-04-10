@@ -12,21 +12,10 @@
             </div>
             <div style="padding-top:10px">
                 <div>
-                    <label class="checkbox_container">Family
+                    <label *ngFor="let type of types" class="checkbox_container">
+                        <p style="all:unset;" (click)="selectFilter(type, 'selectedTypes')">{{type}}</p>
                         <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox_container">Cars
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox_container">Attractions
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox_container">Travels
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
+                        <span (click)="selectFilter(type, 'selectedTypes')" class="checkmark"></span>
                     </label>
                 </div>
             </div>
@@ -38,21 +27,10 @@
             </div>
             <div style="padding-top:10px">
                 <div>
-                    <label class="checkbox_container">Greece
+                    <label *ngFor="let country of countries" class="checkbox_container">
+                        <p style="all:unset;" (click)="selectFilter(country, 'selectedCountries')">{{country}}</p>
                         <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox_container">Italy
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox_container">Norway
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox_container">Spain
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
+                        <span (click)="selectFilter(country, 'selectedCountries')" class="checkmark"></span>
                     </label>
                 </div>
             </div>
@@ -64,21 +42,10 @@
             </div>
             <div style="padding-top:10px">
                 <div>
-                    <label class="checkbox_container">Athens
+                    <label *ngFor="let city of cities" class="checkbox_container">
+                        <p style="all:unset;" (click)="selectFilter(city, 'selectedCities')">{{city}}</p>
                         <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox_container">Madrid
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox_container">Milan
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
-                    </label>
-                    <label class="checkbox_container">Oslo
-                        <input type="checkbox">
-                        <span class="checkmark"></span>
+                        <span (click)="selectFilter(city, 'selectedCities')" class="checkmark"></span>
                     </label>
                 </div>
             </div>
