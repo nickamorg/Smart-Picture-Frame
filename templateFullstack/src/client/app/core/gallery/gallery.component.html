@@ -15,7 +15,7 @@
                     <label *ngFor="let type of types" class="checkbox_container">
                         <p style="all:unset" style="width:100%" (click)="selectFilter(type, 'selectedTypes')">{{type}}</p>
                         <input type="checkbox">
-                        <span class="checkmark"></span>
+                        <span (click)="selectFilter(type, 'selectedTypes')" class="checkmark"></span>
                     </label>
                 </div>
             </div>
@@ -30,7 +30,7 @@
                     <label *ngFor="let country of countries" class="checkbox_container">
                         <p style="all:unset" style="width:100%" (click)="selectFilter(country, 'selectedCountries')">{{country}}</p>
                         <input type="checkbox">
-                        <span class="checkmark"></span>
+                        <span (click)="selectFilter(country, 'selectedCountries')" class="checkmark"></span>
                     </label>
                 </div>
             </div>
@@ -45,7 +45,7 @@
                     <label *ngFor="let city of cities" class="checkbox_container">
                         <p style="all:unset" style="width:100%" (click)="selectFilter(city, 'selectedCities')">{{city}}</p>
                         <input type="checkbox">
-                        <span class="checkmark"></span>
+                        <span (click)="selectFilter(city, 'selectedCities')" class="checkmark"></span>
                     </label>
                 </div>
             </div>
