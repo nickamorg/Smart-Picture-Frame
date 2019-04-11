@@ -1,53 +1,35 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-    <meta charset="utf-8">
-    <title>Fullstack</title>
-    <base href="/">
-    <meta name="author" content="Nikos Anifantis">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-</head>
+    <head>
+        <meta charset="utf-8">
+        <meta name="author" content="Nikolaos Simidalas">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <base href="/">
+        <title>Smart Picture Frame</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    </head>
 
-<body>
-    <app-root></app-root>
-</body>
+    <body>
+        <app-root></app-root>
+    </body>
 
     <script>
-    
         function displayWallsForLoading() {
-        document.getElementById("overlay").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
         }
 
         function stopDisplayWallsForLoading() {
-        document.getElementById("overlay").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
         }
 
         function displayNewWall() {
-        document.getElementById("new_wall_page").style.display = "block";
+            document.getElementById("new_wall_page").style.display = "block";
         }
 
         function stopDisplayNewWall() {
-        document.getElementById("new_wall_page").style.display = "none";
+            document.getElementById("new_wall_page").style.display = "none";
         }
-
-        function placeSquareFrame() {
-            $("#editor").append('<div onclick="focusFrame(this)" class="square_frame focus_frame"></div>');
-        }
-
-        function focusFrame(elem) {
-            $(elem).toggleClass("focus_frame");
-        }
-
-        function displayFrameImages() {
-        document.getElementById("frame_images_page").style.display = "block";
-        }
-
-        function stopDisplayFrameImages() {
-        document.getElementById("frame_images_page").style.display = "none";
-        }
-
     </script>
 </html>
