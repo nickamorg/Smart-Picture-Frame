@@ -20,6 +20,14 @@ export class GalleryComponent implements OnInit {
     allGalleryImagesIndexes: number[];
     displayedGalleryImages: number[];
 
+    displayImage: boolean;
+    displayedImage: string;
+    displayedImageType: string;
+    displayedImageCountry: string;
+    displayedImageCity: string;
+    displayedImageDescr: string;
+    displayedImageTitle: string;
+
     constructor() { 
         this.imagesCol = 6;
         this.types = [];
@@ -49,6 +57,14 @@ export class GalleryComponent implements OnInit {
                 }
             }
         });
+
+        this.displayImage = false;
+        this.displayedImage = "";
+        this.displayedImageType = "";
+        this.displayedImageCountry = "";
+        this.displayedImageCity = "";
+        this.displayedImageDescr = "";
+        this.displayedImageTitle = "";
     }
 
     ngOnInit() { }
@@ -123,6 +139,52 @@ export class GalleryComponent implements OnInit {
             this[selectedFilters[indexFilter]] = this[selectedFilters[indexFilter]].filter(item => 
                     this[filters[indexFilter]].indexOf(item) > -1)
         }
+    }
+
+    displaySelectedImage(src:string) {
+        console.log(src);
+        this.displayImage = true;
+        this.displayedImage = src;
+
+        this.galleryImages.forEach(element => {
+            if(element.src === src) {
+                this.displayedImageType = element.type;
+            }
+        });
+
+        this.galleryImages.forEach(element => {
+            if(element.src === src) {
+                this.displayedImageCity = element.city;
+            }
+        });
+
+        this.galleryImages.forEach(element => {
+            if(element.src === src) {
+                this.displayedImageCountry = element.country;
+            }
+        });
+
+        this.galleryImages.forEach(element => {
+            if(element.src === src) {
+                this.displayedImageDescr = element.description;
+            }
+        });
+
+        this.galleryImages.forEach(element => {
+            if(element.src === src) {
+                this.displayedImageTitle = element.title;
+            }
+        });
+    }
+
+    hideDisplayedImage() {
+        this.displayImage = false;
+        this.displayedImage = "";
+        this.displayedImageType = "";
+        this.displayedImageCountry = "";
+        this.displayedImageCity = "";
+        this.displayedImageDescr = "";
+        this.displayedImageTitle = "";
     }
 }
 

@@ -70,9 +70,9 @@
                 <img class="content-image img-responsive" src="/assets/images/{{galleryImages[index].src}}" alt="">
                 <div class="content-details fadeIn-top">
                     <div>
-                        <img onclick="console.log('a1')" src="/assets/images/preview_image.svg"/>
-                        <img (click)="deleteImage(galleryImages[index].src)" src="/assets/images/delete.svg"/>
-                        <img onclick="console.log('a3')"src="/assets/images/edit.svg"/>
+                        <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index].src)" src="/assets/images/preview_image.svg"/>
+                        <img style="cursor:pointer" (click)="deleteImage(galleryImages[index].src)" src="/assets/images/delete.svg"/>
+                        <img style="cursor:pointer" onclick="console.log('a3')"src="/assets/images/edit.svg"/>
                     </div>
                     <h3>{{galleryImages[index].title}}</h3>
                     <p>{{galleryImages[index].description}}</p>
@@ -80,5 +80,24 @@
             </div>
         </div>
 
+    </div>
+</div>
+
+<div *ngIf="displayImage" id="gallery-image_page" class="gallery-image_overlay">
+    <div class="clearfix">
+        <a href="javascript:void(0)" class="closebtn" (click)="hideDisplayedImage()">&times;</a>
+    </div>
+
+    <div id="gallery-image_overlay_content" class="clearfix">
+        <div class="col-xs-6">
+            <img style="border-radius: 10px" class="content-image img-responsive" src="/assets/images/{{displayedImage}}" alt="">
+        </div>
+        <div class="col-xs-6">
+            <h3 style="margin:0">{{displayedImageTitle}}</h3>
+            <p>{{displayedImageDescr}}</p>
+            <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImageType}}</div>
+            <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImageCountry}}</div>
+            <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImageCity}}</div>
+        </div>
     </div>
 </div>
