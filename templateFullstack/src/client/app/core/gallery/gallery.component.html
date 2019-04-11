@@ -71,7 +71,7 @@
                 <div class="content-details fadeIn-top">
                     <div>
                         <img onclick="console.log('a1')" src="/assets/images/preview_image.svg"/>
-                        <img onclick="console.log('a2')" src="/assets/images/delete.svg"/>
+                        <img (click)="deleteImage(galleryImages[index].src)" src="/assets/images/delete.svg"/>
                         <img onclick="console.log('a3')"src="/assets/images/edit.svg"/>
                     </div>
                     <h3>{{galleryImages[index].title}}</h3>

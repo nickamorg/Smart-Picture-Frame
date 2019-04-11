@@ -93,6 +93,37 @@ export class GalleryComponent implements OnInit {
             }
         }   console.log(this[cat]);     
     }
+
+    deleteImage(src:string) {
+        this.galleryImages = this.galleryImages.filter(function(elem){
+            return elem.src != src;
+        });
+
+        this.displayedGalleryImages = [];
+        for(var i = 0; i < this.galleryImages.length; i++) {
+            this.displayedGalleryImages[i] = i;
+        }
+
+        this.types = [];
+        this.countries = [];
+        this.cities = [];
+        this.galleryImages.forEach(element => {
+            var categories = ["types", "countries", "cities"];
+            var imageField = ["type", "country", "city"];
+            for(var index in categories) {
+                if(this[categories[index]].indexOf(element[imageField[index]]) === -1) {
+                    this[categories[index]].push(element[imageField[index]]);
+                }
+            }
+        });
+
+        var selectedFilters = ["selectedTypes", "selectedCountries", "selectedCities"];
+        var filters = ["types", "countries", "cities"];
+        for(var indexFilter in filters) {
+            this[selectedFilters[indexFilter]] = this[selectedFilters[indexFilter]].filter(item => 
+                    this[filters[indexFilter]].indexOf(item) > -1)
+        }
+    }
 }
 
 class Image {
