@@ -17,6 +17,8 @@ export class GalleryComponent implements OnInit {
     selectedTypes: string[];
     selectedCountries: string[];
     selectedCities: string[];
+    allGalleryImagesIndexes: number[];
+    displayedGalleryImages: number[];
 
     constructor() { 
         this.imagesCol = 6;
@@ -28,6 +30,8 @@ export class GalleryComponent implements OnInit {
         this.selectedTypes = [];
         this.selectedCountries = [];
         this.selectedCities = [];
+        this.allGalleryImagesIndexes = [0, 1, 2, 3];
+        this.displayedGalleryImages = this.allGalleryImagesIndexes;
 
         this.galleryImages = [
             new Image("Amazon Waterfall", "Description Example 1", "waterfall1.png", "Attraction", "Italy",  "Milan"),
@@ -45,10 +49,7 @@ export class GalleryComponent implements OnInit {
                 }
             }
         });
-
     }
-
-
 
     ngOnInit() { }
 
@@ -57,6 +58,8 @@ export class GalleryComponent implements OnInit {
     }
 
     selectFilter(arg:string, cat:string) {
+
+        // Select and Store Filter 'arg' to 'cat' category
         var index = this[cat].indexOf(arg);
         if(index === -1) {
             this[cat].push(arg);
@@ -66,8 +69,29 @@ export class GalleryComponent implements OnInit {
             this.selectedFiltersCounter--;
         }
 
-        console.log(this[cat]);
-        
+        // Apply filters to displayed images
+        if(!this.selectedFiltersCounter) {
+            this.displayedGalleryImages = this.allGalleryImagesIndexes;
+        } else {
+            var flag: boolean;
+            this.displayedGalleryImages = [];
+
+            for(var i = 0; i < this.galleryImages.length; i++) {
+                flag = false;
+                
+                var categories = ["selectedTypes", "selectedCountries", "selectedCities"];
+                var imageField = ["type", "country", "city"];
+
+                for(var index in categories) {
+                    if(this[categories[index]].length) {
+                        var match = this[categories[index]].indexOf(this.galleryImages[i][imageField[index]]);
+                        flag = match > -1? true : false;
+                        if(!flag) break;
+                    }
+                }
+                if(flag) this.displayedGalleryImages.push(i);
+            }
+        }   console.log(this[cat]);     
     }
 }
 
