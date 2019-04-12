@@ -116,7 +116,7 @@
     left:10%;
     width: 80%;
     margin-top: 30px;
-    padding:50px 0;
+    padding-bottom:50px;
     background-color: white;
     border-radius: 10px;
 }
@@ -130,7 +130,7 @@
     width: 150px !important;
 }
 
-#gallery-image_overlay_content input {
+#gallery-image_overlay_content table input {
     width: 150px !important;
 }
 
@@ -162,4 +162,26 @@
 
 .gallery-image_overlay a:hover {
     text-decoration: none;
+}
+
+#edit_image_title {
+    all:unset; 
+    width:100% !important; 
+    font-size: 24px; 
+    text-align: center;
+}
+
+#edit_image_title::placeholder {
+    color:white;
+    font-style: italic;
+}
+
+#edit_image_descr {
+    all:unset; 
+    width:100% !important;
+}
+
+#edit_image_descr::placeholder {
+    color:white;
+    font-style: italic;
 }

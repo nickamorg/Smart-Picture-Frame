@@ -70,9 +70,9 @@
                 <img class="content-image img-responsive" src="/assets/images/{{galleryImages[index].src}}" alt="">
                 <div class="content-details fadeIn-top">
                     <div>
-                        <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index].src)" src="/assets/images/preview_image.svg"/>
+                        <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index].src, 'display')" src="/assets/images/preview_image.svg"/>
                         <img style="cursor:pointer" (click)="deleteImage(galleryImages[index].src)" src="/assets/images/delete.svg"/>
-                        <img style="cursor:pointer" onclick="console.log('a3')"src="/assets/images/edit.svg"/>
+                        <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index].src, 'edit')"  src="/assets/images/edit.svg"/>
                     </div>
                     <h3>{{galleryImages[index].title}}</h3>
                     <p>{{galleryImages[index].description}}</p>
@@ -98,6 +98,53 @@
             <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImage.type}}</div>
             <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImage.country}}</div>
             <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImage.city}}</div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="editImage" id="gallery-image_page" class="gallery-image_overlay">
+    <div id="gallery-image_overlay_content" class="clearfix">
+        <div class="clearfix col-xs-12" style="padding:10px 20px 30px 0px">
+            <img style="padding-right:5px; float:right" src="/assets/images/apply.png" width="25" heigh="25">
+            <img (click)="hideDisplayedImage()" style="padding-right:5px; float:right" src="/assets/images/cancel.png" width="25" heigh="25">
+        </div>
+        <div class="col-xs-12 clearfix" style="display: flex">
+
+        <div class="col-xs-6" style="flex: 1; padding: 1em;">
+            <img style="border-radius: 10px" class="content-image img-responsive" src="/assets/images/{{displayedImage.src}}" alt="">
+        </div>
+        <div class="col-xs-6" style="border-radius:10px; margin:10px; flex: 1; padding: 1em; background-color: #707070; color:white">
+            <input id="edit_image_title" placeholder="Title" value="{{displayedImage.title}}">
+            <textarea id="edit_image_descr" placeholder="Description">{{displayedImage.description}}</textarea>
+            
+            <table align="center" style="margin-top:30px">
+                <tr>
+                    <td style="padding-right:50px"> <label for="edit_image_type">Type</label></td>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="edit_image_type" placeholder="Type" value="{{displayedImage.type}}">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding-right:50px"> <label for="edit_image_country">Country</label></td>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="edit_image_country" placeholder="Country" value="{{displayedImage.country}}">
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style="padding-right:50px"> <label for="edit_image_city">City</label></td>
+                    <td>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="edit_image_city" placeholder="City" value="{{displayedImage.city}}">
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

@@ -21,6 +21,7 @@ export class GalleryComponent implements OnInit {
     displayedGalleryImages: number[];
 
     displayImage: boolean;
+    editImage: boolean;
     displayedImage: Image;
 
     constructor() { 
@@ -54,6 +55,7 @@ export class GalleryComponent implements OnInit {
         });
 
         this.displayImage = false;
+        this.editImage = false;
         this.displayedImage = null;
     }
 
@@ -131,9 +133,12 @@ export class GalleryComponent implements OnInit {
         }
     }
 
-    displaySelectedImage(src:string) {
-        console.log(src);
-        this.displayImage = true;
+    displaySelectedImage(src:string, action: string) {
+        if(action === "display") {
+            this.displayImage = true;
+        } else {
+            this.editImage = true;
+        }
 
         this.galleryImages.forEach(element => {
             if(element.src === src) {
@@ -146,6 +151,7 @@ export class GalleryComponent implements OnInit {
 
     hideDisplayedImage() {
         this.displayImage = false;
+        this.editImage = false;
         this.displayedImage = null;
     }
 }
