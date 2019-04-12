@@ -154,6 +154,19 @@ export class GalleryComponent implements OnInit {
         this.editImage = false;
         this.displayedImage = null;
     }
+
+    saveEditedImage(title: string, description: string, type: string, country: string, city: string) {
+        console.log(city);
+        this.galleryImages.forEach((element, index) => {
+            if(element.src === this.displayedImage.src) {
+                this.galleryImages[index] = new Image(title, description, element.src, 
+                    type, country, city);
+                    return;
+            }
+        });
+
+        this.hideDisplayedImage();
+    }
 }
 
 class Image {
