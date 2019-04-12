@@ -21,12 +21,7 @@ export class GalleryComponent implements OnInit {
     displayedGalleryImages: number[];
 
     displayImage: boolean;
-    displayedImage: string;
-    displayedImageType: string;
-    displayedImageCountry: string;
-    displayedImageCity: string;
-    displayedImageDescr: string;
-    displayedImageTitle: string;
+    displayedImage: Image;
 
     constructor() { 
         this.imagesCol = 6;
@@ -59,12 +54,7 @@ export class GalleryComponent implements OnInit {
         });
 
         this.displayImage = false;
-        this.displayedImage = "";
-        this.displayedImageType = "";
-        this.displayedImageCountry = "";
-        this.displayedImageCity = "";
-        this.displayedImageDescr = "";
-        this.displayedImageTitle = "";
+        this.displayedImage = null;
     }
 
     ngOnInit() { }
@@ -144,47 +134,19 @@ export class GalleryComponent implements OnInit {
     displaySelectedImage(src:string) {
         console.log(src);
         this.displayImage = true;
-        this.displayedImage = src;
 
         this.galleryImages.forEach(element => {
             if(element.src === src) {
-                this.displayedImageType = element.type;
-            }
-        });
-
-        this.galleryImages.forEach(element => {
-            if(element.src === src) {
-                this.displayedImageCity = element.city;
-            }
-        });
-
-        this.galleryImages.forEach(element => {
-            if(element.src === src) {
-                this.displayedImageCountry = element.country;
-            }
-        });
-
-        this.galleryImages.forEach(element => {
-            if(element.src === src) {
-                this.displayedImageDescr = element.description;
-            }
-        });
-
-        this.galleryImages.forEach(element => {
-            if(element.src === src) {
-                this.displayedImageTitle = element.title;
+                this.displayedImage = new Image(element.title, element.description, element.src, 
+                    element.type, element.country, element.city);
+                    return;
             }
         });
     }
 
     hideDisplayedImage() {
         this.displayImage = false;
-        this.displayedImage = "";
-        this.displayedImageType = "";
-        this.displayedImageCountry = "";
-        this.displayedImageCity = "";
-        this.displayedImageDescr = "";
-        this.displayedImageTitle = "";
+        this.displayedImage = null;
     }
 }
 

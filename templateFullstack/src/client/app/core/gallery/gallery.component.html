@@ -90,14 +90,14 @@
 
     <div id="gallery-image_overlay_content" class="clearfix">
         <div class="col-xs-6">
-            <img style="border-radius: 10px" class="content-image img-responsive" src="/assets/images/{{displayedImage}}" alt="">
+            <img style="border-radius: 10px" class="content-image img-responsive" src="/assets/images/{{displayedImage.src}}" alt="">
         </div>
         <div class="col-xs-6">
-            <h3 style="margin:0">{{displayedImageTitle}}</h3>
-            <p>{{displayedImageDescr}}</p>
-            <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImageType}}</div>
-            <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImageCountry}}</div>
-            <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImageCity}}</div>
+            <h3 style="margin:0">{{displayedImage.title}}</h3>
+            <p>{{displayedImage.description}}</p>
+            <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImage.type}}</div>
+            <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImage.country}}</div>
+            <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImage.city}}</div>
         </div>
     </div>
 </div>
