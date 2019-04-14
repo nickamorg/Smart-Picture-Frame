@@ -49,7 +49,7 @@ export class UploadImagesComponent implements OnInit {
                         "id": 1,
                         "border-radius": 0,
                         "border-size": 5,
-                        "border-material": "gold.png",
+                        "border-material": "stone.png",
                         "border-color": "rgb(255, 209, 5)",
                         "padding": 10,
                         "top": 130,
@@ -63,7 +63,7 @@ export class UploadImagesComponent implements OnInit {
                         "id": 2,
                         "border-radius": 100,
                         "border-size": 5,
-                        "border-material": "gold.png",
+                        "border-material": "brick.jpg",
                         "border-color": "purple",
                         "padding": 10,
                         "top": 20,
@@ -77,7 +77,7 @@ export class UploadImagesComponent implements OnInit {
                         "id": 3,
                         "border-radius": 100,
                         "border-size": 10,
-                        "border-material": "gold.png",
+                        "border-material": "iron.jpg",
                         "border-color": "purple",
                         "padding": 30,
                         "top": 20,
@@ -113,6 +113,7 @@ export class UploadImagesComponent implements OnInit {
 
     setFrameBezelsStyle(id: number) {
         let style = {
+            'background-image': 'url("./assets/materials/' + this.walls['wall1']['frames'][id]['border-material'] + '")',
             'background-color': this.walls['wall1']['frames'][id]['border-color'],
             'border-radius': this.walls['wall1']['frames'][id]['border-radius'] + '%',
             'width': this.walls['wall1']['frames'][id]['width'] + 'px',
