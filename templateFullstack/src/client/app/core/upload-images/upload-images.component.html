@@ -1,9 +1,10 @@
 <div align="center">
     <div id="wall_display_bezels" [ngStyle]="setBezelsStyle()"> 
         <div id="wall_display_content" [ngStyle]="setWallStyle()">
-            <div *ngFor="let frame of walls.wall1.frames" [ngStyle]="setFrameBezelsStyle(frame.id)" style="position:absolute">
-                <div [ngStyle]="setFrameStyle(frame.id)" style="position:absolute">
-                    <img [ngStyle]="setImageStyle(frame.id)" src="/assets/images/{{frame.images[0]}}">
+            <div *ngFor="let frame of walls[displayedWall].frames; let i = index" [ngStyle]="setFrameBezelsStyle(i)" style="position:absolute">
+                <p>{{i}}</p>
+                <div [ngStyle]="setFrameStyle(i)" style="position:absolute">
+                    <img [ngStyle]="setImageStyle(i)" src="/assets/images/{{frame.images[0]}}">
                 </div>
             </div>
         </div>

@@ -6,93 +6,33 @@ import { NumberSymbol } from '@angular/common';
     templateUrl: './upload-images.component.html',
     styleUrls: ['./upload-images.component.scss']
 })
-export class UploadImagesComponent implements OnInit {
-    walls: {};
 
-    constructor() { 
-        this.walls = {
-            "wall1": {
-                "title": "example glossary",
-                "creator": "Home",
-                "type": "General",
-                "target": "Family",
-                "description": "Just a usual wall",
-                "border-size": 10,
-                "border-material": "lava.jpg",
-                "border-color": "#C4C4C4",
-                "background-color": "rgb(97, 0, 0)",
-                "display-time": "20: 30",
-                "duration": 30,
-                "repeat-time": "02:30:00",
-                "wallpapers-iterate-time": 30,
-                "wallpapers": ["wallpaper.jpg", "waterfall2.png"],
-                "color": "#ffffff",
-                "frames": [
-                    {
-                        "id": 0,
-                        "border-radius": 0,
-                        "border-size": 5,
-                        "border-material": "gold.png",
-                        "border-color": "rgb(34, 0, 78)",
-                        "padding": 10,
-                        "top": 20,
-                        "left": 50,
-                        "width": 100,
-                        "height": 100,
-                        "images": ["waterfall1.png", "waterfall2.png"],
-                        "iterate-time": 30
-                    },
-                    {
-                        "id": 1,
-                        "border-radius": 0,
-                        "border-size": 5,
-                        "border-material": "stone.png",
-                        "border-color": "rgb(255, 209, 5)",
-                        "padding": 10,
-                        "top": 130,
-                        "left": 50,
-                        "width": 100,
-                        "height": 100,
-                        "images": ["waterfall2.png", "waterfall2.png"],
-                        "iterate-time": 30
-                    },
-                    {
-                        "id": 2,
-                        "border-radius": 100,
-                        "border-size": 5,
-                        "border-material": "brick.jpg",
-                        "border-color": "purple",
-                        "padding": 10,
-                        "top": 20,
-                        "left": 200,
-                        "width": 200,
-                        "height": 200,
-                        "images": ["waterfall3.png", "waterfall2.png"],
-                        "iterate-time": 30
-                    },
-                    {
-                        "id": 3,
-                        "border-radius": 100,
-                        "border-size": 10,
-                        "border-material": "iron.jpg",
-                        "border-color": "purple",
-                        "padding": 30,
-                        "top": 20,
-                        "left": 500,
-                        "width": 150,
-                        "height": 150,
-                        "images": ["waterfall3.png", "waterfall2.png"],
-                        "iterate-time": 30
-                    }
-                ]
-            }
-        };
+export class UploadImagesComponent implements OnInit {
+    walls: Wall[] = [];
+    displayedWall: number = 0;
+
+    constructor() {
+
+        this.walls.push(
+            new Wall("Example glossary", "Home", "General", "Family", "Just a usual wall",
+                10, "lava.jpg", "#C4C4C4", "rgb(97, 0, 0)", "20:30", 30, 150, 30, 
+                ["wallpaper.jpg", "waterfall2.png"], "#FFFFFFF", 
+                [
+                    new Frame(0, 5, "gold.jpg", "rgb(34, 0, 78)", 10, 20, 50, 100, 100,
+                        ["waterfall1.png", "waterfall2.png"], 30),
+                    new Frame(0, 5, "stone.png", "rgb(34, 0, 78)", 10, 130, 50, 100, 100,
+                        ["waterfall2.png", "waterfall3.png"], 30),
+                    new Frame(0, 5, "brick.jpg", "rgb(34, 0, 78)", 10, 20, 300, 200, 200,
+                        ["waterfall3.png", "waterfall1.png"], 30),
+                        new Frame(100, 5, "iron.jpg", "rgb(34, 0, 78)", 15, 50, 600, 150, 150,
+                        ["waterfall4.png", "waterfall3.png"], 30)
+            ]));
     }
 
     setBezelsStyle() {
         let style = {
-            'background-image': 'url("./assets/materials/' + this.walls['wall1']['border-material'] + '")',
-            'background-color': this.walls["wall1"]["border-color"]
+            'background-image': 'url("./assets/materials/' + this.walls[this.displayedWall].borderMaterial + '")',
+            'background-color': this.walls[this.displayedWall].borderColor
         };
 
         return style;
@@ -100,13 +40,13 @@ export class UploadImagesComponent implements OnInit {
 
     setWallStyle() {
         let style = {
-            'height': 260 - this.walls["wall1"]["border-size"] * 2 + 'px',
-            'width': 990 - this.walls["wall1"]["border-size"] * 2 + 'px',
-            'top': this.walls["wall1"]["border-size"] + 'px',
-            'background-image': 'url("./assets/images/' + this.walls['wall1']['wallpapers'][0] + '")',
+            'height': 260 - this.walls[this.displayedWall].borderSize * 2 + 'px',
+            'width': 990 - this.walls[this.displayedWall].borderSize * 2 + 'px',
+            'top': this.walls[this.displayedWall].borderSize + 'px',
+            'background-image': 'url("./assets/images/' + this.walls[this.displayedWall].wallpapers[0] + '")',
             'background-repeat': 'no-repeat',
             'background-size': '100% 100%',
-            'background-color': this.walls["wall1"]["background-color"]
+            'background-color': this.walls[this.displayedWall].backgroundColor
         };
 
         return style;
@@ -114,13 +54,13 @@ export class UploadImagesComponent implements OnInit {
 
     setFrameBezelsStyle(id: number) {
         let style = {
-            'background-image': 'url("./assets/materials/' + this.walls['wall1']['frames'][id]['border-material'] + '")',
-            'background-color': this.walls['wall1']['frames'][id]['border-color'],
-            'border-radius': this.walls['wall1']['frames'][id]['border-radius'] + '%',
-            'width': this.walls['wall1']['frames'][id]['width'] + 'px',
-            'height': this.walls['wall1']['frames'][id]['height'] + 'px',
-            'top': this.walls['wall1']['frames'][id]['top'] + 'px',
-            'left': this.walls['wall1']['frames'][id]['left'] + 'px'
+            'background-image': 'url("./assets/materials/' + this.walls[this.displayedWall].frames[id].borderMaterial + '")',
+            'background-color': this.walls[this.displayedWall].frames[id].borderColor,
+            'border-radius': this.walls[this.displayedWall].frames[id].borderRadius + '%',
+            'width': this.walls[this.displayedWall].frames[id].width + 'px',
+            'height': this.walls[this.displayedWall].frames[id].height + 'px',
+            'top': this.walls[this.displayedWall].frames[id].top + 'px',
+            'left': this.walls[this.displayedWall].frames[id].left + 'px'
         };
 
         return style;
@@ -129,12 +69,12 @@ export class UploadImagesComponent implements OnInit {
     setFrameStyle(id:number) {
         let style = {
             'background-color': 'rgb(255, 255, 255)',
-            'border-radius': this.walls['wall1']['frames'][id]['border-radius'] + '%',
-            'width': (this.walls['wall1']['frames'][id]['width'] - this.walls['wall1']['frames'][id]['border-size'] * 2)  + 'px',
-            'height': (this.walls['wall1']['frames'][id]['height'] - this.walls['wall1']['frames'][id]['border-size'] * 2) + 'px',
-            'top': this.walls['wall1']['frames'][id]['border-size'] + 'px',
-            'left': this.walls['wall1']['frames'][id]['border-size'] + 'px',
-            'padding': (this.walls['wall1']['frames'][id]['padding']) + 'px'
+            'border-radius': this.walls[this.displayedWall].frames[id].borderRadius + '%',
+            'width': (this.walls[this.displayedWall].frames[id].width - this.walls[this.displayedWall].frames[id].borderSize * 2)  + 'px',
+            'height': (this.walls[this.displayedWall].frames[id].height - this.walls[this.displayedWall].frames[id].borderSize * 2) + 'px',
+            'top': this.walls[this.displayedWall].frames[id].borderSize + 'px',
+            'left': this.walls[this.displayedWall].frames[id].borderSize + 'px',
+            'padding': (this.walls[this.displayedWall].frames[id].padding) + 'px'
         }
 
         return style;
@@ -142,9 +82,9 @@ export class UploadImagesComponent implements OnInit {
 
     setImageStyle(id:number) {
         let style = {
-            'border-radius': this.walls['wall1']['frames'][id]['border-radius'] + '%',
-            'width': (this.walls['wall1']['frames'][id]['width'] - this.walls['wall1']['frames'][id]['padding'] * 2 - this.walls['wall1']['frames'][id]['border-size'] * 2)  + 'px',
-            'height': (this.walls['wall1']['frames'][id]['height'] - this.walls['wall1']['frames'][id]['padding'] * 2 - this.walls['wall1']['frames'][id]['border-size'] * 2) + 'px',
+            'border-radius': this.walls[this.displayedWall].frames[id].borderRadius + '%',
+            'width': (this.walls[this.displayedWall].frames[id].width - this.walls[this.displayedWall].frames[id].padding * 2 - this.walls[this.displayedWall].frames[id].borderSize * 2)  + 'px',
+            'height': (this.walls[this.displayedWall].frames[id].height - this.walls[this.displayedWall].frames[id].padding * 2 - this.walls[this.displayedWall].frames[id].borderSize * 2) + 'px',
         }
 
         return style;
@@ -152,4 +92,77 @@ export class UploadImagesComponent implements OnInit {
 
     ngOnInit() { }
 
+}
+
+class Wall {
+    title: string = "";
+    creator: string = "";
+    type: string = "";
+    target: string = "";
+    description: string = "";
+    borderSize: number = 0;
+    borderMaterial: string = "";
+    borderColor: string = "";
+    backgroundColor: string = "";
+    displayTime: string = "";
+    duration: number = 0;
+    repeatTime: number = 0;
+    wallpaperIterateTime: number = 0;
+    wallpapers : string[] = [];
+    color: string = "";
+    frames: Frame[] = [];
+
+    constructor(title, creator, type, target, description, borderSize, 
+        borderMaterial, borderColor, backgroundColor, displayTime, duration,
+        repeatTime, wallpaperIterateTime, wallpapers, color, frames) {
+
+            this.title = title;
+            this.creator = creator;
+            this.type = type;
+            this.target = target;
+            this.description = description;
+            this.borderSize = borderSize;
+            this.borderMaterial = borderMaterial;
+            this.borderColor = borderColor;
+            this.backgroundColor = backgroundColor;
+            this.displayTime = displayTime;
+            this.duration = duration;
+            this.repeatTime = repeatTime;
+            this.wallpaperIterateTime = wallpaperIterateTime;
+            this.wallpapers = wallpapers;
+            this.color = color;
+            this.frames = frames;
+
+    }
+}
+
+class Frame {
+    borderRadius: number = 0;
+    borderSize: number = 0;
+    borderMaterial: string = "";
+    borderColor: string = "";
+    padding: number = 0;
+    top: number = 0;
+    left: number = 0;
+    width: number = 0;
+    height: number = 0;
+    images: string[] = [];
+    iterateTime: number = 0;
+
+    constructor(borderRadius, borderSize, borderMaterial, borderColor, 
+        padding, top, left, width, height, images, iterateTime) {
+            this.borderRadius = borderRadius;
+            this.borderSize = borderSize;
+            this.borderMaterial = borderMaterial;
+            this.borderColor = borderColor;
+            this.padding = padding;
+            this.top = top;
+            this.left = left;
+            this.width = width;
+            this.height = height;
+            this.images = images;
+            this.iterateTime = iterateTime;
+
+
+    }
 }

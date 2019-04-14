@@ -28,7 +28,6 @@ export class MaterialsComponent implements OnInit {
             return elem.src != src;
         });
     }
-
 }
 
 class Material {
