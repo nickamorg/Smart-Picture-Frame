@@ -18,17 +18,14 @@ export class UploadImagesComponent implements OnInit {
                 "target": "Family",
                 "description": "Just a usual wall",
                 "border-size": 10,
-                "border-material": "gold.png",
+                "border-material": "lava.jpg",
                 "border-color": "#C4C4C4",
                 "background-color": "rgb(97, 0, 0)",
                 "display-time": "20: 30",
                 "duration": 30,
                 "repeat-time": "02:30:00",
                 "wallpapers-iterate-time": 30,
-                "wallpapers": {
-                    "image1": "waterfall.png",
-                    "image2": "waterfall2.png"
-                },
+                "wallpapers": ["wallpaper.jpg", "waterfall2.png"],
                 "color": "#ffffff",
                 "frames": [
                     {
@@ -106,6 +103,9 @@ export class UploadImagesComponent implements OnInit {
             'height': 260 - this.walls["wall1"]["border-size"] * 2 + 'px',
             'width': 990 - this.walls["wall1"]["border-size"] * 2 + 'px',
             'top': this.walls["wall1"]["border-size"] + 'px',
+            'background-image': 'url("./assets/images/' + this.walls['wall1']['wallpapers'][0] + '")',
+            'background-repeat': 'no-repeat',
+            'background-size': '100% 100%',
             'background-color': this.walls["wall1"]["background-color"]
         };
 
