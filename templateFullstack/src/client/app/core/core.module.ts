@@ -9,6 +9,7 @@ import { NewWallComponent } from './new-wall/new-wall.component';
 import { LoadWallComponent } from './load-wall/load-wall.component';
 import { UploadImagesComponent } from './upload-images/upload-images.component';
 import { MaterialsComponent } from './materials/materials.component';
+import { WallpapersComponent } from './wallpapers/wallpapers.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { ToolsComponent } from './tools/tools.component';
@@ -29,7 +30,8 @@ import { FrameImagesComponent } from './frame-images/frame-images.component';
     WorkspaceComponent,
     ToolsComponent,
     EditorComponent,
-    FrameImagesComponent
+    FrameImagesComponent,
+    WallpapersComponent
   ],
   imports: [
     CommonModule,

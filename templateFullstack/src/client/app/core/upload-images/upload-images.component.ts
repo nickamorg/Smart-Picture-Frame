@@ -16,7 +16,7 @@ export class UploadImagesComponent implements OnInit {
         this.walls.push(
             new Wall("Example glossary", "Home", "General", "Family", "Just a usual wall",
                 10, "lava.jpg", "#C4C4C4", "#FFFFFF", "20:30", 0.1, 150, 30, 
-                ["wallpaper.jpg", "wallpaper1.jpg"], "#FFFFFFF", 
+                ["waterfalls.jpg", "inferno.jpg"], "#FFFFFFF", 
                 [
                     new Frame(0, 5, "gold.jpg", "rgb(34, 0, 78)", 10, 20, 50, 100, 100,
                         ["waterfall1.png", "waterfall2.png"], 0.1),

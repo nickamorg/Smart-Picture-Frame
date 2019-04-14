@@ -1,0 +1,14 @@
+<p style="padding-left:15px; font-weight: 600;">{{wallpapers.length}} Wallpapers</p>
+
+<div *ngFor="let wallpaper of wallpapers" class="col-xs-12" style="padding-bottom:20px">
+    <div class="content">
+        <div class="content-overlay"></div>
+        <img class="content-image img-responsive" src="/assets/wallpapers/{{wallpaper.src}}" alt="">
+        <div class="content-details fadeIn-top">
+            <div>
+                <img style="cursor:pointer" (click)="deleteWallpaper(wallpaper.src)" src="/assets/images/delete.svg"/>
+            </div>
+            <h3>{{wallpaper.title}}</h3>
+        </div>    
+    </div>
+</div>
