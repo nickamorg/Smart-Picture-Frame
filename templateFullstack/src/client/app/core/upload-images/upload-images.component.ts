@@ -15,18 +15,20 @@ export class UploadImagesComponent implements OnInit {
 
         this.walls.push(
             new Wall("Example glossary", "Home", "General", "Family", "Just a usual wall",
-                10, "lava.jpg", "#C4C4C4", "rgb(97, 0, 0)", "20:30", 30, 150, 30, 
-                ["wallpaper.jpg", "waterfall2.png"], "#FFFFFFF", 
+                10, "lava.jpg", "#C4C4C4", "#FFFFFF", "20:30", 0.1, 150, 30, 
+                ["wallpaper.jpg", "wallpaper1.jpg"], "#FFFFFFF", 
                 [
                     new Frame(0, 5, "gold.jpg", "rgb(34, 0, 78)", 10, 20, 50, 100, 100,
-                        ["waterfall1.png", "waterfall2.png"], 30),
+                        ["waterfall1.png", "waterfall2.png"], 0.1),
                     new Frame(0, 5, "stone.png", "rgb(34, 0, 78)", 10, 130, 50, 100, 100,
-                        ["waterfall2.png", "waterfall3.png"], 30),
+                        ["waterfall2.png", "waterfall3.png"], 0.5),
                     new Frame(0, 5, "brick.jpg", "rgb(34, 0, 78)", 10, 20, 300, 200, 200,
-                        ["waterfall3.png", "waterfall1.png"], 30),
+                        ["waterfall3.png", "waterfall1.png"], 1),
                         new Frame(100, 5, "iron.jpg", "rgb(34, 0, 78)", 15, 50, 600, 150, 150,
-                        ["waterfall4.png", "waterfall3.png"], 30)
+                        ["waterfall4.png", "waterfall3.png"], 1.5)
             ]));
+            
+            this.setDisplayedWall(0);
     }
 
     setBezelsStyle() {
@@ -43,7 +45,7 @@ export class UploadImagesComponent implements OnInit {
             'height': 260 - this.walls[this.displayedWall].borderSize * 2 + 'px',
             'width': 990 - this.walls[this.displayedWall].borderSize * 2 + 'px',
             'top': this.walls[this.displayedWall].borderSize + 'px',
-            'background-image': 'url("./assets/images/' + this.walls[this.displayedWall].wallpapers[0] + '")',
+            'background-image': 'url("./assets/wallpapers/' + this.walls[this.displayedWall].wallpapers[this.walls[this.displayedWall].displayedWallpaperIndex] + '")',
             'background-repeat': 'no-repeat',
             'background-size': '100% 100%',
             'background-color': this.walls[this.displayedWall].backgroundColor
@@ -90,6 +92,10 @@ export class UploadImagesComponent implements OnInit {
         return style;
     }
 
+    setDisplayedWall(index: number) {
+        this.displayedWall = index;
+    }
+
     ngOnInit() { }
 
 }
@@ -111,6 +117,7 @@ class Wall {
     wallpapers : string[] = [];
     color: string = "";
     frames: Frame[] = [];
+    displayedWallpaperIndex: number = 0;
 
     constructor(title, creator, type, target, description, borderSize, 
         borderMaterial, borderColor, backgroundColor, displayTime, duration,
@@ -133,6 +140,12 @@ class Wall {
             this.color = color;
             this.frames = frames;
 
+            if(this.wallpapers.length > 0) {
+                var self = this;
+                setInterval(function(){ 
+                    self.displayedWallpaperIndex = ++self.displayedWallpaperIndex % self.wallpapers.length;
+                }, self.duration * 60000);
+            }
     }
 }
 
@@ -147,6 +160,7 @@ class Frame {
     width: number = 0;
     height: number = 0;
     images: string[] = [];
+    displayedImageIndex: number = 0;
     iterateTime: number = 0;
 
     constructor(borderRadius, borderSize, borderMaterial, borderColor, 
@@ -163,6 +177,11 @@ class Frame {
             this.images = images;
             this.iterateTime = iterateTime;
 
-
+            if(this.images.length > 0) {
+                var self = this;
+                setInterval(function(){ 
+                    self.displayedImageIndex = ++self.displayedImageIndex % self.images.length;
+                }, self.iterateTime * 60000);
+            }
     }
 }
