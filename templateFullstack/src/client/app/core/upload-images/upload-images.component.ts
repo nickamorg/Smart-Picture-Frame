@@ -94,6 +94,7 @@ export class UploadImagesComponent implements OnInit {
 
     setBezelsStyle() {
         let style = {
+            'background-image': 'url("./assets/materials/' + this.walls['wall1']['border-material'] + '")',
             'background-color': this.walls["wall1"]["border-color"]
         };
 

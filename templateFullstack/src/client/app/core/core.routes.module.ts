@@ -5,7 +5,7 @@ import { HomeComponent } from './home/home.component';
 import { NewWallComponent } from './new-wall/new-wall.component';
 import { LoadWallComponent } from './load-wall/load-wall.component';
 import { UploadImagesComponent } from './upload-images/upload-images.component';
-import { UploadMaterialsComponent } from './upload-materials/upload-materials.component';
+import { MaterialsComponent } from './materials/materials.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 
@@ -14,7 +14,7 @@ const coreRoutes: Routes = [
   { path: 'new-wall', component: NewWallComponent },
   { path: 'load-wall', component: LoadWallComponent },
   { path: 'upload-images', component: UploadImagesComponent },
-  { path: 'upload-materials', component: UploadMaterialsComponent },
+  { path: 'materials', component: MaterialsComponent },
   { path: 'gallery', component: GalleryComponent },
   { path: 'workspace', component: WorkspaceComponent }
 ];

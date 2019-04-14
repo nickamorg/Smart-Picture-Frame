@@ -8,7 +8,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NewWallComponent } from './new-wall/new-wall.component';
 import { LoadWallComponent } from './load-wall/load-wall.component';
 import { UploadImagesComponent } from './upload-images/upload-images.component';
-import { UploadMaterialsComponent } from './upload-materials/upload-materials.component';
+import { MaterialsComponent } from './materials/materials.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { ToolsComponent } from './tools/tools.component';
@@ -24,7 +24,7 @@ import { FrameImagesComponent } from './frame-images/frame-images.component';
     NewWallComponent,
     LoadWallComponent,
     UploadImagesComponent,
-    UploadMaterialsComponent,
+    MaterialsComponent,
     GalleryComponent,
     WorkspaceComponent,
     ToolsComponent,
