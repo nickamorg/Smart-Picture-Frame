@@ -90,6 +90,9 @@ export class ShapesService {
     bazelMaterial: string;
     currFrameImages: string[];
 
+
+    materials: string[];
+
     constructor() { 
         this.id = 0;
         this.shapes = [new Shape("square_frame")];
@@ -107,6 +110,8 @@ export class ShapesService {
                             new FrameImage("waterfall4.png")];
         this.selectedImages = 0;
         this.imagesCol = 6;
+
+        this.materials = ["aqua.jpg", "lava.jpg", "brick.jpg", "iron.jpg", "stone.png", "gold.jpg"];
 
     }
 
@@ -229,9 +234,34 @@ export class ShapesService {
         this.hasBazels = !this.hasBazels;
     }
 
-    addMaterial(mat:string) {
-        this.bazelMaterial = mat;
-        this.shapes[this.id].bazelMaterial = mat;
+    addMaterial(index:number) {
+        this.bazelMaterial = this.materials[index];
+        this.shapes[this.id].bazelMaterial = this.materials[index];
+    }
+
+    returnBazelMaterial() {
+        let style = {
+            'background-image': 'url("./assets/materials/' + this.bazelMaterial + '")',
+            'width': '207px',
+            'height': '27px'
+        }
+
+        return style;
+    } 
+
+    setDropDownDisplayedMaterial(index: number) {
+        console.log(index);
+        let style = {
+            'background-image': 'url("./assets/materials/' + this.materials[index] + '")',
+            'width': '207px',
+            'height': '27px',
+            'margin-left': '10px',
+            'margin-bottom': '10px',
+            'cursor': 'pointer',
+            'padding-bottom': '5px'
+        }
+
+        return style;
     }
 }
 

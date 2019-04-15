@@ -44,14 +44,11 @@
                             </ng-template>
 
                             <ng-template [ngIf]="shapesService.bazelMaterial !== ''">
-                                <img src="/assets/materials/{{shapesService.bazelMaterial}}.png"> 
+                                <div [ngStyle]="shapesService.returnBazelMaterial()"></div>
                             </ng-template>
                         </button>
                         <ul class="dropdown-menu" style="width:100%; text-align: center; padding-top: 10px">
-                            <li (click)='shapesService.addMaterial("wood")' style="cursor: pointer; padding-bottom: 5px"><img src="/assets/materials/wood.png"> </li>
-                            <li (click)='shapesService.addMaterial("aqua")' style="cursor: pointer; padding-bottom: 5px"><img src="/assets/materials/aqua.png"> </li>
-                            <li (click)='shapesService.addMaterial("iron")' style="cursor: pointer; padding-bottom: 5px"><img src="/assets/materials/iron.png"> </li>
-                            <li (click)='shapesService.addMaterial("gold")' style="cursor: pointer; padding-bottom: 5px"><img src="/assets/materials/gold.png"> </li>
+                            <li *ngFor="let type of shapesService.materials; let i = index" (click)='shapesService.addMaterial(i)'  [ngStyle]="shapesService.setDropDownDisplayedMaterial(i)"></li>
                         </ul>
                     </div>
                 </div>
