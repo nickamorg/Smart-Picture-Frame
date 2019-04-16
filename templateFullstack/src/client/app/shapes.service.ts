@@ -63,12 +63,12 @@ export class ShapesService {
 
         var tmpFrame = new Frame();
         tmpFrame.init(100, 5, "iron.jpg", "rgb(34, 0, 78)", 15, 20, 200, 150, 150,
-        ["waterfall4.png", "waterfall3.png"], 1.5);
+        ["waterfall4.png", "waterfall3.png"], 30);
         this.frames.push(tmpFrame);
 
         var tmpFrame = new Frame();
         tmpFrame.init(0, 5, "brick.jpg", "rgb(34, 0, 78)", 10, 50, 400, 100, 100,
-        ["waterfall3.png", "waterfall1.png"], 1);
+        ["waterfall3.png", "waterfall1.png"], 15);
         this.frames.push(tmpFrame);
 
         this.currFrameImages = [];
@@ -132,6 +132,14 @@ export class ShapesService {
 
     setHeight(height) {
         this.frames[this.selectedFrame].height = height;
+    }
+
+    setPadding(padding) {
+        this.frames[this.selectedFrame].padding = padding;
+    }
+
+    setIterateTime(iterateTime) {
+        this.frames[this.selectedFrame].iterateTime = iterateTime;
     }
 
     setBorderSize(borderSize) {
@@ -238,6 +246,10 @@ export class ShapesService {
         this.frames.push(newFrame);
         this.selectedFrame = this.frames.length - 1;
         this.initCurrFrameImages(this.selectedFrame);
+    }
+
+    changeDisplayedImage(index: number) {
+        this.frames[this.selectedFrame].displayedImageIndex = index;
     }
 
 }
