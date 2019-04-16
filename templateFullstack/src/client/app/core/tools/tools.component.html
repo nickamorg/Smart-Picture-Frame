@@ -30,23 +30,25 @@
             </div>
 
             <div style="padding:10px 10px; border-bottom: 1px solid #E3E2E2">
-                <div data-toggle="collapse" data-target="#frame_bazels" (click)='shapesService.toggleHasBazels()'>
+                <div data-toggle="collapse" data-target="#frame_bazels" (click)='shapesService.toggleHasMaterial()'>
                     <span style="color:#5C5555">BAZELS</span>
                     <img src="{{shapesService.hasBazels?'/assets/images/remove.svg':'/assets/images/add.svg'}}" style="float:right" >
                 </div>
 
                 <div id="frame_bazels" class="collapse">
                     <div class="dropdown" style="padding-top:10px">
-                        <button style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                            <ng-template [ngIf]="shapesService.bazelMaterial === ''">
-                                Material
-                                <img style="float:right" src="/assets/images/arrow_down.svg">
-                            </ng-template>
-
-                            <ng-template [ngIf]="shapesService.bazelMaterial !== ''">
+                        <button (click)="shapesService.toggleHasMaterial()" style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                            <div *ngIf="shapesService.frames[shapesService.selectedFrame].hasMaterial; else elseBlock">
                                 <div [ngStyle]="shapesService.returnBazelMaterial()"></div>
+                            </div>
+                            <ng-template #elseBlock>
+                                Material <img style="float:right" src="/assets/images/arrow_down.svg">
                             </ng-template>
                         </button>
+                        <div style="padding-top:10px">
+                            <span style="padding-right:10px">Border Size</span>
+                            <input (keyup)="shapesService.setBorderSize($event.target.value)" type="text" style="width:150px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.frames[shapesService.selectedFrame].borderSize}}">
+                        </div>
                         <ul class="dropdown-menu" style="width:100%; text-align: center; padding-top: 10px">
                             <li *ngFor="let type of shapesService.materials; let i = index" (click)='shapesService.addMaterial(i)'  [ngStyle]="shapesService.setDropDownDisplayedMaterial(i)"></li>
                         </ul>

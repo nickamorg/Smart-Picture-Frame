@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 
-var counter:number = -1;
 var imageID:number = -1;
 
 class Frame {
     borderRadius: number = 0;
     borderSize: number = 0;
+    hasMaterial: boolean = false;
     borderMaterial: string = "";
     borderColor: string = "";
     padding: number = 0;
@@ -19,8 +19,10 @@ class Frame {
 
     init(borderRadius, borderSize, borderMaterial, borderColor, 
                 padding, top, left, width, height, images, iterateTime) {
+        
         this.borderRadius = borderRadius;
         this.borderSize = borderSize;
+        this.hasMaterial = borderMaterial !== ''?true:false;
         this.borderMaterial = borderMaterial;
         this.borderColor = borderColor;
         this.padding = padding;
@@ -30,66 +32,6 @@ class Frame {
         this.height = height;
         this.images = images;
         this.iterateTime = iterateTime;
-
-        // if(this.images.length > 0) {
-        //     var self = this;
-        //     setInterval(function(){ 
-        //         self.displayedImageIndex = ++self.displayedImageIndex % self.images.length;
-        //     }, self.iterateTime * 60000);
-        // }
-    }
-}
-
-class Shape {
-    
-    padding: number;
-    id: number;
-    type: string;
-    backgroundColor: string;
-    top: number;
-    left: number;
-    width: number;
-    height: number;
-    hasBazels: boolean;
-    bazelMaterial: string;
-    frameImages: string[];
-
-    constructor(type:string) {
-        counter++;
-        this.padding = 0;
-        this.top = 50;
-        this.left = 10;
-        this.width = 100;
-        this.height = 100;
-        this.backgroundColor = randomColor();
-        this.type = type;
-        this.id = counter;
-        this.hasBazels = false;
-        this.bazelMaterial = "";
-
-        this.frameImages = [];
-    }
-
-    setStyle() {
-        let style = {
-            'background-color': this.backgroundColor,
-            'top': this.top + 'px',
-            'left': this.left + 'px',
-            'width': this.width + 'px',
-            'height': this.height + 'px'
-        };
-
-        if(this.bazelMaterial !== "") {
-            let bazel_img_url = "/assets/materials/" + this.bazelMaterial + ".png";
-            
-            style["border"] = "10px solid transparent";
-            style["border-image"] = "url('" + bazel_img_url + "') 13";
-        }
-        return style;
-    }
-
-    tellme() {
-        this.top += 10;
     }
 }
 
@@ -110,23 +52,10 @@ export class ShapesService {
     frames: Frame[] = [];
     selectedFrame: number = 0;
 
-    shapes: Shape[];
     frameImages: FrameImage[];
     selectedImages: number;
     imagesCol: number;
-
-    padding: number;
-    id: number;
-    type: string;
-    backgroundColor: string;
-    top: number;
-    left: number;
-    width: number;
-    height: number;
-    hasBazels: boolean;
-    bazelMaterial: string;
     currFrameImages: string[];
-
 
     materials: string[];
 
@@ -142,18 +71,6 @@ export class ShapesService {
         ["waterfall3.png", "waterfall1.png"], 1);
         this.frames.push(tmpFrame);
 
-        console.log(this.frames);
-
-        
-
-        this.id = 0;
-        this.shapes = [new Shape("square_frame")];
-        this.top = 50;
-        this.left = 10;
-        this.width = 100;
-        this.height = 100;
-        this.hasBazels = false;
-        this.bazelMaterial = "";
         this.currFrameImages = [];
 
         this.frameImages = [new FrameImage("waterfall1.png"),
@@ -165,26 +82,6 @@ export class ShapesService {
 
         this.materials = ["aqua.jpg", "lava.jpg", "brick.jpg", "iron.jpg", "stone.png", "gold.jpg"];
 
-    }
-
-    focusShape(id) {
-        this.id = id;
-        this.shapes[id].top += 10;
-        this.top = this.shapes[id].top;
-        this.left = this.shapes[id].left;
-        this.width = this.shapes[id].width;
-        this.height = this.shapes[id].height;
-        this.currFrameImages = this.shapes[id].frameImages;
-        this.selectedImages = this.currFrameImages.length;
-
-        for (var i = 0; i < this.frameImages.length; i++) {
-            this.frameImages[i].selected = false;
-            for (var j = 0; j < this.currFrameImages.length; j++) {
-                if(this.frameImages[i].src === this.currFrameImages[j]) {
-                    this.frameImages[i].selected = true;
-                }
-            }
-        }
     }
 
     selectImage(id) {
@@ -201,7 +98,6 @@ export class ShapesService {
             if (index > -1) {
                 this.currFrameImages.splice(index, 1);
             }
-
             this.selectedImages--;
         }
     }
@@ -211,13 +107,11 @@ export class ShapesService {
     }
 
     uncheckAllImages() {
+        this.selectedImages = 0
+        this.currFrameImages = [];
         this.frameImages.forEach(function (value) {
             value.selected = false;
         });
-
-        this.selectedImages = 0;
-
-        this.currFrameImages = [];
     }
 
     addSelectedImages() {
@@ -240,19 +134,22 @@ export class ShapesService {
         this.frames[this.selectedFrame].height = height;
     }
 
-    toggleHasBazels() {
-        this.shapes[this.id].hasBazels = !this.hasBazels;
-        this.hasBazels = !this.hasBazels;
+    setBorderSize(borderSize) {
+        this.frames[this.selectedFrame].borderSize = borderSize;
+    }
+
+    toggleHasMaterial() {
+        // this.frames[this.selectedFrame].hasMaterial = !this.frames[this.selectedFrame].hasMaterial;
     }
 
     addMaterial(index:number) {
-        this.bazelMaterial = this.materials[index];
-        this.shapes[this.id].bazelMaterial = this.materials[index];
+        this.frames[this.selectedFrame].borderMaterial = this.materials[index];
+        this.frames[this.selectedFrame].hasMaterial = true;
     }
 
     returnBazelMaterial() {
         let style = {
-            'background-image': 'url("./assets/materials/' + this.bazelMaterial + '")',
+            'background-image': 'url("./assets/materials/' + this.frames[this.selectedFrame].borderMaterial + '")',
             'width': '207px',
             'height': '27px'
         }
@@ -318,8 +215,6 @@ export class ShapesService {
 
     focusFrame(index) {
         this.selectedFrame = index;
-        console.log(this.frames[this.selectedFrame].images);
-
         this.initCurrFrameImages(index);
     }
 
@@ -342,14 +237,7 @@ export class ShapesService {
         newFrame.borderRadius = type === "square_frame"? 0:100;
         this.frames.push(newFrame);
         this.selectedFrame = this.frames.length - 1;
-
         this.initCurrFrameImages(this.selectedFrame);
-        
     }
-}
 
-function randomColor():string {
-    return '#' + (function co(lor){   return (lor +=
-        [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'][Math.floor(Math.random()*16)])
-        && (lor.length == 6) ?  lor : co(lor); })('');
 }
