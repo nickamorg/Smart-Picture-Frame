@@ -216,32 +216,12 @@ export class ShapesService {
         });
 
         this.selectedImages = 0;
+
+        this.currFrameImages = [];
     }
 
     addSelectedImages() {
-        this.shapes[this.id].frameImages = this.currFrameImages;
-    }
-
-    pushShape(type:string) {
-        this.shapes.push(new Shape(type));
-
-        this.padding = 0;
-        this.top = 50;
-        this.left = 10;
-        this.width = 100;
-        this.height = 100;
-        this.backgroundColor = randomColor();
-        this.type = type;
-        this.id = counter;
-        this.hasBazels = false;
-        this.bazelMaterial = "";
-        this.currFrameImages = [];
-
-        this.selectedImages = 0;
-        this.frameImages.forEach(function(value) {
-            value.selected = false;
-        });
-        
+        this.frames[this.selectedFrame].images = this.currFrameImages;
     }
 
     setPosX(posX) {
@@ -338,6 +318,23 @@ export class ShapesService {
 
     focusFrame(index) {
         this.selectedFrame = index;
+        console.log(this.frames[this.selectedFrame].images);
+
+        this.initCurrFrameImages(index);
+    }
+
+    initCurrFrameImages(index: number) {
+        this.currFrameImages = this.frames[index].images;
+        this.selectedImages = this.currFrameImages.length;
+
+        for (var i = 0; i < this.frameImages.length; i++) {
+            this.frameImages[i].selected = false;
+            for (var j = 0; j < this.currFrameImages.length; j++) {
+                if(this.frameImages[i].src === this.currFrameImages[j]) {
+                    this.frameImages[i].selected = true;
+                }
+            }
+        }
     }
 
     pushFrame(type:string) {
@@ -345,6 +342,8 @@ export class ShapesService {
         newFrame.borderRadius = type === "square_frame"? 0:100;
         this.frames.push(newFrame);
         this.selectedFrame = this.frames.length - 1;
+
+        this.initCurrFrameImages(this.selectedFrame);
         
     }
 }
