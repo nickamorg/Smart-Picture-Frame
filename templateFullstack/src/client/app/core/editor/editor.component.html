@@ -1,11 +1,11 @@
 <div id="editor"> 
     <div (click)="shapesService.focusFrame(i)" *ngFor="let frame of shapesService.frames; let i = index" [ngStyle]="shapesService.setFrameBezelsStyle(i)" style="position:absolute">
         <div [ngStyle]="shapesService.setFrameStyle(i)" style="position:absolute">
-            <img [ngStyle]="shapesService.setImageStyle(i)" src="/assets/images/{{frame.images[frame.displayedImageIndex]}}">
+            <ng-template [ngIf]="frame.images.length >= 1">
+                <img [ngStyle]="shapesService.setImageStyle(i)" src="/assets/images/{{frame.images[frame.displayedImageIndex]}}">
+            </ng-template>
         </div>
     </div>
-
-    <div [ngStyle]="shape.setStyle()" (click)="shapesService.focusShape(shape.id)" *ngFor="let shape of shapesService.shapes" [class.focus_frame]="shape.id==shapesService.id" [ngClass]="shape.type"></div>
 </div>
 
 <div id="editor_current_frame_images"> 

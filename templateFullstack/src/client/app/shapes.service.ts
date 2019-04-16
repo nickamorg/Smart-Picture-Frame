@@ -9,10 +9,10 @@ class Frame {
     borderMaterial: string = "";
     borderColor: string = "";
     padding: number = 0;
-    top: number = 0;
-    left: number = 0;
-    width: number = 0;
-    height: number = 0;
+    top: number = 50;
+    left: number = 10;
+    width: number = 100;
+    height: number = 100;
     images: string[] = [];
     displayedImageIndex: number = 0;
     iterateTime: number = 0;
@@ -245,31 +245,19 @@ export class ShapesService {
     }
 
     setPosX(posX) {
-        posX = parseInt(posX);
-        
-        this.left = posX;
-        this.shapes[this.id].left = posX;
+        this.frames[this.selectedFrame].left = posX;
     }
     
     setPosY(posY) {
-        posY = parseInt(posY);
-        
-        this.top = posY;
-        this.shapes[this.id].top = posY;
+        this.frames[this.selectedFrame].top = posY;
     }
 
     setWidth(width) {
-        width = parseInt(width);
-        
-        this.width = width;
-        this.shapes[this.id].width = width;
+        this.frames[this.selectedFrame].width = width;
     }
 
     setHeight(height) {
-        height = parseInt(height);
-        
-        this.height = height;
-        this.shapes[this.id].height = height;
+        this.frames[this.selectedFrame].height = height;
     }
 
     toggleHasBazels() {
@@ -350,6 +338,14 @@ export class ShapesService {
 
     focusFrame(index) {
         this.selectedFrame = index;
+    }
+
+    pushFrame(type:string) {
+        var newFrame = new Frame();
+        newFrame.borderRadius = type === "square_frame"? 0:100;
+        this.frames.push(newFrame);
+        this.selectedFrame = this.frames.length - 1;
+        
     }
 }
 

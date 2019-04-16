@@ -32,7 +32,15 @@ export class EditorComponent implements OnInit {
         }
         this.shapesService.pushShape(type);
         console.log(this.shapesService.shapes);
-      }
+    }
+
+    addFrame(type: string) {
+        if (!this.shapesService.frames) {
+          this.shapesService.frames = [];
+        }
+        this.shapesService.pushFrame(type);
+        console.log(this.shapesService.frames);
+    }
 
     test(str: string) {
         //this.shapesService.shapes += "<div (click)='tellme()'>XaXa</div>";

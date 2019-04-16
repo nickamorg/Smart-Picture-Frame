@@ -8,16 +8,16 @@
                 <table style="width: 100%">
                     <tr style="border-bottom: 10px solid transparent">
                         <td><label style="padding:0 10px">X</label></td>
-                        <td><input (keyup)="shapesService.setPosX($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="posX" placeholder="0" value="{{shapesService.left}}"></td>
+                        <td><input (keyup)="shapesService.setPosX($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="posX" placeholder="0" value="{{shapesService.frames[shapesService.selectedFrame].left}}"></td>
                         <td><label style="padding:0 10px">Y</label></td>
-                        <td><input (keyup)="shapesService.setPosY($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="posY" placeholder="0" value="{{shapesService.top}}"></td>
+                        <td><input (keyup)="shapesService.setPosY($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="posY" placeholder="0" value="{{shapesService.frames[shapesService.selectedFrame].top}}"></td>
                     </tr>
 
                     <tr style="border-bottom: 10px solid transparent">
                         <td><label style="padding:0 10px">W</label></td>
-                        <td><input (keyup)="shapesService.setWidth($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="width" placeholder="0" value="{{shapesService.width}}"></td>
+                        <td><input (keyup)="shapesService.setWidth($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="width" placeholder="0" value="{{shapesService.frames[shapesService.selectedFrame].width}}"></td>
                         <td><label style="padding:0 10px">H</label></td>
-                        <td><input (keyup)="shapesService.setHeight($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.height}}"></td>
+                        <td><input (keyup)="shapesService.setHeight($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.frames[shapesService.selectedFrame].height}}"></td>
                     </tr>
 
                     <tr style="border-bottom: 10px solid transparent">
