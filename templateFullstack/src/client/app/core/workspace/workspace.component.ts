@@ -15,7 +15,6 @@ export class WorkspaceComponent implements OnInit {
   }
 
   insertNewFrame(type: string) {
-    console.log("yes");
     this.editor.addShape(type);
   }
 }

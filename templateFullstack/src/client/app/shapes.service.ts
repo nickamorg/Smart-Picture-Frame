@@ -1,8 +1,44 @@
 import { Injectable } from '@angular/core';
-import { l } from '@angular/core/src/render3';
 
 var counter:number = -1;
 var imageID:number = -1;
+
+class Frame {
+    borderRadius: number = 0;
+    borderSize: number = 0;
+    borderMaterial: string = "";
+    borderColor: string = "";
+    padding: number = 0;
+    top: number = 0;
+    left: number = 0;
+    width: number = 0;
+    height: number = 0;
+    images: string[] = [];
+    displayedImageIndex: number = 0;
+    iterateTime: number = 0;
+
+    init(borderRadius, borderSize, borderMaterial, borderColor, 
+                padding, top, left, width, height, images, iterateTime) {
+        this.borderRadius = borderRadius;
+        this.borderSize = borderSize;
+        this.borderMaterial = borderMaterial;
+        this.borderColor = borderColor;
+        this.padding = padding;
+        this.top = top;
+        this.left = left;
+        this.width = width;
+        this.height = height;
+        this.images = images;
+        this.iterateTime = iterateTime;
+
+        // if(this.images.length > 0) {
+        //     var self = this;
+        //     setInterval(function(){ 
+        //         self.displayedImageIndex = ++self.displayedImageIndex % self.images.length;
+        //     }, self.iterateTime * 60000);
+        // }
+    }
+}
 
 class Shape {
     
@@ -32,8 +68,6 @@ class Shape {
         this.bazelMaterial = "";
 
         this.frameImages = [];
-
-        console.log("NEW SHAPE  " + this.id);
     }
 
     setStyle() {
@@ -73,6 +107,9 @@ class FrameImage {
 
 @Injectable()
 export class ShapesService {
+    frames: Frame[] = [];
+    selectedFrame: number = 0;
+
     shapes: Shape[];
     frameImages: FrameImage[];
     selectedImages: number;
@@ -93,7 +130,22 @@ export class ShapesService {
 
     materials: string[];
 
-    constructor() { 
+    constructor() {
+
+        var tmpFrame = new Frame();
+        tmpFrame.init(100, 5, "iron.jpg", "rgb(34, 0, 78)", 15, 20, 200, 150, 150,
+        ["waterfall4.png", "waterfall3.png"], 1.5);
+        this.frames.push(tmpFrame);
+
+        var tmpFrame = new Frame();
+        tmpFrame.init(0, 5, "brick.jpg", "rgb(34, 0, 78)", 10, 50, 400, 100, 100,
+        ["waterfall3.png", "waterfall1.png"], 1);
+        this.frames.push(tmpFrame);
+
+        console.log(this.frames);
+
+        
+
         this.id = 0;
         this.shapes = [new Shape("square_frame")];
         this.top = 50;
@@ -168,7 +220,6 @@ export class ShapesService {
 
     addSelectedImages() {
         this.shapes[this.id].frameImages = this.currFrameImages;
-        console.log(this.currFrameImages);
     }
 
     pushShape(type:string) {
@@ -196,37 +247,29 @@ export class ShapesService {
     setPosX(posX) {
         posX = parseInt(posX);
         
-        console.log(this.id);
         this.left = posX;
         this.shapes[this.id].left = posX;
-        console.log("TEST");
     }
     
     setPosY(posY) {
         posY = parseInt(posY);
         
-        console.log(this.id);
         this.top = posY;
         this.shapes[this.id].top = posY;
-        console.log("TEST");
     }
 
     setWidth(width) {
         width = parseInt(width);
         
-        console.log(this.id);
         this.width = width;
         this.shapes[this.id].width = width;
-        console.log("TEST");
     }
 
     setHeight(height) {
         height = parseInt(height);
         
-        console.log(this.id);
         this.height = height;
         this.shapes[this.id].height = height;
-        console.log("TEST");
     }
 
     toggleHasBazels() {
@@ -250,7 +293,6 @@ export class ShapesService {
     } 
 
     setDropDownDisplayedMaterial(index: number) {
-        console.log(index);
         let style = {
             'background-image': 'url("./assets/materials/' + this.materials[index] + '")',
             'width': '207px',
@@ -262,6 +304,52 @@ export class ShapesService {
         }
 
         return style;
+    }
+
+    setFrameBezelsStyle(index: number) {
+        let style = {
+            'background-image': 'url("./assets/materials/' + this.frames[index].borderMaterial + '")',
+            'background-color': this.frames[index].borderColor,
+            'border-radius': this.frames[index].borderRadius + '%',
+            'width': this.frames[index].width + 'px',
+            'height': this.frames[index].height + 'px',
+            'top': this.frames[index].top + 'px',
+            'left': this.frames[index].left + 'px'
+        };
+
+        if(this.selectedFrame === index) {
+            style['box-shadow'] = '0px 0px 0px 5px #30C2FF';
+        }
+
+        return style;
+    }
+
+    setFrameStyle(id:number) {
+        let style = {
+            'background-color': 'rgb(255, 255, 255)',
+            'border-radius': this.frames[id].borderRadius + '%',
+            'width': (this.frames[id].width - this.frames[id].borderSize * 2)  + 'px',
+            'height': (this.frames[id].height - this.frames[id].borderSize * 2) + 'px',
+            'top': this.frames[id].borderSize + 'px',
+            'left': this.frames[id].borderSize + 'px',
+            'padding': this.frames[id].padding + 'px'
+        }
+
+        return style;
+    }
+
+    setImageStyle(id:number) {
+        let style = {
+            'border-radius': this.frames[id].borderRadius + '%',
+            'width': (this.frames[id].width - this.frames[id].padding * 2 - this.frames[id].borderSize * 2)  + 'px',
+            'height': (this.frames[id].height - this.frames[id].padding * 2 - this.frames[id].borderSize * 2) + 'px',
+        }
+
+        return style;
+    }
+
+    focusFrame(index) {
+        this.selectedFrame = index;
     }
 }
 

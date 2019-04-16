@@ -24,7 +24,7 @@ export class UploadImagesComponent implements OnInit {
                         ["waterfall2.png", "waterfall3.png"], 0.5),
                     new Frame(0, 5, "brick.jpg", "rgb(34, 0, 78)", 10, 20, 300, 200, 200,
                         ["waterfall3.png", "waterfall1.png"], 1),
-                        new Frame(100, 5, "iron.jpg", "rgb(34, 0, 78)", 15, 50, 600, 150, 150,
+                    new Frame(100, 5, "iron.jpg", "rgb(34, 0, 78)", 15, 50, 600, 150, 150,
                         ["waterfall4.png", "waterfall3.png"], 1.5)
             ]));
             
