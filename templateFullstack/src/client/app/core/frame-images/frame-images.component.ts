@@ -23,7 +23,5 @@ export class FrameImagesComponent implements OnInit {
         this.shapesService.addSelectedImages();
         this.sendMessage();
     }
-  
-    //frame-images_checked 
 
 }

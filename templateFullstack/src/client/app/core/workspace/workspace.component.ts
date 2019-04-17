@@ -2,19 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { EditorComponent } from '../editor/editor.component';
 
 @Component({
-  selector: 'app-workspace',
-  templateUrl: './workspace.component.html',
-  styleUrls: ['./workspace.component.scss'],
-  providers:[EditorComponent],
+    selector: 'app-workspace',
+    templateUrl: './workspace.component.html',
+    styleUrls: ['./workspace.component.scss'],
+    providers:[EditorComponent],
 })
 export class WorkspaceComponent implements OnInit {
 
-  constructor(private editor: EditorComponent ) {}
+    constructor(private editor: EditorComponent ) {}
 
-  ngOnInit() {
-  }
+    ngOnInit() { }
 
-  insertNewFrame(type: string) {
-    this.editor.addFrame(type);
-  }
+    insertNewFrame(type: string) {
+        this.editor.addFrame(type);
+    }
 }

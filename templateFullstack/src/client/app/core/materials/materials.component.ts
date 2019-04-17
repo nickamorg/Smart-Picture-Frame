@@ -23,7 +23,6 @@ export class MaterialsComponent implements OnInit {
     ngOnInit() { }
 
     deleteMaterial(src: string) {
-        console.log(src)
         this.materials = this.materials.filter(function(elem){
             return elem.src != src;
         });

@@ -6,31 +6,30 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./wallpapers.component.scss']
 })
 export class WallpapersComponent implements OnInit {
-  wallpapers: Wallpaper[];
+    wallpapers: Wallpaper[];
 
-  constructor() { 
-      this.wallpapers = [
-          new Wallpaper("waterfalls.jpg", "Waterfalls"),
-          new Wallpaper("inferno.jpg", "Inferno"),
-      ];
-  }
+    constructor() { 
+        this.wallpapers = [
+            new Wallpaper("waterfalls.jpg", "Waterfalls"),
+            new Wallpaper("inferno.jpg", "Inferno"),
+        ];
+    }
 
-  ngOnInit() { }
+    ngOnInit() { }
 
-  deleteWallpaper(src: string) {
-      console.log(src)
-      this.wallpapers = this.wallpapers.filter(function(elem){
-          return elem.src != src;
-      });
-  }
+    deleteWallpaper(src: string) {
+        this.wallpapers = this.wallpapers.filter(function(elem){
+            return elem.src != src;
+        });
+    }
 }
 
 class Wallpaper {
-  src: string;
-  title: string;
+    src: string;
+    title: string;
 
-  constructor(src: string, title: string) {
-      this.src = src;
-      this.title = title;
-  }
+    constructor(src: string, title: string) {
+        this.src = src;
+        this.title = title;
+    }
 }

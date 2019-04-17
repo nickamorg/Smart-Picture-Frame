@@ -7,33 +7,24 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class GalleryComponent implements OnInit {
-    imagesCol: number;
+    imagesCol: number = 6;
     galleryImages: Image[];
-    types: string[];
-    countries: string[];
-    cities: string[];
+    types: string[] = [];
+    countries: string[] = [];
+    cities: string[] = [];
 
-    selectedFiltersCounter: number;
-    selectedTypes: string[];
-    selectedCountries: string[];
-    selectedCities: string[];
+    selectedFiltersCounter: number = 0;
+    selectedTypes: string[] = [];
+    selectedCountries: string[] = [];
+    selectedCities: string[] = [];
     allGalleryImagesIndexes: number[];
     displayedGalleryImages: number[];
 
-    displayImage: boolean;
-    editImage: boolean;
-    displayedImage: Image;
+    displayImage: boolean = false;
+    editImage: boolean = false;
+    displayedImage: Image = null;
 
-    constructor() { 
-        this.imagesCol = 6;
-        this.types = [];
-        this.countries = [];
-        this.cities = [];
-
-        this.selectedFiltersCounter = 0;
-        this.selectedTypes = [];
-        this.selectedCountries = [];
-        this.selectedCities = [];
+    constructor() {
         this.allGalleryImagesIndexes = [0, 1, 2, 3];
         this.displayedGalleryImages = this.allGalleryImagesIndexes;
 
@@ -53,10 +44,6 @@ export class GalleryComponent implements OnInit {
                 }
             }
         });
-
-        this.displayImage = false;
-        this.editImage = false;
-        this.displayedImage = null;
     }
 
     ngOnInit() { }
@@ -99,7 +86,7 @@ export class GalleryComponent implements OnInit {
                 }
                 if(flag) this.displayedGalleryImages.push(i);
             }
-        }   console.log(this[cat]);     
+        }  
     }
 
     deleteImage(src:string) {
@@ -156,7 +143,6 @@ export class GalleryComponent implements OnInit {
     }
 
     saveEditedImage(title: string, description: string, type: string, country: string, city: string) {
-        console.log(city);
         this.galleryImages.forEach((element, index) => {
             if(element.src === this.displayedImage.src) {
                 this.galleryImages[index] = new Image(title, description, element.src, 

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ShapesService } from '../../shapes.service';
 
 @Component({
@@ -8,7 +8,6 @@ import { ShapesService } from '../../shapes.service';
 })
 export class ToolsComponent implements OnInit {
     showChooseFrameImagesModal: boolean = false;
-    case:number = 1;
 
     toggleChooseFrameImagesModal(){
         this.showChooseFrameImagesModal = !this.showChooseFrameImagesModal;
@@ -20,7 +19,6 @@ export class ToolsComponent implements OnInit {
 
     receiveMessage($event) {
         this.toggleChooseFrameImagesModal();
-        //this.message = $event
     }
 
 }
