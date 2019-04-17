@@ -3,7 +3,7 @@
         <div style="width:100%; background-color: #EBEBEB; border-bottom: 1px solid #E3E2E2; margin-bottom: 10px">
             <h5 style="padding:10px 20px 10px 10px; margin:0">TOOLS</h5>
         </div>
-        <div *ngIf="case == 1" style="color:#9A9A9A">
+        <div *ngIf="shapesService.isFocusedFrame" style="color:#9A9A9A">
             <div style="border-bottom: 1px solid #E3E2E2">
                 <table style="width: 100%">
                     <tr style="border-bottom: 10px solid transparent">
@@ -69,7 +69,7 @@
 
         </div>
 
-        <div *ngIf="case == 2"  style="color:#9A9A9A">
+        <div *ngIf="shapesService.isFocusedWall"  style="color:#9A9A9A">
             <div style="padding:0 10px 10px 10px; border-bottom: 1px solid #E3E2E2">
                 <span style="color:#5C5555">DISPLAY TIME</span>
                 <img src="/assets/images/add.svg" style="float:right">

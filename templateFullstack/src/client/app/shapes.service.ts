@@ -50,17 +50,16 @@ class FrameImage {
 @Injectable()
 export class ShapesService {
     frames: Frame[] = [];
-    selectedFrame: number = 0;
-
+    selectedFrame: number = -1;
     frameImages: FrameImage[];
-    selectedImages: number;
-    imagesCol: number;
-    currFrameImages: string[];
-
+    selectedImages: number = 0;
+    imagesCol: number = 6;
+    currFrameImages: string[] = [];
+    isFocusedFrame: boolean = false;
+    isFocusedWall: boolean = true;
     materials: string[];
 
     constructor() {
-
         var tmpFrame = new Frame();
         tmpFrame.init(100, 5, "iron.jpg", "rgb(34, 0, 78)", 15, 20, 200, 150, 150,
         ["waterfall4.png", "waterfall3.png"], 30);
@@ -71,15 +70,10 @@ export class ShapesService {
         ["waterfall3.png", "waterfall1.png"], 15);
         this.frames.push(tmpFrame);
 
-        this.currFrameImages = [];
-
         this.frameImages = [new FrameImage("waterfall1.png"),
                             new FrameImage("waterfall2.png"),
                             new FrameImage("waterfall3.png"),
                             new FrameImage("waterfall4.png")];
-        this.selectedImages = 0;
-        this.imagesCol = 6;
-
         this.materials = ["aqua.jpg", "lava.jpg", "brick.jpg", "iron.jpg", "stone.png", "gold.jpg"];
 
     }
@@ -222,6 +216,8 @@ export class ShapesService {
     }
 
     focusFrame(index) {
+        this.isFocusedFrame = true;
+        this.isFocusedWall = false;
         this.selectedFrame = index;
         this.initCurrFrameImages(index);
     }
@@ -241,6 +237,8 @@ export class ShapesService {
     }
 
     pushFrame(type:string) {
+        this.isFocusedFrame = true;
+        this.isFocusedWall = false;
         var newFrame = new Frame();
         newFrame.borderRadius = type === "square_frame"? 0:100;
         this.frames.push(newFrame);
@@ -250,6 +248,16 @@ export class ShapesService {
 
     changeDisplayedImage(index: number) {
         this.frames[this.selectedFrame].displayedImageIndex = index;
+    }
+
+    focusWall() {
+        this.isFocusedFrame = false;
+        this.isFocusedWall = true;
+        this.selectedFrame = null;
+    }
+
+    setWallStyle() {
+        return this.isFocusedWall? {'box-shadow': '0px 0px 0px 5px #30C2FF'}: null;
     }
 
 }
