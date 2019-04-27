@@ -97,15 +97,21 @@
             <div style="padding:10px 20px 10px 20px; border-bottom: 1px solid #E3E2E2">
                 <p style="color:#5C5555">BORDER</p>
                 <div class="dropdown">
+                    
                     <button (click)="shapesService.toggleHasMaterial()" style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" class="btn dropdown-toggle" type="button" data-toggle="dropdown">
-                        Material <img style="float:right" src="/assets/images/arrow_down.svg">
+                        <div *ngIf="shapesService.hasWallMaterial; else elseBlock">
+                            <div [ngStyle]="shapesService.returnWallMaterial()"></div>
+                        </div>
+                        <ng-template #elseBlock>
+                            Material <img styl e="float:right" src="/assets/images/arrow_down.svg">
+                        </ng-template>
                     </button>
                     <div style="padding-top:10px">
                         <span style="padding-right:10px">Border Size</span>
-                        <input (keyup)="shapesService.setBorderSize($event.target.value)" type="text" style="width:131px; border-radius: 5px" id="height" placeholder="0" value="0">
+                        <input (keyup)="shapesService.setWallBorderSize($event.target.value)" type="text" style="width:131px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.wallBorderSize}}">
                     </div>
                     <ul class="dropdown-menu" style="width:100%; text-align: center; top:40px">
-                        <li *ngFor="let type of shapesService.materials; let i = index" (click)='shapesService.addMaterial(i)' [ngStyle]="shapesService.setDropDownDisplayedMaterial(i)"></li>
+                        <li *ngFor="let type of shapesService.materials; let i = index" (click)='shapesService.addWallMaterial(i)' [ngStyle]="shapesService.setDropDownDisplayedMaterial(i)"></li>
                     </ul>
                 </div>
             </div>

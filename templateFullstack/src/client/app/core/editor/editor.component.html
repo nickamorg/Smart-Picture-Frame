@@ -1,9 +1,11 @@
-<div id="editor" (click)="shapesService.focusWall()" [ngStyle]="shapesService.setWallStyle()"> 
-    <div (click)="shapesService.focusFrame(i); $event.stopPropagation()" *ngFor="let frame of shapesService.frames; let i = index" [ngStyle]="shapesService.setFrameBezelsStyle(i)" style="position:absolute">
-        <div [ngStyle]="shapesService.setFrameStyle(i)" style="position:absolute">
-            <ng-template [ngIf]="frame.images.length >= 1">
-                <img [ngStyle]="shapesService.setImageStyle(i)" src="/assets/images/{{frame.images[frame.displayedImageIndex]}}">
-            </ng-template>
+<div id="editor" (click)="shapesService.focusWall()" [ngStyle]="shapesService.setWallBorderStyle()"> 
+    <div [ngStyle]="shapesService.setWallStyle()">
+        <div (click)="shapesService.focusFrame(i); $event.stopPropagation()" *ngFor="let frame of shapesService.frames; let i = index" [ngStyle]="shapesService.setFrameBezelsStyle(i)" style="position:absolute">
+            <div [ngStyle]="shapesService.setFrameStyle(i)" style="position:absolute">
+                <ng-template [ngIf]="frame.images.length >= 1">
+                    <img [ngStyle]="shapesService.setImageStyle(i)" src="/assets/images/{{frame.images[frame.displayedImageIndex]}}">
+                </ng-template>
+            </div>
         </div>
     </div>
 </div>

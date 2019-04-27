@@ -49,6 +49,9 @@ class FrameImage {
 
 @Injectable()
 export class ShapesService {
+    wallMaterial: string = "";
+    hasWallMaterial: boolean = false;
+    wallBorderSize: number = 0;
     frames: Frame[] = [];
     selectedFrame: number = -1;
     frameImages: FrameImage[];
@@ -257,7 +260,51 @@ export class ShapesService {
     }
 
     setWallStyle() {
-        return this.isFocusedWall? {'box-shadow': '0px 0px 0px 5px #30C2FF'}: null;
+        let style = {
+            'width':  (800 - this.wallBorderSize) + 'px',
+            'height': (200 - this.wallBorderSize) + 'px',
+            'top':  (this.wallBorderSize / 2) + 'px', 
+            'left': (this.wallBorderSize / 2) + 'px',
+            'background-color': 'white',
+            'position': 'absolute'
+        };
+        
+        return style;
+        //return this.isFocusedWall? {'box-shadow': '0px 0px 0px 5px #30C2FF'}: null;
+    }
+
+    setWallBorderStyle() {
+        let style = {
+        'background-image': 'url("./assets/materials/' + this.wallMaterial + '")',
+        'background-color': '#ffffff'
+        }
+
+        if(this.isFocusedWall) {
+            style['box-shadow'] = '0px 0px 0px 5px #30C2FF'
+        }
+        // return {'border': '10px solid red'};
+        // return this.isFocusedWall? {'box-shadow': '0px 0px 0px 5px #30C2FF'}: null;
+
+        return style;
+    }
+
+    addWallMaterial(index:number) {
+        this.wallMaterial = this.materials[index];
+        this.hasWallMaterial = true;
+    }
+
+    returnWallMaterial() {
+        let style = {
+            'background-image': 'url("./assets/materials/' + this.wallMaterial + '")',
+            'width': '190px',
+            'height': '27px'
+        }
+
+        return style;
+    } 
+
+    setWallBorderSize(borderSize) {
+        this.wallBorderSize = borderSize;
     }
 
 }
