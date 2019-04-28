@@ -16,6 +16,7 @@ import { ToolsComponent } from './tools/tools.component';
 import { EditorComponent } from './editor/editor.component';
 import { ShapesService } from '../shapes.service';
 import { FrameImagesComponent } from './frame-images/frame-images.component';
+import { WallImagesComponent } from './wall-images/wall-images.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { FrameImagesComponent } from './frame-images/frame-images.component';
     ToolsComponent,
     EditorComponent,
     FrameImagesComponent,
-    WallpapersComponent
+    WallpapersComponent,
+    WallImagesComponent
   ],
   imports: [
     CommonModule,

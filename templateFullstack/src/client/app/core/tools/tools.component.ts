@@ -8,17 +8,26 @@ import { ShapesService } from '../../shapes.service';
 })
 export class ToolsComponent implements OnInit {
     showChooseFrameImagesModal: boolean = false;
-
-    toggleChooseFrameImagesModal(){
-        this.showChooseFrameImagesModal = !this.showChooseFrameImagesModal;
-    }
+    showChooseWallImagesModal: boolean = false;
     
     constructor(private shapesService: ShapesService) { }
 
     ngOnInit() { }
 
+    toggleChooseFrameImagesModal() {
+        this.showChooseFrameImagesModal = !this.showChooseFrameImagesModal;
+    }
+
+    toggleChooseWallImagesModal() {
+        this.showChooseWallImagesModal = !this.showChooseWallImagesModal;
+    }
+
     receiveMessage($event) {
-        this.toggleChooseFrameImagesModal();
+        if($event === 'toggleChooseFrameImagesModal') {
+            this.toggleChooseFrameImagesModal();
+        } else {
+            this.toggleChooseWallImagesModal();
+        }
     }
 
 }

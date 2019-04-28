@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 
 var imageID:number = -1;
+var wallImageID:number = -1;
 
 class Frame {
     borderRadius: number = 0;
@@ -47,6 +48,18 @@ class FrameImage {
     }
 }
 
+class WallImage {
+    src:string;
+    selected:boolean;
+    id: number;
+
+    constructor(src:string) {
+        this.src = src;
+        this.selected = false;
+        this.id = ++wallImageID;
+    }
+}
+
 @Injectable()
 export class ShapesService {
     wallMaterial: string = "";
@@ -61,7 +74,11 @@ export class ShapesService {
     isFocusedFrame: boolean = false;
     isFocusedWall: boolean = true;
     materials: string[];
-
+    wallImages: WallImage[];
+    wallImagesCol: number = 6;
+    selectedWallImages: number = 0;
+    currWallImages: string[] = [];
+    
     constructor() {
         var tmpFrame = new Frame();
         tmpFrame.init(100, 5, "iron.jpg", "rgb(34, 0, 78)", 15, 20, 200, 150, 150,
@@ -79,6 +96,8 @@ export class ShapesService {
                             new FrameImage("waterfall4.png")];
         this.materials = ["aqua.jpg", "lava.jpg", "brick.jpg", "iron.jpg", "stone.png", "gold.jpg"];
 
+        this.wallImages = [ new WallImage("inferno.jpg"),
+                            new WallImage("waterfalls.jpg")];
     }
 
     selectImage(id) {
@@ -266,24 +285,25 @@ export class ShapesService {
             'top':  (this.wallBorderSize / 2) + 'px', 
             'left': (this.wallBorderSize / 2) + 'px',
             'background-color': 'white',
-            'position': 'absolute'
+            'position': 'absolute',
+            'background-image': 'url("./assets/wallpapers/inferno.jpg")',
+            'background-size': 'cover'
+            
         };
         
         return style;
-        //return this.isFocusedWall? {'box-shadow': '0px 0px 0px 5px #30C2FF'}: null;
     }
 
     setWallBorderStyle() {
         let style = {
-        'background-image': 'url("./assets/materials/' + this.wallMaterial + '")',
-        'background-color': '#ffffff'
+            'background-image': 'url("./assets/materials/' + this.wallMaterial + '")',
+            'background-size': 'cover',
+            'background-color': '#ffffff'
         }
 
         if(this.isFocusedWall) {
             style['box-shadow'] = '0px 0px 0px 5px #30C2FF'
         }
-        // return {'border': '10px solid red'};
-        // return this.isFocusedWall? {'box-shadow': '0px 0px 0px 5px #30C2FF'}: null;
 
         return style;
     }
@@ -305,6 +325,38 @@ export class ShapesService {
 
     setWallBorderSize(borderSize) {
         this.wallBorderSize = borderSize;
+    }
+
+    selectWallImage(id) {
+        this.wallImages[id].selected = !this.wallImages[id].selected;
+        
+        if(this.wallImages[id].selected) {
+            this.selectedWallImages++;
+        } else {
+            this.selectedWallImages--;
+        }
+    }
+
+    changeWallImagesCol(col:number) {
+        this.wallImagesCol = col;
+    }
+
+    uncheckAllWallImages() {
+        this.selectedWallImages = 0
+        this.currWallImages = [];
+        this.wallImages.forEach(function (value) {
+            value.selected = false;
+        });
+    }
+
+    addSelectedWallImages() {
+        var self = this;
+        
+        this.wallImages.forEach(function (value) {
+            if(value.selected) {
+                self.currWallImages.push(value.src);
+            }
+        });
     }
 
 }
