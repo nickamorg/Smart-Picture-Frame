@@ -75,10 +75,11 @@ export class ShapesService {
     isFocusedWall: boolean = true;
     materials: string[];
     wallImages: WallImage[];
-    wallImagesCol: number = 6;
+    wallImagesCol: number = 12;
     selectedWallImages: number = 0;
     currWallImages: string[] = [];
-    
+    displayedWallImageIndex: number = 0;
+
     constructor() {
         var tmpFrame = new Frame();
         tmpFrame.init(100, 5, "iron.jpg", "rgb(34, 0, 78)", 15, 20, 200, 150, 150,
@@ -286,9 +287,8 @@ export class ShapesService {
             'left': (this.wallBorderSize / 2) + 'px',
             'background-color': 'white',
             'position': 'absolute',
-            'background-image': 'url("./assets/wallpapers/inferno.jpg")',
+            'background-image': 'url("./assets/wallpapers/' + this.currWallImages[this.displayedWallImageIndex] + '")',
             'background-size': 'cover'
-            
         };
         
         return style;
@@ -328,13 +328,8 @@ export class ShapesService {
     }
 
     selectWallImage(id) {
-        this.wallImages[id].selected = !this.wallImages[id].selected;
-        
-        if(this.wallImages[id].selected) {
-            this.selectedWallImages++;
-        } else {
-            this.selectedWallImages--;
-        }
+        this.wallImages[id].selected = !this.wallImages[id].selected;  
+        this.selectedWallImages += this.wallImages[id].selected? 1 : -1;
     }
 
     changeWallImagesCol(col:number) {
@@ -344,6 +339,7 @@ export class ShapesService {
     uncheckAllWallImages() {
         this.selectedWallImages = 0
         this.currWallImages = [];
+        
         this.wallImages.forEach(function (value) {
             value.selected = false;
         });
@@ -351,7 +347,8 @@ export class ShapesService {
 
     addSelectedWallImages() {
         var self = this;
-        
+        self.currWallImages = [];
+
         this.wallImages.forEach(function (value) {
             if(value.selected) {
                 self.currWallImages.push(value.src);
@@ -359,4 +356,7 @@ export class ShapesService {
         });
     }
 
+    changeDisplayedWallImage(index: number) {
+        this.displayedWallImageIndex = index;
+    }
 }
