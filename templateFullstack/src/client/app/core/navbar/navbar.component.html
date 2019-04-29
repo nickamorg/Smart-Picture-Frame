@@ -8,7 +8,7 @@
 
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li routerLinkActive="active" onclick="displayNewWall()"><a>New Wall</a></li>
+                <li routerLinkActive="active" (click)="toggleNewWallModal()"><a>New Wall</a></li>
                 <li routerLinkActive="active" onclick="displayWallsForLoading()"><a>Load Wall</a></li>
                 <li routerLinkActive="active"><a routerLink="/upload-images">Upload Images</a></li>
                 <li routerLinkActive="active"><a routerLink="/materials">Materials</a></li>
@@ -20,4 +20,6 @@
         </div>
 
     </div>
+
+    <app-new-wall (messageEvent)="receiveMessage($event)" [showNewWallModalPartially]="showNewWallModal"></app-new-wall>
 </nav>

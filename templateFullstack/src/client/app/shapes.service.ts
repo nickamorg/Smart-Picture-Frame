@@ -285,7 +285,7 @@ export class ShapesService {
             'height': (200 - this.wallBorderSize) + 'px',
             'top':  (this.wallBorderSize / 2) + 'px', 
             'left': (this.wallBorderSize / 2) + 'px',
-            'background-color': 'white',
+            'background-color': '#C4C4C4',
             'position': 'absolute',
             'background-image': 'url("./assets/wallpapers/' + this.currWallImages[this.displayedWallImageIndex] + '")',
             'background-size': 'cover'
@@ -339,7 +339,7 @@ export class ShapesService {
     uncheckAllWallImages() {
         this.selectedWallImages = 0
         this.currWallImages = [];
-        
+
         this.wallImages.forEach(function (value) {
             value.selected = false;
         });

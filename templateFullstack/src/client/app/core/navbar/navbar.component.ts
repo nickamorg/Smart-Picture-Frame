@@ -1,12 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
-  selector: 'navbar',
-  templateUrl: './navbar.component.html',
-  styleUrls: ['./navbar.component.scss']
+    selector: 'navbar',
+    templateUrl: './navbar.component.html',
+    styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-  constructor() { }
+    showNewWallModal: boolean = false;
+    
+    constructor() { }
 
-  ngOnInit() { }
+    ngOnInit() { }
+
+    toggleNewWallModal() {
+        this.showNewWallModal = !this.showNewWallModal;
+        console.log(this.showNewWallModal);
+    }
+
+    receiveMessage($event) {
+       this.toggleNewWallModal();
+    }
 }

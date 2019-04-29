@@ -1,6 +1,6 @@
-<div id="new_wall_page" class="overlay">
+<div *ngIf="showNewWallModalPartially" id="new_wall_page" class="overlay" style="z-index:5">
     <div class="clearfix">
-        <a href="javascript:void(0)" class="closebtn" onclick="stopDisplayNewWall()">&times;</a>
+        <a href="javascript:void(0)" class="closebtn" (click)="sendMessage()">&times;</a>
     </div>
   
     <div id="new-wall_overlay_content" class="clearfix">
@@ -40,6 +40,16 @@
                         <select class="form-control" id="wall_target">
                             <option>Family</option>
                         </select>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="padding-right:20px"> <label for="wall_title">Title</label> </td>
+
+                <td>
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="wall_title" placeholder="Title">
                     </div>
                 </td>
             </tr>
