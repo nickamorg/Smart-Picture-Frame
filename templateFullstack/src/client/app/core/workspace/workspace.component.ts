@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EditorComponent } from '../editor/editor.component';
+import { ShapesService } from '../../shapes.service';
 
 @Component({
     selector: 'app-workspace',
@@ -9,7 +10,7 @@ import { EditorComponent } from '../editor/editor.component';
 })
 export class WorkspaceComponent implements OnInit {
 
-    constructor(private editor: EditorComponent ) {}
+    constructor(private editor: EditorComponent, private shapesService: ShapesService ) {}
 
     ngOnInit() { }
 

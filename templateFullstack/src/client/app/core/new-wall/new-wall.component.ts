@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ShapesService } from '../../shapes.service';
 
 @Component({
     selector: 'app-new-wall',
@@ -10,7 +11,7 @@ export class NewWallComponent implements OnInit {
     @Output() messageEvent = new EventEmitter<string>();
     
     showNewWall: boolean = false;
-    constructor() {}
+    constructor(private shapesService: ShapesService) {}
 
     ngOnInit() { }
 
@@ -20,5 +21,10 @@ export class NewWallComponent implements OnInit {
 
     toggleDisplayedStatues() {
         this.showNewWall = !this.showNewWall;
+    }
+
+    createNewWall() {
+        this.sendMessage();
+        this.shapesService.initNewWall();
     }
 }

@@ -20,7 +20,6 @@
             </tr>
             <tr>
                 <td> <label for="wall_type">Type</label> </td>
-
                 <td>
                     <div class="form-group">
                         <select class="form-control" id="wall_type">
@@ -34,7 +33,6 @@
 
             <tr>
                 <td> <label for="wall_target">Target</label> </td>
-
                 <td>
                     <div class="form-group">
                         <select class="form-control" id="wall_target">
@@ -46,7 +44,6 @@
 
             <tr>
                 <td style="padding-right:20px"> <label for="wall_title">Title</label> </td>
-
                 <td>
                     <div class="form-group">
                         <input type="text" class="form-control" id="wall_title" placeholder="Title">
@@ -56,7 +53,6 @@
 
             <tr>
                 <td style="padding-right:20px"> <label for="wall_description">Description</label> </td>
-
                 <td>
                     <div class="form-group">
                         <input type="text" class="form-control" id="wall_description" placeholder="Description">
@@ -66,7 +62,7 @@
 
             <tr>
                 <td colspan="2" style="padding: 10px 0 30px 0">
-                    <button type="button" class="btn btn-block" style="color:white; background-color:#707070">Create Wall</button>
+                    <button routerLink="/home" (click)="createNewWall()" type="button" class="btn btn-block" style="color:white; background-color:#707070">Create Wall</button>
                 </td>
             </tr>
         </table>

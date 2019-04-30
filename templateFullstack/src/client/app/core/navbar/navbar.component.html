@@ -7,15 +7,20 @@
         </div>
 
         <div class="collapse navbar-collapse">
-            <ul class="nav navbar-nav">
+            <ul class="nav navbar-nav" style="float:initial">
                 <li routerLinkActive="active" (click)="toggleNewWallModal()"><a>New Wall</a></li>
                 <li routerLinkActive="active" onclick="displayWallsForLoading()"><a>Load Wall</a></li>
                 <li routerLinkActive="active"><a routerLink="/upload-images">Upload Images</a></li>
                 <li routerLinkActive="active"><a routerLink="/materials">Materials</a></li>
                 <li routerLinkActive="active"><a routerLink="/wallpapers">Wallpapers</a></li>
                 <li routerLinkActive="active"><a routerLink="/gallery">Gallery</a></li>
-                <!-- <li routerLinkActive="active"><a routerLink="/home">Home</a></li>
-                <li routerLinkActive="active"><a routerLink="/serviceX">ServiceX</a></li> -->
+
+                <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active">
+                    <a><img src="./assets/images/preview.png"/> Preview Wall</a>
+                </li>
+                <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active">
+                    <a><img src="./assets/images/save.png"/> Save Wall</a>
+                </li>
             </ul>
         </div>
 

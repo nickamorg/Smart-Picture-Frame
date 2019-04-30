@@ -79,6 +79,7 @@ export class ShapesService {
     selectedWallImages: number = 0;
     currWallImages: string[] = [];
     displayedWallImageIndex: number = 0;
+    editMode: boolean = false;
 
     constructor() {
         var tmpFrame = new Frame();
@@ -274,6 +275,8 @@ export class ShapesService {
     }
 
     focusWall() {
+        if(!this.editMode) return;
+
         this.isFocusedFrame = false;
         this.isFocusedWall = true;
         this.selectedFrame = null;
@@ -295,6 +298,8 @@ export class ShapesService {
     }
 
     setWallBorderStyle() {
+        if(!this.editMode) return undefined;
+
         let style = {
             'background-image': 'url("./assets/materials/' + this.wallMaterial + '")',
             'background-size': 'cover',
@@ -358,5 +363,9 @@ export class ShapesService {
 
     changeDisplayedWallImage(index: number) {
         this.displayedWallImageIndex = index;
+    }
+
+    initNewWall() {
+        this.editMode = true;
     }
 }

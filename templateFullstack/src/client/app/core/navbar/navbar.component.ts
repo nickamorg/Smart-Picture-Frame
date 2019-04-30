@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ShapesService } from '../../shapes.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'navbar',
@@ -8,7 +10,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 export class NavbarComponent implements OnInit {
     showNewWallModal: boolean = false;
     
-    constructor() { }
+    constructor(private shapesService: ShapesService, private router: Router) { }
 
     ngOnInit() { }
 
