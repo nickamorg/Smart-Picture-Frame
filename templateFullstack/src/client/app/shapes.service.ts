@@ -80,6 +80,8 @@ export class ShapesService {
     currWallImages: string[] = [];
     displayedWallImageIndex: number = 0;
     editMode: boolean = false;
+    currWallSet: string[] = ["Main Display", "Waterfalls Display", "Italy Display"];
+    currWallSetFocusedWall: number = 1;
 
     constructor() {
         var tmpFrame = new Frame();
@@ -367,5 +369,23 @@ export class ShapesService {
 
     initNewWall() {
         this.editMode = true;
+    }
+
+    setWallTitleStyle(index) {
+        return this.currWallSetFocusedWall === index? 
+        {'background-color': '#30C2FF', 'color': 'white'}:
+        {'background-color': '#F5F5F5',   'color': 'black'};
+    }
+
+    selectCurrWallSetFocusedWall(index) {
+        this.currWallSetFocusedWall = index;
+    }
+
+    addCurrWallSetWall() {
+        this.currWallSet.push("");
+    }
+
+    setCurrWallSetFocusedWallNewTitle(title) {
+        this.currWallSet[this.currWallSetFocusedWall] = title;
     }
 }
