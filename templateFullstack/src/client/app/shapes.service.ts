@@ -382,10 +382,12 @@ export class ShapesService {
     }
 
     addCurrWallSetWall() {
+        if(this.currWallSet.indexOf("") > -1) return;
+
         this.currWallSet.push("");
     }
 
-    setCurrWallSetFocusedWallNewTitle(title) {
-        this.currWallSet[this.currWallSetFocusedWall] = title;
+    setCurrWallSetFocusedWallNewTitle(index, title) {
+        this.currWallSet[index] = title;
     }
 }

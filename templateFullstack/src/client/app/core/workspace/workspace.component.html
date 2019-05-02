@@ -1,5 +1,5 @@
 <div class="workspace">
-    <div style="width:100%; height:200px; overflow-y: auto; overflow-x: hidden">
+    <div style="width:100%">
         <div style="width:100%; background-color: #EBEBEB">
             <div *ngIf="shapesService.editMode === false">
                 <h5 style="padding:10px 10px 10px 20px; margin:0">GENERAL WALL</h5>
@@ -10,8 +10,10 @@
                 <img style="float:right" src="./assets/images/info.svg"/>
             </h5>
         </div>
-        <div *ngIf="shapesService.editMode" style="padding-top:10px">
-            <input *ngFor="let wall of shapesService.currWallSet; let i = index" [ngStyle]="shapesService.setWallTitleStyle(i)" class="wall_title" readonly="true" ondblclick="this.readOnly='';" (click)="shapesService.selectCurrWallSetFocusedWall(i)" (focusout)="shapesService.setCurrWallSetFocusedWallNewTitle($event.target.value)" value="{{wall}}" placeholder="Set a title" />
+        <div style="padding-top:10px; height:200px; overflow-y: auto; overflow-x: hidden">
+            <div *ngIf="shapesService.editMode">
+                <input *ngFor="let wall of shapesService.currWallSet; let i = index" [ngStyle]="shapesService.setWallTitleStyle(i)" class="wall_title" readonly="true" ondblclick="this.readOnly='';" (click)="shapesService.selectCurrWallSetFocusedWall(i)" (focusout)="shapesService.setCurrWallSetFocusedWallNewTitle(i, $event.target.value)" value="{{wall}}" placeholder="Set a title" />
+            </div>
         </div>
     </div>
     <div style="width:100%">
