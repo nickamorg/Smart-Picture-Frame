@@ -10,54 +10,41 @@
             <tr>
                 <td><label for="wall_creator">Creator</label></td>
                 <td><div class="form-group">
-                    <select class="form-control" id="wall_creator">
-                        <option>Home</option>
-                        <option>Mom</option>
-                        <option>Dad</option>
-                        <option>Nick</option>
+                    <select (change)="selectWallCreator($event.target.value)" class="form-control">
+                        <option *ngFor="let creator of creators" value="{{creator}}">{{creator}}</option>
                     </select>
                 </div></td> 
             </tr>
             <tr>
                 <td> <label for="wall_type">Type</label> </td>
-                <td>
-                    <div class="form-group">
-                        <select class="form-control" id="wall_type">
-                            <option>General</option>
-                            <option>Special</option>
-                            <option>Personal</option>
-                        </select>
-                    </div>
-                </td>
+                <td><div class="form-group">
+                    <select (change)="selectWallType($event.target.value)" class="form-control">
+                        <option *ngFor="let type of types" value="{{type}}">{{type}}</option>
+                    </select>
+                </div></td> 
             </tr>
 
             <tr>
                 <td> <label for="wall_target">Target</label> </td>
-                <td>
-                    <div class="form-group">
-                        <select class="form-control" id="wall_target">
-                            <option>Family</option>
-                        </select>
-                    </div>
-                </td>
+                <td><div class="form-group">
+                    <select (change)="selectWallTarget($event.target.value)" class="form-control">
+                        <option *ngFor="let target of targets" value="{{target}}">{{target}}</option>
+                    </select>
+                </div></td> 
             </tr>
 
             <tr>
                 <td style="padding-right:20px"> <label for="wall_title">Title</label> </td>
-                <td>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="wall_title" placeholder="Title">
-                    </div>
-                </td>
+                <td><div class="form-group">
+                    <input (keyup)="setWallTitle($event.target.value)" type="text" class="form-control" id="wall_title" placeholder="Title">
+                </div></td>
             </tr>
 
             <tr>
                 <td style="padding-right:20px"> <label for="wall_description">Description</label> </td>
-                <td>
-                    <div class="form-group">
-                        <input type="text" class="form-control" id="wall_description" placeholder="Description">
-                    </div>
-                </td>
+                <td><div class="form-group">
+                    <input (keyup)="setWallDescription($event.target.value)" type="text" class="form-control" id="wall_description" placeholder="Description">
+                </div></td>
             </tr>
 
             <tr>

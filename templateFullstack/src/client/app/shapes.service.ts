@@ -82,6 +82,11 @@ export class ShapesService {
     editMode: boolean = false;
     currWallSet: string[] = ["Main Display", "Waterfalls Display", "Italy Display"];
     currWallSetFocusedWall: number = 1;
+    currWallCreator: string;
+    currWallType: string;
+    currWallTarget: string;
+    currWallTitle: string;
+    currWallDescription: string;
 
     constructor() {
         var tmpFrame = new Frame();
@@ -367,7 +372,12 @@ export class ShapesService {
         this.displayedWallImageIndex = index;
     }
 
-    initNewWall() {
+    initNewWall(creator, type, target, title, description) {
+        this.currWallCreator = creator;
+        this.currWallType = type;
+        this.currWallTarget = target;
+        this.currWallTitle = title;
+        this.currWallDescription = description;
         this.editMode = true;
     }
 

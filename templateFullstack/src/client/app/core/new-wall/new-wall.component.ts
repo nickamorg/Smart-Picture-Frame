@@ -11,6 +11,15 @@ export class NewWallComponent implements OnInit {
     @Output() messageEvent = new EventEmitter<string>();
     
     showNewWall: boolean = false;
+    creators: string[] = ["Home", "Dad", "Mom", "Nick"];
+    types: string[] = ["General", "Personal", "Special"];
+    targets: string[] = ["Family"];
+    selectedCreator: string;
+    selectedType: string;
+    selectedTarget: string;
+    title: string;
+    description: string;
+    
     constructor(private shapesService: ShapesService) {}
 
     ngOnInit() { }
@@ -25,6 +34,27 @@ export class NewWallComponent implements OnInit {
 
     createNewWall() {
         this.sendMessage();
-        this.shapesService.initNewWall();
+        this.shapesService.initNewWall( this.selectWallCreator, this.selectWallType, 
+                                        this.selectWallTarget, this.title, this.description);
+    }
+
+    selectWallCreator(creator) {
+        this.selectedCreator = creator;
+    }
+
+    selectWallType(type) {
+        this.selectedType = type;
+    }
+
+    selectWallTarget(target) {
+        this.selectedTarget = target;
+    }
+
+    setWallTitle(title) {
+        this.title = title;
+    }
+
+    setWallDescription(description) {
+        this.description = description;
     }
 }
