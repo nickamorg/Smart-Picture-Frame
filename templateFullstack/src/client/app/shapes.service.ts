@@ -379,6 +379,8 @@ export class ShapesService {
         this.currWallTitle = title;
         this.currWallDescription = description;
         this.editMode = true;
+
+        console.log(this.currWallType);
     }
 
     setWallTitleStyle(index) {

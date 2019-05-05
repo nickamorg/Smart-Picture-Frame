@@ -14,9 +14,9 @@ export class NewWallComponent implements OnInit {
     creators: string[] = ["Home", "Dad", "Mom", "Nick"];
     types: string[] = ["General", "Personal", "Special"];
     targets: string[] = ["Family"];
-    selectedCreator: string;
-    selectedType: string;
-    selectedTarget: string;
+    selectedCreator: string = "Home";
+    selectedType: string = "General";
+    selectedTarget: string = "Family";
     title: string;
     description: string;
     
@@ -34,8 +34,8 @@ export class NewWallComponent implements OnInit {
 
     createNewWall() {
         this.sendMessage();
-        this.shapesService.initNewWall( this.selectWallCreator, this.selectWallType, 
-                                        this.selectWallTarget, this.title, this.description);
+        this.shapesService.initNewWall( this.selectedCreator, this.selectedType, 
+                                        this.selectedTarget, this.title, this.description);
     }
 
     selectWallCreator(creator) {

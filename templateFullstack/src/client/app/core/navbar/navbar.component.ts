@@ -16,7 +16,6 @@ export class NavbarComponent implements OnInit {
 
     toggleNewWallModal() {
         this.showNewWallModal = !this.showNewWallModal;
-        console.log(this.showNewWallModal);
     }
 
     receiveMessage($event) {

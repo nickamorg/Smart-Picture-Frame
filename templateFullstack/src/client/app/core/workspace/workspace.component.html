@@ -7,7 +7,36 @@
 
             <h5 *ngIf="shapesService.editMode" style="padding:10px 10px 10px 20px; margin:0">GENERAL WALL
                 <img (click)="shapesService.addCurrWallSetWall()" style="float:right" src="./assets/images/plus.svg"/>
-                <img style="float:right" src="./assets/images/info.svg"/>
+                
+                <div class="wall_title_tooltip" style="float:right">
+                    <img src="./assets/images/info.svg"/>
+                    <span class="wall_title_tooltiptext">
+                        <table style="text-align: left">
+                            <tr>
+                                <td style="padding:0 10px 5px 10px; color:#CAC2C2">Creator:</td>
+                                <td style="padding-bottom: 5px">{{shapesService.currWallCreator}}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0 10px 5px 10px; color:#CAC2C2">Type:</td>
+                                <td style="padding-bottom: 5px">{{shapesService.currWallType}}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0 10px 5px 10px; color:#CAC2C2">Target:</td>
+                                <td style="padding-bottom: 5px">{{shapesService.currWallTarget}}</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:0 10px 5px 10px; color:#CAC2C2">Title:</td>
+                                <td style="padding-bottom: 5px">{{shapesService.currWallTitle}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" style="padding:0 10px 0 10px; color:#CAC2C2">Description:</td>
+                            </tr>
+                            <tr> 
+                                <td colspan="2" style="padding:0 10px 0 20px;">{{shapesService.currWallDescription}}</td>
+                            </tr>
+                        </table>
+                    </span>
+                </div>
             </h5>
         </div>
         <div style="padding-top:10px; height:200px; overflow-y: auto; overflow-x: hidden">

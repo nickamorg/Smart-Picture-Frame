@@ -21,3 +21,29 @@
     font-size: 14px;
     padding:5px 0 5px 10px;
 }
+
+.wall_title_tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.wall_title_tooltip .wall_title_tooltiptext {
+    visibility: hidden;
+  width: 160px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 100%;
+  left: 50%;
+  margin-left: -140px;
+}
+  
+  .wall_title_tooltip:hover .wall_title_tooltiptext {
+    visibility: visible;
+  }
