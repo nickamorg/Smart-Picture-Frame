@@ -1,6 +1,6 @@
 <div id="editor" (click)="shapesService.focusWall()" [ngStyle]="shapesService.setWallBorderStyle()">
     <div *ngIf="shapesService.editMode" [ngStyle]="shapesService.setWallStyle()">
-        <div (click)="shapesService.focusFrame(i); $event.stopPropagation()" *ngFor="let frame of shapesService.frames; let i = index" [ngStyle]="shapesService.setFrameBezelsStyle(i)" style="position:absolute">
+        <div (click)="shapesService.focusFrame(i); $event.stopPropagation()" *ngFor="let frame of shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames; let i = index" [ngStyle]="shapesService.setFrameBorderStyle(i)" style="position:absolute">
             <div [ngStyle]="shapesService.setFrameStyle(i)" style="position:absolute">
                 <ng-template [ngIf]="frame.images.length >= 1">
                     <img [ngStyle]="shapesService.setImageStyle(i)" src="/assets/images/{{frame.images[frame.displayedImageIndex]}}">
@@ -13,13 +13,13 @@
 <div id="editor_current_frame_images"> 
     <div *ngIf="shapesService.editMode">
         <div *ngIf="shapesService.isFocusedFrame"  style="color:#9A9A9A">
-            <div style="padding-bottom:15px" class="col-xs-3" *ngFor="let frameImage of shapesService.frames[shapesService.selectedFrame].images; let i = index">
+            <div style="padding-bottom:15px" class="col-xs-3" *ngFor="let frameImage of shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].images; let i = index">
                 <img (click)="shapesService.changeDisplayedImage(i)" title="{{frameImage}}" class="img-responsive" src="/assets/images/{{frameImage}}">
             </div>
         </div>
 
         <div *ngIf="shapesService.isFocusedWall"  style="color:#9A9A9A">
-            <div style="padding-bottom:15px" class="col-xs-6" *ngFor="let wallpaper of shapesService.currWallImages; let i = index">
+            <div style="padding-bottom:15px" class="col-xs-6" *ngFor="let wallpaper of shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].images; let i = index">
                 <img (click)="shapesService.changeDisplayedWallImage(i)" title="{{wallpaper}}" class="img-responsive" src="/assets/wallpapers/{{wallpaper}}">
             </div>
         </div>

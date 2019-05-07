@@ -14,25 +14,25 @@
                         <table style="text-align: left">
                             <tr>
                                 <td style="padding:0 10px 5px 10px; color:#CAC2C2">Creator:</td>
-                                <td style="padding-bottom: 5px">{{shapesService.currWallCreator}}</td>
+                                <td style="padding-bottom: 5px">{{shapesService.loadedWallSet.creator}}</td>
                             </tr>
                             <tr>
                                 <td style="padding:0 10px 5px 10px; color:#CAC2C2">Type:</td>
-                                <td style="padding-bottom: 5px">{{shapesService.currWallType}}</td>
+                                <td style="padding-bottom: 5px">{{shapesService.loadedWallSet.type}}</td>
                             </tr>
                             <tr>
                                 <td style="padding:0 10px 5px 10px; color:#CAC2C2">Target:</td>
-                                <td style="padding-bottom: 5px">{{shapesService.currWallTarget}}</td>
+                                <td style="padding-bottom: 5px">{{shapesService.loadedWallSet.target}}</td>
                             </tr>
                             <tr>
                                 <td style="padding:0 10px 5px 10px; color:#CAC2C2">Title:</td>
-                                <td style="padding-bottom: 5px">{{shapesService.currWallTitle}}</td>
+                                <td style="padding-bottom: 5px">{{shapesService.loadedWallSet.title}}</td>
                             </tr>
                             <tr>
                                 <td colspan="2" style="padding:0 10px 0 10px; color:#CAC2C2">Description:</td>
                             </tr>
                             <tr> 
-                                <td colspan="2" style="padding:0 10px 0 20px;">{{shapesService.currWallDescription}}</td>
+                                <td colspan="2" style="padding:0 10px 0 20px;">{{shapesService.loadedWallSet.description}}</td>
                             </tr>
                         </table>
                     </span>
@@ -41,7 +41,7 @@
         </div>
         <div style="padding-top:10px; height:200px; overflow-y: auto; overflow-x: hidden">
             <div *ngIf="shapesService.editMode">
-                <input *ngFor="let wall of shapesService.currWallSet; let i = index" [ngStyle]="shapesService.setWallTitleStyle(i)" class="wall_title" readonly="true" ondblclick="this.readOnly='';" (click)="shapesService.selectCurrWallSetFocusedWall(i)" (focusout)="shapesService.setCurrWallSetFocusedWallNewTitle(i, $event.target.value)" value="{{wall}}" placeholder="Set a title" />
+                <input *ngFor="let wall of shapesService.loadedWallSet.walls; let i = index" [ngStyle]="shapesService.setWallTitleStyle(i)" class="wall_title" readonly="true" ondblclick="this.readOnly='';" (click)="shapesService.selectCurrWallSetFocusedWall(i)" (focusout)="shapesService.setCurrWallSetFocusedWallNewTitle(i, $event.target.value)" value="{{wall.title}}" placeholder="Set a title" />
             </div>
         </div>
     </div>

@@ -60,8 +60,49 @@ class WallImage {
     }
 }
 
+class Wall {
+    borderMaterial: string = "";
+    hasMaterial: boolean = false;
+    borderSize: number = 0;
+    frames: Frame[] = [];
+    images: string[] = [];
+    displayedImageIndex: number = 0;
+    title: string = "";
+    
+    init(borderMaterial, borderSize, frames, images, title) {
+        this.borderMaterial = borderMaterial;
+        this.borderSize = borderSize;
+        this.frames = frames;
+        this.images = images;
+        this.title = title;
+        this.hasMaterial = borderMaterial != ""? true : false;
+    }
+}
+
+class WallSet {
+    walls: Wall[] = [];
+    creator: string = "";
+    type: string = "";
+    target: string = "";
+    title: string = "";
+    description: string = "";
+
+    init(walls, creator, type, target, title, description) {
+        this.walls = walls;
+        this.creator = creator;
+        this.type = type;
+        this.target = target;
+        this.title = title;
+        this.description = description;
+    }
+}
+
 @Injectable()
 export class ShapesService {
+    WallSets: WallSet[];
+    loadedWallSet: WallSet;
+    focusedWallIndex: number = 0;
+
     wallMaterial: string = "";
     hasWallMaterial: boolean = false;
     wallBorderSize: number = 0;
@@ -80,24 +121,31 @@ export class ShapesService {
     currWallImages: string[] = [];
     displayedWallImageIndex: number = 0;
     editMode: boolean = false;
-    currWallSet: string[] = ["Main Display", "Waterfalls Display", "Italy Display"];
-    currWallSetFocusedWall: number = 1;
-    currWallCreator: string;
-    currWallType: string;
-    currWallTarget: string;
-    currWallTitle: string;
-    currWallDescription: string;
+
+    feedInit() {
+        this.loadedWallSet = new WallSet();
+
+        var tmpFrame = new Frame();
+        tmpFrame.init(100, 5, "gold.jpg", "rgb(34, 0, 78)", 15, 20, 200, 150, 150,
+        ["waterfall4.png", "waterfall3.png"], 30);
+
+        var tmpFrame1 = new Frame();
+        tmpFrame1.init(0, 5, "brick.jpg", "rgb(34, 0, 78)", 10, 50, 400, 100, 100,
+        ["waterfall3.png", "waterfall1.png"], 15);
+
+        var tmpFrames = [];
+        tmpFrames.push(tmpFrame);
+        tmpFrames.push(tmpFrame1);
+        
+        var images = [ "inferno.jpg", "waterfalls.jpg"];
+        var tmpWall = new Wall();
+        tmpWall.init("lava.jpg", 10, tmpFrames, images, "Waterfalls Display");
+    
+        this.loadedWallSet.init([tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
+    }
 
     constructor() {
-        var tmpFrame = new Frame();
-        tmpFrame.init(100, 5, "iron.jpg", "rgb(34, 0, 78)", 15, 20, 200, 150, 150,
-        ["waterfall4.png", "waterfall3.png"], 30);
-        this.frames.push(tmpFrame);
-
-        var tmpFrame = new Frame();
-        tmpFrame.init(0, 5, "brick.jpg", "rgb(34, 0, 78)", 10, 50, 400, 100, 100,
-        ["waterfall3.png", "waterfall1.png"], 15);
-        this.frames.push(tmpFrame);
+        this.feedInit();
 
         this.frameImages = [new FrameImage("waterfall1.png"),
                             new FrameImage("waterfall2.png"),
@@ -140,35 +188,35 @@ export class ShapesService {
     }
 
     addSelectedImages() {
-        this.frames[this.selectedFrame].images = this.currFrameImages;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].images = this.currFrameImages;
     }
 
     setPosX(posX) {
-        this.frames[this.selectedFrame].left = posX;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].left = posX;
     }
     
     setPosY(posY) {
-        this.frames[this.selectedFrame].top = posY;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].top = posY;
     }
 
     setWidth(width) {
-        this.frames[this.selectedFrame].width = width;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].width = width;
     }
 
     setHeight(height) {
-        this.frames[this.selectedFrame].height = height;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].height = height;
     }
 
     setPadding(padding) {
-        this.frames[this.selectedFrame].padding = padding;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].padding = padding;
     }
 
     setIterateTime(iterateTime) {
-        this.frames[this.selectedFrame].iterateTime = iterateTime;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].iterateTime = iterateTime;
     }
 
     setBorderSize(borderSize) {
-        this.frames[this.selectedFrame].borderSize = borderSize;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize = borderSize;
     }
 
     toggleHasMaterial() {
@@ -176,13 +224,13 @@ export class ShapesService {
     }
 
     addMaterial(index:number) {
-        this.frames[this.selectedFrame].borderMaterial = this.materials[index];
-        this.frames[this.selectedFrame].hasMaterial = true;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial = this.materials[index];
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].hasMaterial = true;
     }
 
-    returnBazelMaterial() {
+    returnBorderMaterial() {
         let style = {
-            'background-image': 'url("./assets/materials/' + this.frames[this.selectedFrame].borderMaterial + '")',
+            'background-image': 'url("./assets/materials/' + this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial + '")',
             'width': '207px',
             'height': '27px'
         }
@@ -204,17 +252,21 @@ export class ShapesService {
         return style;
     }
 
-    setFrameBezelsStyle(index: number) {
+    setFrameBorderStyle(index: number) {
         let style = {
-            'background-image': 'url("./assets/materials/' + this.frames[index].borderMaterial + '")',
-            'background-color': this.frames[index].borderColor,
-            'border-radius': this.frames[index].borderRadius + '%',
-            'width': this.frames[index].width + 'px',
-            'height': this.frames[index].height + 'px',
-            'top': this.frames[index].top + 'px',
-            'left': this.frames[index].left + 'px'
+            'background-color': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].borderColor,
+            'border-radius': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].borderRadius + '%',
+            'width': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].width + 'px',
+            'height': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].height + 'px',
+            'top': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].top + 'px',
+            'left': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].left + 'px'
         };
 
+        var frameBorderMaterial = this.loadedWallSet.walls[this.focusedWallIndex].frames[index].borderMaterial;
+        if(frameBorderMaterial !== "" && frameBorderMaterial !== undefined) {
+            style['background-image'] = 'url("./assets/materials/' + frameBorderMaterial + '")';
+        }
+        
         if(this.selectedFrame === index) {
             style['box-shadow'] = '0px 0px 0px 5px #30C2FF';
         }
@@ -225,12 +277,12 @@ export class ShapesService {
     setFrameStyle(id:number) {
         let style = {
             'background-color': 'rgb(255, 255, 255)',
-            'border-radius': this.frames[id].borderRadius + '%',
-            'width': (this.frames[id].width - this.frames[id].borderSize * 2)  + 'px',
-            'height': (this.frames[id].height - this.frames[id].borderSize * 2) + 'px',
-            'top': this.frames[id].borderSize + 'px',
-            'left': this.frames[id].borderSize + 'px',
-            'padding': this.frames[id].padding + 'px'
+            'border-radius': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderRadius + '%',
+            'width': (this.loadedWallSet.walls[this.focusedWallIndex].frames[id].width - this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize * 2)  + 'px',
+            'height': (this.loadedWallSet.walls[this.focusedWallIndex].frames[id].height - this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize * 2) + 'px',
+            'top': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize + 'px',
+            'left': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize + 'px',
+            'padding': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].padding + 'px'
         }
 
         return style;
@@ -238,9 +290,9 @@ export class ShapesService {
 
     setImageStyle(id:number) {
         let style = {
-            'border-radius': this.frames[id].borderRadius + '%',
-            'width': (this.frames[id].width - this.frames[id].padding * 2 - this.frames[id].borderSize * 2)  + 'px',
-            'height': (this.frames[id].height - this.frames[id].padding * 2 - this.frames[id].borderSize * 2) + 'px',
+            'border-radius': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderRadius + '%',
+            'width': (this.loadedWallSet.walls[this.focusedWallIndex].frames[id].width - this.loadedWallSet.walls[this.focusedWallIndex].frames[id].padding * 2 - this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize * 2)  + 'px',
+            'height': (this.loadedWallSet.walls[this.focusedWallIndex].frames[id].height - this.loadedWallSet.walls[this.focusedWallIndex].frames[id].padding * 2 - this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize * 2) + 'px',
         }
 
         return style;
@@ -254,7 +306,7 @@ export class ShapesService {
     }
 
     initCurrFrameImages(index: number) {
-        this.currFrameImages = this.frames[index].images;
+        this.currFrameImages = this.loadedWallSet.walls[this.focusedWallIndex].frames[index].images;
         this.selectedImages = this.currFrameImages.length;
 
         for (var i = 0; i < this.frameImages.length; i++) {
@@ -272,13 +324,13 @@ export class ShapesService {
         this.isFocusedWall = false;
         var newFrame = new Frame();
         newFrame.borderRadius = type === "square_frame"? 0:100;
-        this.frames.push(newFrame);
-        this.selectedFrame = this.frames.length - 1;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames.push(newFrame);
+        this.selectedFrame = this.loadedWallSet.walls[this.focusedWallIndex].frames.length - 1;
         this.initCurrFrameImages(this.selectedFrame);
     }
 
     changeDisplayedImage(index: number) {
-        this.frames[this.selectedFrame].displayedImageIndex = index;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].displayedImageIndex = index;
     }
 
     focusWall() {
@@ -291,15 +343,19 @@ export class ShapesService {
 
     setWallStyle() {
         let style = {
-            'width':  (800 - this.wallBorderSize) + 'px',
-            'height': (200 - this.wallBorderSize) + 'px',
-            'top':  (this.wallBorderSize / 2) + 'px', 
-            'left': (this.wallBorderSize / 2) + 'px',
+            'width':  (800 - this.loadedWallSet.walls[this.focusedWallIndex].borderSize) + 'px',
+            'height': (200 - this.loadedWallSet.walls[this.focusedWallIndex].borderSize) + 'px',
+            'top':  (this.loadedWallSet.walls[this.focusedWallIndex].borderSize / 2) + 'px', 
+            'left': (this.loadedWallSet.walls[this.focusedWallIndex].borderSize / 2) + 'px',
             'background-color': '#C4C4C4',
             'position': 'absolute',
-            'background-image': 'url("./assets/wallpapers/' + this.currWallImages[this.displayedWallImageIndex] + '")',
             'background-size': 'cover'
         };
+
+        var wallWallpaper = this.loadedWallSet.walls[this.focusedWallIndex].images[this.loadedWallSet.walls[this.focusedWallIndex].displayedImageIndex];
+        if(wallWallpaper !== "" && wallWallpaper !== undefined) {
+            style['background-image'] = 'url("./assets/wallpapers/' + wallWallpaper + '")'
+        }
         
         return style;
     }
@@ -308,9 +364,13 @@ export class ShapesService {
         if(!this.editMode) return undefined;
 
         let style = {
-            'background-image': 'url("./assets/materials/' + this.wallMaterial + '")',
             'background-size': 'cover',
             'background-color': '#ffffff'
+        }
+
+        var wallBorderMaterial = this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial;
+        if(wallBorderMaterial !== "" && wallBorderMaterial !== undefined) {
+            style['background-image'] = 'url("./assets/materials/' + wallBorderMaterial + '")';
         }
 
         if(this.isFocusedWall) {
@@ -321,13 +381,13 @@ export class ShapesService {
     }
 
     addWallMaterial(index:number) {
-        this.wallMaterial = this.materials[index];
+        this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = this.materials[index];
         this.hasWallMaterial = true;
     }
 
     returnWallMaterial() {
         let style = {
-            'background-image': 'url("./assets/materials/' + this.wallMaterial + '")',
+            'background-image': 'url("./assets/materials/' + this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial + '")',
             'width': '190px',
             'height': '27px'
         }
@@ -336,7 +396,7 @@ export class ShapesService {
     } 
 
     setWallBorderSize(borderSize) {
-        this.wallBorderSize = borderSize;
+        this.loadedWallSet.walls[this.focusedWallIndex].borderSize = borderSize;
     }
 
     selectWallImage(id) {
@@ -359,47 +419,56 @@ export class ShapesService {
 
     addSelectedWallImages() {
         var self = this;
-        self.currWallImages = [];
+        self.loadedWallSet.walls[this.focusedWallIndex].images = [];
 
         this.wallImages.forEach(function (value) {
             if(value.selected) {
-                self.currWallImages.push(value.src);
+                self.loadedWallSet.walls[self.focusedWallIndex].images.push(value.src);
             }
         });
     }
 
     changeDisplayedWallImage(index: number) {
-        this.displayedWallImageIndex = index;
+        this.loadedWallSet.walls[this.focusedWallIndex].displayedImageIndex = index;
     }
 
     initNewWall(creator, type, target, title, description) {
-        this.currWallCreator = creator;
-        this.currWallType = type;
-        this.currWallTarget = target;
-        this.currWallTitle = title;
-        this.currWallDescription = description;
-        this.editMode = true;
+        this.loadedWallSet = new WallSet();
+        this.loadedWallSet.creator = creator;
+        this.loadedWallSet.type = type;
+        this.loadedWallSet.target = target;
+        this.loadedWallSet.title = title;
+        this.loadedWallSet.description = description;
+        this.loadedWallSet.walls = [];
+        this.loadedWallSet.walls.push(new Wall);
 
-        console.log(this.currWallType);
+        this.editMode = true;
     }
 
     setWallTitleStyle(index) {
-        return this.currWallSetFocusedWall === index? 
+        return this.focusedWallIndex === index? 
         {'background-color': '#30C2FF', 'color': 'white'}:
         {'background-color': '#F5F5F5',   'color': 'black'};
     }
 
     selectCurrWallSetFocusedWall(index) {
-        this.currWallSetFocusedWall = index;
+        this.focusedWallIndex = index;
+        this.isFocusedWall = true;
+        this.isFocusedFrame = false;
+        this.selectedFrame = -1;
     }
 
     addCurrWallSetWall() {
-        if(this.currWallSet.indexOf("") > -1) return;
-
-        this.currWallSet.push("");
+        var flag = false;
+        this.loadedWallSet.walls.forEach(element => {
+            if(element.title === "") flag = true;
+        });
+        
+        if(!flag) this.loadedWallSet.walls.push(new Wall());
+        this.selectCurrWallSetFocusedWall(this.loadedWallSet.walls.length - 1);
     }
 
     setCurrWallSetFocusedWallNewTitle(index, title) {
-        this.currWallSet[index] = title;
+        this.loadedWallSet.walls[index].title = title;
     }
 }
