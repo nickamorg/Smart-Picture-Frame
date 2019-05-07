@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class NavbarComponent implements OnInit {
     showNewWallModal: boolean = false;
-    
+    showLoadWallModal: boolean = false;
+
     constructor(private shapesService: ShapesService, private router: Router) { }
 
     ngOnInit() { }
@@ -18,7 +19,16 @@ export class NavbarComponent implements OnInit {
         this.showNewWallModal = !this.showNewWallModal;
     }
 
+    toggleLoadWallModal() {
+        this.showLoadWallModal = !this.showLoadWallModal;
+    }
+
     receiveMessage($event) {
-       this.toggleNewWallModal();
+        console.log($event);
+        if($event === "toggleShowNewWallModalPartially") {
+            this.toggleNewWallModal();
+        } else {
+            this.toggleLoadWallModal();
+        }
     }
 }

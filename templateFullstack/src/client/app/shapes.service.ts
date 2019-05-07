@@ -34,6 +34,37 @@ class Frame {
         this.images = images;
         this.iterateTime = iterateTime;
     }
+
+    getFrameBorderStyle(index: number) {
+        let style = {
+            'background-color': this.borderColor,
+            'border-radius': this.borderRadius + '%',
+            'width': this.width + 'px',
+            'height': this.height + 'px',
+            'top': this.top + 'px',
+            'left': this.left + 'px'
+        };
+
+        if(this.borderMaterial !== "" && this.borderMaterial !== undefined) {
+            style['background-image'] = 'url("./assets/materials/' + this.borderMaterial + '")';
+        }
+
+        return style;
+    }
+
+    getFrameStyle() {
+        let style = {
+            'background-color': 'rgb(255, 255, 255)',
+            'border-radius': this.borderRadius + '%',
+            'width': (this.width - this.borderSize * 2)  + 'px',
+            'height': (this.height - this.borderSize * 2) + 'px',
+            'top': this.borderSize + 'px',
+            'left': this.borderSize + 'px',
+            'padding': this.padding + 'px'
+        }
+
+        return style;
+    }
 }
 
 class FrameImage {
@@ -77,6 +108,41 @@ class Wall {
         this.title = title;
         this.hasMaterial = borderMaterial != ""? true : false;
     }
+
+    getBorderStyle() {
+        let style = {
+            'background-size': 'cover',
+            'background-color': '#ffffff',
+            'width': '800px',
+            'height': '200px'
+        }
+
+        if(this.borderMaterial !== "" && this.borderMaterial !== undefined) {
+            style['background-image'] = 'url("./assets/materials/' + this.borderMaterial + '")';
+        }
+
+        return style;
+    }
+
+    getWallStyle() {
+        let style = {
+            'width':  (800 - this.borderSize) + 'px',
+            'height': (200 - this.borderSize) + 'px',
+            'top':  (this.borderSize / 2) + 'px', 
+            'left': (this.borderSize / 2) + 'px',
+            'background-color': '#C4C4C4',
+            'position': 'relative',
+            'background-size': 'cover'
+        };
+
+        var wallWallpaper = this.images[this.displayedImageIndex];
+        if(wallWallpaper !== "" && wallWallpaper !== undefined) {
+            style['background-image'] = 'url("./assets/wallpapers/' + wallWallpaper + '")'
+        }
+        
+        return style;
+    }
+
 }
 
 class WallSet {
@@ -99,7 +165,7 @@ class WallSet {
 
 @Injectable()
 export class ShapesService {
-    WallSets: WallSet[];
+    wallSets: WallSet[] = [];
     loadedWallSet: WallSet;
     focusedWallIndex: number = 0;
 
@@ -142,6 +208,12 @@ export class ShapesService {
         tmpWall.init("lava.jpg", 10, tmpFrames, images, "Waterfalls Display");
     
         this.loadedWallSet.init([tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
+        
+        this.wallSets.push(new WallSet());
+        this.wallSets[0].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
+        this.wallSets.push(new WallSet());
+        this.wallSets[1].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
+        
     }
 
     constructor() {
