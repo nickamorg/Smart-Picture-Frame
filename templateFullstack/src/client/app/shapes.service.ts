@@ -65,6 +65,31 @@ class Frame {
 
         return style;
     }
+
+    copy() {
+        var newFrame = new Frame();
+        newFrame.borderRadius = this.borderRadius;
+        newFrame.borderSize = this.borderSize;
+        newFrame.hasMaterial = this.hasMaterial;
+        newFrame.borderMaterial = this.borderMaterial;
+        newFrame.borderColor = this.borderColor;
+        newFrame.borderColor = this.borderColor;
+        newFrame.padding = this.padding;
+        newFrame.top = this.top;
+        newFrame.left = this.left;
+        newFrame.width = this.width;
+
+        newFrame.height = this.height;
+        newFrame.displayedImageIndex = this.displayedImageIndex;
+        newFrame.iterateTime = this.iterateTime;
+        
+        newFrame.images = [];
+        for(var i = 0; i < this.images.length; i++) {
+            newFrame.images.push(this.images[i]);
+        }
+
+        return newFrame;
+    }
 }
 
 class FrameImage {
@@ -143,6 +168,27 @@ class Wall {
         return style;
     }
 
+    copy() {
+        var newWall = new Wall();
+        newWall.borderMaterial = this.borderMaterial;
+        newWall.hasMaterial = this.hasMaterial;
+        newWall.borderSize = this.borderSize;
+        newWall.displayedImageIndex = this.displayedImageIndex;
+        newWall.title = this.title;
+
+        newWall.images = [];
+        for(var i = 0; i < this.images.length; i++) {
+            newWall.images.push(this.images[i]);
+        }
+        
+        newWall.frames = [];
+        for(var i = 0; i < this.frames.length; i++) {
+            newWall.frames.push(this.frames[i].copy());
+        }
+
+        return newWall;
+    }
+
 }
 
 class WallSet {
@@ -160,6 +206,23 @@ class WallSet {
         this.target = target;
         this.title = title;
         this.description = description;
+    }
+
+    copy() {
+        var newWallSet = new WallSet();
+        newWallSet.creator = this.creator;
+        newWallSet.type = this.type;
+        newWallSet.target = this.target;
+        newWallSet.title = this.title;
+        newWallSet.description = this.description;
+        newWallSet.walls = [];
+
+        for(var i = 0; i < this.walls.length; i++) {
+            newWallSet.walls.push(this.walls[i].copy());
+        }
+
+        return newWallSet;
+       
     }
 }
 

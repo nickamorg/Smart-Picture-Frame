@@ -14,7 +14,7 @@
                 <!-- Wrapper for slides -->
                 <div class="carousel-inner" style="width:800px">
 
-                    <div class="item" *ngFor="let wall of wallSet.walls; let index = index" [class.active]="index == 0" style="width:800px">
+                    <div routerLink="/home" (click)="loadWall(wallSetIndex, index)" class="item" *ngFor="let wall of wallSet.walls; let index = index" [class.active]="index == 0" style="width:800px">
                         <div style="top:20px; width: 800px">
                             <div [ngStyle]="wall.getBorderStyle()">
                                 <div [ngStyle]="wall.getWallStyle()">

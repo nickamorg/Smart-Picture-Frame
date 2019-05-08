@@ -24,7 +24,6 @@ export class NavbarComponent implements OnInit {
     }
 
     receiveMessage($event) {
-        console.log($event);
         if($event === "toggleShowNewWallModalPartially") {
             this.toggleNewWallModal();
         } else {

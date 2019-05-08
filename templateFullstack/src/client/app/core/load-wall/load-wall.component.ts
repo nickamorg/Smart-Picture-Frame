@@ -25,8 +25,12 @@ export class LoadWallComponent {
         this.showLoadWall = !this.showLoadWall;
     }
 
-    loadWall() {
+    loadWall(wallSetIndex, wallIndex) {
+        console.log(wallSetIndex, wallIndex);
         this.sendMessage();
+        this.shapesService.loadedWallSet = this.shapesService.wallSets[wallSetIndex].copy();
+        this.shapesService.focusedWallIndex = wallIndex;
+        this.shapesService.editMode = true;
         // this.shapesService.loadWall(....);
     }
 }
