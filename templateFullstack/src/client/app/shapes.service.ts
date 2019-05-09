@@ -66,6 +66,18 @@ class Frame {
         return style;
     }
 
+    getFirstImageStyle() {
+        let style = {
+            'border-radius': this.borderRadius + '%',
+            'width': (this.width - this.padding * 2 - this.borderSize * 2)  + 'px',
+            'height': (this.height - this.padding * 2 - this.borderSize * 2) + 'px',
+            'top': this.borderSize + 'px',
+            'left': this.borderSize + 'px'
+        }
+        
+        return style;
+    }
+
     copy() {
         var newFrame = new Frame();
         newFrame.borderRadius = this.borderRadius;
@@ -252,7 +264,6 @@ export class ShapesService {
     editMode: boolean = false;
 
     feedInit() {
-        this.loadedWallSet = new WallSet();
 
         var tmpFrame = new Frame();
         tmpFrame.init(100, 5, "gold.jpg", "rgb(34, 0, 78)", 15, 20, 200, 150, 150,
@@ -270,13 +281,12 @@ export class ShapesService {
         var tmpWall = new Wall();
         tmpWall.init("lava.jpg", 10, tmpFrames, images, "Waterfalls Display");
     
-        this.loadedWallSet.init([tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
-        
         this.wallSets.push(new WallSet());
         this.wallSets[0].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
         this.wallSets.push(new WallSet());
         this.wallSets[1].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
         
+        this.loadedWallSet = this.wallSets[0].copy();
     }
 
     constructor() {
@@ -568,15 +578,16 @@ export class ShapesService {
     }
 
     initNewWall(creator, type, target, title, description) {
-        this.loadedWallSet = new WallSet();
-        this.loadedWallSet.creator = creator;
-        this.loadedWallSet.type = type;
-        this.loadedWallSet.target = target;
-        this.loadedWallSet.title = title;
-        this.loadedWallSet.description = description;
-        this.loadedWallSet.walls = [];
-        this.loadedWallSet.walls.push(new Wall);
-
+        var newWallSet = new WallSet();
+        newWallSet.creator = creator;
+        newWallSet.type = type;
+        newWallSet.target = target;
+        newWallSet.title = title;
+        newWallSet.description = description;
+        newWallSet.walls = [];
+        newWallSet.walls.push(new Wall());
+        this.wallSets.push(newWallSet);
+        this.loadedWallSet = newWallSet.copy();
         this.editMode = true;
     }
 
