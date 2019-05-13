@@ -7,11 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class WallpapersComponent implements OnInit {
     wallpapers: Wallpaper[];
+    uploadedWallpapers: Wallpaper[];
+    showUploadedWallpapersModal: boolean = false;
 
     constructor() { 
         this.wallpapers = [
-            new Wallpaper("waterfalls.jpg", "Waterfalls"),
-            new Wallpaper("inferno.jpg", "Inferno"),
+            new Wallpaper("/assets/wallpapers/waterfalls.jpg", "Waterfalls"),
+            new Wallpaper("/assets/wallpapers/inferno.jpg", "Inferno"),
         ];
     }
 
@@ -19,6 +21,42 @@ export class WallpapersComponent implements OnInit {
 
     deleteWallpaper(src: string) {
         this.wallpapers = this.wallpapers.filter(function(elem){
+            return elem.src != src;
+        });
+    }
+
+    processFile(imageInput) {
+        this.uploadedWallpapers = [];
+        this.showUploadedWallpapersModal = true;
+        for(var i = 0; i < imageInput.files.length; i++) {
+            var file: File = imageInput.files[i];
+            var reader = new FileReader();
+            reader.addEventListener('load', (event: any) => {
+                this.uploadedWallpapers.push(new Wallpaper(event.target.result, ""));
+            });
+            reader.readAsDataURL(file);
+        }
+    }
+
+    uploadWallpapers() {
+        //Mongodb code missed
+        this.showUploadedWallpapersModal = false;
+        
+        this.uploadedWallpapers.forEach(element => {
+           this.wallpapers.push(element); 
+        });
+    }
+
+    cancelUploadWallpapers() {
+        this.showUploadedWallpapersModal = false;
+    }
+
+    saveWallpaperTitle(index, event) {
+        this.uploadedWallpapers[index].title = event.target.value;
+    }
+
+    deleteUploadedWallpaper(src: string) {
+        this.uploadedWallpapers = this.uploadedWallpapers.filter(function(elem){
             return elem.src != src;
         });
     }

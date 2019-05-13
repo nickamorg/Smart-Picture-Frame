@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class MaterialsComponent implements OnInit {
     materials: Material[];
     uploadedMaterials: Material[];
-    imagesToBeUploaded: boolean = false;
+    showUploadedMaterialsModal: boolean = false;
 
     constructor() { 
         this.materials = [
@@ -31,17 +31,13 @@ export class MaterialsComponent implements OnInit {
     }
 
     processFile(imageInput) {
-        console.log(imageInput);
         this.uploadedMaterials = [];
-        this.imagesToBeUploaded = true;
+        this.showUploadedMaterialsModal = true;
         for(var i = 0; i < imageInput.files.length; i++) {
-         
             var file: File = imageInput.files[i];
             var reader = new FileReader();
             reader.addEventListener('load', (event: any) => {
-                //console.log(event.target.result, file)
                 this.uploadedMaterials.push(new Material(event.target.result, ""));
-                console.log(this.uploadedMaterials.length);
                 /*
                 this.selectedFile = new ImageSnippet(event.target.result, file);
             
@@ -55,14 +51,13 @@ export class MaterialsComponent implements OnInit {
 
                 */
             });
-        
             reader.readAsDataURL(file);
         }
     }
 
     uploadMaterials() {
         //Mongodb code missed
-        this.imagesToBeUploaded = false;
+        this.showUploadedMaterialsModal = false;
         
         this.uploadedMaterials.forEach(element => {
            this.materials.push(element); 
@@ -70,7 +65,7 @@ export class MaterialsComponent implements OnInit {
     }
 
     cancelUploadMaterials() {
-        this.imagesToBeUploaded = false;
+        this.showUploadedMaterialsModal = false;
     }
 
     saveMaterialTitle(index, event) {

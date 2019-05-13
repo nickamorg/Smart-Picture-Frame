@@ -8,7 +8,7 @@
             (change)="processFile(imageInput)">
   </label>
   
-  <p style="padding-left:15px; font-weight: 600;">{{materials.length}} Materials</p>
+<p style="padding-left:15px; font-weight: 600;">{{materials.length}} Materials</p>
 
 <div *ngFor="let material of materials" class="col-xs-2" style="padding-bottom:20px">
     <div class="content">
@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<div *ngIf="imagesToBeUploaded" class="upload_materials_overlay">
+<div *ngIf="showUploadedMaterialsModal" class="upload_materials_overlay">
     <div id="upload_materials_overlay_content" class="clearfix">
         <div class="col-xs-12" style="padding-top:40px">
             <div style="padding:0 10px 10px 15px">
@@ -36,7 +36,7 @@
                 </div>
             </div>
         
-            <div class="scrollbar upload_materials-2" style="height:400px; padding-top:10px">
+            <div class="scrollbar" style="height:400px; padding-top:10px">
                 <div *ngFor="let material of uploadedMaterials; let i = index" class="col-xs-3" style="padding-bottom:30px; text-align: center">
                     <img style="border-radius:10px" class="img-responsive" src="{{material.src}}" alt="">
                     <div class="form-group" style="padding-top:10px">
