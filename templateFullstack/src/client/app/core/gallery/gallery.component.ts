@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ɵConsole } from '@angular/core';
 
 @Component({
     selector: 'app-gallery',
@@ -7,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 
 export class GalleryComponent implements OnInit {
+    uploadedImages: Image[];
+    showUploadedImagesModal: boolean = false;
+
     imagesCol: number = 6;
     galleryImages: Image[];
     types: string[] = [];
@@ -26,20 +29,28 @@ export class GalleryComponent implements OnInit {
 
     constructor() {
         this.allGalleryImagesIndexes = [0, 1, 2, 3];
-        this.displayedGalleryImages = this.allGalleryImagesIndexes;
 
         this.galleryImages = [
-            new Image("Amazon Waterfall", "Description Example 1", "waterfall1.png", "Attraction", "Italy",  "Milan"),
-            new Image("Amazon Waterfall", "Description Example 2", "waterfall2.png", "Family",     "Greece", "Athens"),
-            new Image("Amazon Waterfall", "Description Example 3", "waterfall3.png", "Travels",    "Norway", "Oslo"),
-            new Image("Amazon Waterfall", "Description Example 4", "waterfall4.png", "Cars",       "Spain",  "Madrid"),
+            new Image("Amazon Waterfall", "Description Example 1", "/assets/images/waterfall1.png", "Attraction", "Italy",  "Milan"),
+            new Image("Amazon Waterfall", "Description Example 2", "/assets/images/waterfall2.png", "Family",     "Greece", "Athens"),
+            new Image("Amazon Waterfall", "Description Example 3", "/assets/images/waterfall3.png", "Travels",    "Norway", "Oslo"),
+            new Image("Amazon Waterfall", "Description Example 4", "/assets/images/waterfall4.png", "Cars",       "Spain",  "Madrid"),
         ]
+
+        this.initFiltering();
+    }
+
+    initFiltering() {
+        this.displayedGalleryImages = [];
+        for(var i = 0; i < this.galleryImages.length; i++) {
+            this.displayedGalleryImages.push(i);
+        }
 
         this.galleryImages.forEach(element => {
             var categories = ["types", "countries", "cities"];
             var imageField = ["type", "country", "city"];
             for(var index in categories) {
-                if(this[categories[index]].indexOf(element[imageField[index]]) === -1) {
+                if(this[categories[index]].indexOf(element[imageField[index]]) === -1 && element[imageField[index]] !== "") {
                     this[categories[index]].push(element[imageField[index]]);
                 }
             }
@@ -152,6 +163,62 @@ export class GalleryComponent implements OnInit {
         });
 
         this.hideDisplayedImage();
+    }
+
+    processFile(imageInput) {
+        this.uploadedImages = [];
+        this.showUploadedImagesModal = true;
+
+        for(var i = 0; i < imageInput.files.length; i++) {
+            var file: File = imageInput.files[i];
+            var reader = new FileReader();
+            reader.addEventListener('load', (event: any) => {
+                this.uploadedImages.push(new Image("", "", event.target.result, "", "", ""));             
+            });
+            reader.readAsDataURL(file);
+        }
+    }
+
+    uploadImages() {
+        //Mongodb code missed
+        this.showUploadedImagesModal = false;
+        
+        this.uploadedImages.forEach(element => {
+           this.galleryImages.push(element); 
+        });
+
+        this.initFiltering();
+        console.log(this.galleryImages);
+    }
+
+    cancelUploadImages() {
+        this.showUploadedImagesModal = false;
+    }
+
+    deleteUploadedMaterial(src: string) {
+        this.uploadedImages = this.uploadedImages.filter(function(elem){
+            return elem.src != src;
+        });
+    }
+
+    addUploadedImageTitle(index, event) {
+        this.uploadedImages[index].title = event.target.value;
+    }
+
+    addUploadedImageDescription(index, event) {
+        this.uploadedImages[index].description = event.target.value;
+    }
+
+    addUploadedImageType(index, event) {
+        this.uploadedImages[index].type = event.target.value;
+    }
+    
+    addUploadedImageCountry(index, event) {
+        this.uploadedImages[index].country = event.target.value;
+    }
+
+    addUploadedImageCity(index, event) {
+        this.uploadedImages[index].city = event.target.value;
     }
 }
 

@@ -33,6 +33,7 @@ export class MaterialsComponent implements OnInit {
     processFile(imageInput) {
         this.uploadedMaterials = [];
         this.showUploadedMaterialsModal = true;
+        
         for(var i = 0; i < imageInput.files.length; i++) {
             var file: File = imageInput.files[i];
             var reader = new FileReader();

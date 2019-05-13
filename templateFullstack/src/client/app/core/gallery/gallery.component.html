@@ -54,20 +54,29 @@
 </div>
 
 <div class="gallery_display">
-
     <div style="padding:0 0 10px 15px">
         <img [class.gallery_inactive_option]="imagesCol!==12" (click)="changeImagesCol(12)" style="padding-right:3px; cursor:pointer" src="/assets/images/2x1.png" alt="">
         <img [class.gallery_inactive_option]="imagesCol!==6"  (click)="changeImagesCol(6)"  style="padding-right:3px; cursor:pointer" src="/assets/images/2x2.png" alt="">
         <img [class.gallery_inactive_option]="imagesCol!==4"  (click)="changeImagesCol(4)"  style="padding-right:3px; cursor:pointer" src="/assets/images/3x3.png" alt="">
         <img [class.gallery_inactive_option]="imagesCol!==3"  (click)="changeImagesCol(3)"  style="padding-right:3px; cursor:pointer" src="/assets/images/4x4.png" alt="">
         <span style="font-weight: 600">{{displayedGalleryImages.length}} Images</span>
+
+        <label class="image-upload-container btn btn-bwm" style="float:right">
+            <span><img src="./assets/images/upload.svg"/></span>
+            <input  style="display:none" 
+                    #imageInput
+                    multiple
+                    type="file"
+                    accept="image/*"
+                    (change)="processFile(imageInput)">
+        </label>
     </div>
 
     <div class="scrollbar" style="height:450px">
         <div *ngFor="let index of displayedGalleryImages" class="col-xs-{{imagesCol}}" style="padding-bottom:30px; text-align: center">
             <div class="content">
                 <div class="content-overlay"></div>
-                <img class="content-image img-responsive" src="/assets/images/{{galleryImages[index].src}}" alt="">
+                <img class="content-image img-responsive" src="{{galleryImages[index].src}}" alt="">
                 <div class="content-details fadeIn-top">
                     <div>
                         <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index].src, 'display')" src="/assets/images/preview_image.svg"/>
@@ -90,7 +99,7 @@
 
     <div id="gallery-image_overlay_content" class="clearfix" style="padding-top:50px">
         <div class="col-xs-6">
-            <img style="border-radius: 10px" class="content-image img-responsive" src="/assets/images/{{displayedImage.src}}" alt="">
+            <img style="border-radius: 10px" class="content-image img-responsive" src="{{displayedImage.src}}" alt="">
         </div>
         <div class="col-xs-6">
             <h3 style="margin:0">{{displayedImage.title}}</h3>
@@ -110,41 +119,95 @@
         </div>
         <div class="col-xs-12 clearfix" style="display: flex">
 
-        <div class="col-xs-6" style="flex: 1; padding: 1em;">
-            <img style="border-radius: 10px" class="content-image img-responsive" src="/assets/images/{{displayedImage.src}}" alt="">
+            <div class="col-xs-6" style="flex: 1; padding: 1em;">
+                <img style="border-radius: 10px" class="content-image img-responsive" src="{{displayedImage.src}}" alt="">
+            </div>
+            <div class="col-xs-6" style="border-radius:10px; margin:10px; flex: 1; padding: 1em; background-color: #707070; color:white">
+                <input #edit_image_title id="edit_image_title" placeholder="Title" value="{{displayedImage.title}}">
+                <textarea #edit_image_descr id="edit_image_descr" placeholder="Description">{{displayedImage.description}}</textarea>
+                
+                <table align="center" style="margin-top:30px">
+                    <tr>
+                        <td style="padding-right:50px"> <label for="edit_image_type">Type</label></td>
+                        <td>
+                            <div class="form-group">
+                                <input #edit_image_type type="text" class="form-control" id="edit_image_type" placeholder="Type" value="{{displayedImage.type}}">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-right:50px"> <label for="edit_image_country">Country</label></td>
+                        <td>
+                            <div class="form-group">
+                                <input #edit_image_country type="text" class="form-control" id="edit_image_country" placeholder="Country" value="{{displayedImage.country}}">
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding-right:50px"> <label for="edit_image_city">City</label></td>
+                        <td>
+                            <div class="form-group">
+                                <input #edit_image_city type="text" class="form-control" id="edit_image_city" placeholder="City" value="{{displayedImage.city}}">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
-        <div class="col-xs-6" style="border-radius:10px; margin:10px; flex: 1; padding: 1em; background-color: #707070; color:white">
-            <input #edit_image_title id="edit_image_title" placeholder="Title" value="{{displayedImage.title}}">
-            <textarea #edit_image_descr id="edit_image_descr" placeholder="Description">{{displayedImage.description}}</textarea>
-            
-            <table align="center" style="margin-top:30px">
-                <tr>
-                    <td style="padding-right:50px"> <label for="edit_image_type">Type</label></td>
-                    <td>
-                        <div class="form-group">
-                            <input #edit_image_type type="text" class="form-control" id="edit_image_type" placeholder="Type" value="{{displayedImage.type}}">
-                        </div>
-                    </td>
-                </tr>
+    </div>
+</div>
 
-                <tr>
-                    <td style="padding-right:50px"> <label for="edit_image_country">Country</label></td>
-                    <td>
-                        <div class="form-group">
-                            <input #edit_image_country type="text" class="form-control" id="edit_image_country" placeholder="Country" value="{{displayedImage.country}}">
-                        </div>
-                    </td>
-                </tr>
+<div *ngIf="showUploadedImagesModal" class="upload_images_overlay">
+    <div id="upload_images_overlay_content" class="clearfix col-xs-12" style="padding-top:40px">
+        <div style="padding:0 10px 10px 15px" >
+            <span style="color:#707070">UPLOAD IMAGES</span>
+            <img (click)="uploadImages()" style="padding-right:5px; float:right" src="/assets/images/apply.png" width="25" heigh="25">
+            <img (click)="cancelUploadImages()" style="padding-right:5px; float:right" src="/assets/images/cancel.png" width="25" heigh="25">
+            <div>
+                <span style="font-weight: 600; font-style: italic">{{uploadedImages.length}} Images</span>
+            </div>
+        </div>
+        <div class="scrollbar clearfix" style="height:400px; padding-top:10px">
+            <div class="clearfix" style="display: flex" *ngFor="let image of uploadedImages; let i = index">
+                <div class="col-xs-6" style="flex: 1; padding: 1em;">
+                    <img style="border-radius: 10px" class="content-image img-responsive" src="{{image.src}}" alt="">
+                </div>
+                <div class="col-xs-6" style="border-radius:10px; margin:10px; flex: 1; padding: 1em; background-color: #707070; color:white">
+                    <input #edit_image_title id="edit_image_title" placeholder="Title" (change)="addUploadedImageTitle(i, $event)">
+                    <textarea #edit_image_descr id="edit_image_descr" placeholder="Description" (change)="addUploadedImageDescription(i, $event)"></textarea>
+                    
+                    <table align="center">
+                        <tr>
+                            <td style="padding-right:50px"> <label for="edit_image_type">Type</label></td>
+                            <td>
+                                <div class="form-group">
+                                    <input #edit_image_type type="text" class="form-control" id="edit_image_type" placeholder="Type" (change)="addUploadedImageType(i, $event)">
+                                </div>
+                            </td>
+                        </tr>
 
-                <tr>
-                    <td style="padding-right:50px"> <label for="edit_image_city">City</label></td>
-                    <td>
-                        <div class="form-group">
-                            <input #edit_image_city type="text" class="form-control" id="edit_image_city" placeholder="City" value="{{displayedImage.city}}">
-                        </div>
-                    </td>
-                </tr>
-            </table>
+                        <tr>
+                            <td style="padding-right:50px"> <label for="edit_image_country">Country</label></td>
+                            <td>
+                                <div class="form-group">
+                                    <input #edit_image_country type="text" class="form-control" id="edit_image_country" placeholder="Country" (change)="addUploadedImageCountry(i, $event)">
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding-right:50px"> <label for="edit_image_city">City</label></td>
+                            <td>
+                                <div class="form-group">
+                                    <input #edit_image_city type="text" class="form-control" id="edit_image_city" placeholder="City" (change)="addUploadedImageCity(i, $event)">
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

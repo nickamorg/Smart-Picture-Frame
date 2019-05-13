@@ -28,6 +28,7 @@ export class WallpapersComponent implements OnInit {
     processFile(imageInput) {
         this.uploadedWallpapers = [];
         this.showUploadedWallpapersModal = true;
+        
         for(var i = 0; i < imageInput.files.length; i++) {
             var file: File = imageInput.files[i];
             var reader = new FileReader();
