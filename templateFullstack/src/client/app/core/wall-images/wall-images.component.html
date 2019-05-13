@@ -1,5 +1,5 @@
-<div *ngIf="showChooseWallImagesModalPartially" id="wall_images_page" class="wall-images_overlay">
-  <div id="wall-images_overlay_content" class="clearfix">
+<div *ngIf="showChooseWallImagesModalPartially" id="wall_images_page" class="modal_overlay">
+  <div id="modal_overlay_content" class="clearfix">
       <div class="col-xs-12" style="padding-top:40px">
           <div style="padding:0 10px 10px 15px">
               <img [class.wall-images_inactive_option]="shapesService.wallImagesCol!==12" (click)="shapesService.changeWallImagesCol(12)" style="padding-right:3px; cursor:pointer" src="/assets/images/2x1.png" alt="">

@@ -227,7 +227,6 @@
 
 .content {
     position: relative;
-    // max-width: 400px;
     margin: auto;
     overflow: hidden;
 }
@@ -248,11 +247,11 @@
 }
 
 .content:hover .content-overlay{
-     opacity: 1;
+    opacity: 1;
 }
 
 .content-image{
-     width: 100%;
+    width: 100%;
 }
 
 .content-details {
@@ -306,4 +305,68 @@
 
 .fadeIn-right{
      left: 80%;
+}
+
+// Modal Style
+
+#modal_overlay_content {
+	position: relative;
+    top: 5%;
+    max-height: 90%;
+    left:15%;
+    width: 70%;
+    margin-top: 30px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+#modal_overlay_content h3 {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+#modal_overlay_content select {
+    width: 150px !important;
+}
+
+#modal_overlay_content input {
+    width: 150px !important;
+}
+
+.modal_checked {
+    outline: 5px solid #30C2FF;
+}
+
+.modal_inactive_option {
+    opacity: 0.5;
+}
+
+.img-responsive {
+    display: inline !important;
+}
+
+.modal_overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+}
+
+.modal_overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+.modal_overlay a {
+    color:#C4C4C4;
+}
+
+.modal_overlay a:hover {
+    text-decoration: none;
 }
