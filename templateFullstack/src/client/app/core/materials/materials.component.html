@@ -13,23 +13,10 @@
 <div *ngFor="let material of materials" class="col-xs-2" style="padding-bottom:20px">
     <div class="content">
         <div class="content-overlay"></div>
-        <img class="content-image img-responsive" src="/assets/materials/{{material.src}}" alt="">
-        <div class="content-details fadeIn-top">
-            <div>
-                <img style="cursor:pointer" (click)="deleteMaterial(material.src)" src="/assets/images/delete.svg"/>
-            </div>
-            <h3>{{material.title}}</h3>
-        </div>    
-    </div>
-</div>
-
-<div *ngFor="let material of uploadedMaterials" class="col-xs-2" style="padding-bottom:20px">
-    <div class="content">
-        <div class="content-overlay"></div>
         <img class="content-image img-responsive" src="{{material.src}}" alt="">
         <div class="content-details fadeIn-top">
             <div>
-                <img style="cursor:pointer" (click)="deleteUploadedMaterial(material.src)" src="/assets/images/delete.svg"/>
+                <img style="cursor:pointer" (click)="deleteMaterial(material.src)" src="/assets/images/delete.svg"/>
             </div>
             <h3>{{material.title}}</h3>
         </div>    

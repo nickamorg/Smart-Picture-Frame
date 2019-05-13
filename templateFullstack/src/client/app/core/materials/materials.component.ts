@@ -13,12 +13,12 @@ export class MaterialsComponent implements OnInit {
 
     constructor() { 
         this.materials = [
-            new Material("gold.jpg", "Gold"),
-            new Material("brick.jpg", "Brick"),
-            new Material("iron.jpg", "Iron"),
-            new Material("stone.png", "Stone"),
-            new Material("aqua.jpg", "Aqua"),
-            new Material("lava.jpg", "Lava")
+            new Material("/assets/materials/gold.jpg", "Gold"),
+            new Material("/assets/materials/brick.jpg", "Brick"),
+            new Material("/assets/materials/iron.jpg", "Iron"),
+            new Material("/assets/materials/stone.png", "Stone"),
+            new Material("/assets/materials/aqua.jpg", "Aqua"),
+            new Material("/assets/materials/lava.jpg", "Lava")
         ];
     }
 
@@ -63,7 +63,10 @@ export class MaterialsComponent implements OnInit {
     uploadMaterials() {
         //Mongodb code missed
         this.imagesToBeUploaded = false;
-        console.log(this.uploadedMaterials);
+        
+        this.uploadedMaterials.forEach(element => {
+           this.materials.push(element); 
+        });
     }
 
     cancelUploadMaterials() {
