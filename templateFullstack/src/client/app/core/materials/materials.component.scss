@@ -1,0 +1,67 @@
+#upload_materials_overlay_content {
+	position: relative;
+    top: 5%;
+    max-height: 90%;
+    left:15%;
+    width: 70%;
+    margin-top: 30px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+#upload_materials_overlay_content h3 {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+#upload_materials_overlay_content select {
+    width: 150px !important;
+}
+
+#upload_materials_overlay_content input {
+    width: 150px !important;
+}
+
+.upload_materials_checked {
+    outline: 5px solid #30C2FF;
+}
+
+// .upload_materials-2 div:nth-child(odd) {
+//     content: "";
+//     clear: both;
+//     display: table;
+// }
+
+.upload_materials_inactive_option {
+    opacity: 0.5;
+}
+
+.img-responsive {
+    display: inline !important;
+}
+
+.upload_materials_overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+}
+
+.upload_materials_overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+.upload_materials_overlay a {
+    color:#C4C4C4;
+}
+
+.upload_materials_overlay a:hover {
+    text-decoration: none;
+}
