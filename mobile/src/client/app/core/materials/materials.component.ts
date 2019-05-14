@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationService } from '../../navigation.service';
 
 @Component({
     selector: 'app-materials',
@@ -11,7 +12,9 @@ export class MaterialsComponent implements OnInit {
     uploadedMaterials: Material[];
     showUploadedMaterialsModal: boolean = false;
 
-    constructor() { 
+    constructor(private navigationService: NavigationService) {
+        this.navigationService.showNavBar = false;
+        
         this.materials = [
             new Material("/assets/materials/gold.jpg", "Gold"),
             new Material("/assets/materials/brick.jpg", "Brick"),
