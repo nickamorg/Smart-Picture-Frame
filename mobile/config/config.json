@@ -6,7 +6,7 @@
   "development": {
     "general": {
       "environment": "development",
-      "clientPort": 3000
+      "clientPort": 4000
     },
     "express": {
       "hostName": "localhost",

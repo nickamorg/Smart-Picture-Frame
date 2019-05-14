@@ -14,3 +14,22 @@ $color-black:    #000000;
 .nav .active a {
     color: $color-black !important;
 }
+
+ul {
+    padding-top:40px;
+    padding-left:15%;
+}
+
+ul li {
+    font-size:30px;
+}
+
+#menu {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #707070;
+}
