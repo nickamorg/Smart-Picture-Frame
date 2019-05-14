@@ -19,7 +19,7 @@
     "Solertis",
     "Fullstack"
   ],
-  "author": "Nikos Anifantis",
+  "author": "Nikolaos Simidalas",
   "license": "ISC",
   "dependencies": {
     "@amisolertis/utils-config": "^2.0.2",
