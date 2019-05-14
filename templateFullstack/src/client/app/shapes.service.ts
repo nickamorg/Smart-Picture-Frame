@@ -17,6 +17,7 @@ class Frame {
     images: string[] = [];
     displayedImageIndex: number = 0;
     iterateTime: number = 0;
+    id: string = IDgenerator();
 
     init(borderRadius, borderSize, borderMaterial, borderColor, 
                 padding, top, left, width, height, images, iterateTime) {
@@ -90,7 +91,7 @@ class Frame {
         newFrame.top = this.top;
         newFrame.left = this.left;
         newFrame.width = this.width;
-
+        newFrame.id = this.id;
         newFrame.height = this.height;
         newFrame.displayedImageIndex = this.displayedImageIndex;
         newFrame.iterateTime = this.iterateTime;
@@ -136,6 +137,7 @@ class Wall {
     images: string[] = [];
     displayedImageIndex: number = 0;
     title: string = "";
+    id: string = IDgenerator();
     
     init(borderMaterial, borderSize, frames, images, title) {
         this.borderMaterial = borderMaterial;
@@ -187,6 +189,7 @@ class Wall {
         newWall.borderSize = this.borderSize;
         newWall.displayedImageIndex = this.displayedImageIndex;
         newWall.title = this.title;
+        newWall.id = this.id;
 
         newWall.images = [];
         for(var i = 0; i < this.images.length; i++) {
@@ -210,6 +213,7 @@ class WallSet {
     target: string = "";
     title: string = "";
     description: string = "";
+    id: string = IDgenerator();
 
     init(walls, creator, type, target, title, description) {
         this.walls = walls;
@@ -227,8 +231,9 @@ class WallSet {
         newWallSet.target = this.target;
         newWallSet.title = this.title;
         newWallSet.description = this.description;
-        newWallSet.walls = [];
+        newWallSet.id = this.id;
 
+        newWallSet.walls = [];
         for(var i = 0; i < this.walls.length; i++) {
             newWallSet.walls.push(this.walls[i].copy());
         }
@@ -243,6 +248,7 @@ export class ShapesService {
     wallSets: WallSet[] = [];
     loadedWallSet: WallSet;
     focusedWallIndex: number = 0;
+    loadedWallSetIndex: number = 0;
 
     wallMaterial: string = "";
     hasWallMaterial: boolean = false;
@@ -589,6 +595,8 @@ export class ShapesService {
         this.wallSets.push(newWallSet);
         this.loadedWallSet = newWallSet.copy();
         this.editMode = true;
+        this.loadedWallSetIndex = this.wallSets.length - 1;
+        this.focusedWallIndex = 0;
     }
 
     setWallTitleStyle(index) {
@@ -617,4 +625,25 @@ export class ShapesService {
     setCurrWallSetFocusedWallNewTitle(index, title) {
         this.loadedWallSet.walls[index].title = title;
     }
+
+    saveWall() {
+        var wallSetWalls = this.wallSets[this.loadedWallSetIndex].walls;
+        var editedWall = this.loadedWallSet.walls[this.focusedWallIndex];
+        for(var i = 0; i < wallSetWalls.length; i++) {
+            if(wallSetWalls[i].id === editedWall.id) {
+                wallSetWalls[i] = editedWall.copy();
+            }
+        }
+    }
+
+    saveWallSet() {
+        this.wallSets[this.loadedWallSetIndex] = this.loadedWallSet.copy();
+    }
+}
+
+function IDgenerator() {
+    var S4 = function() {
+       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
+    };
+    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
 }

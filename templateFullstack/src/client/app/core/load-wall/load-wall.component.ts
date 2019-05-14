@@ -34,6 +34,8 @@ export class LoadWallComponent {
         this.shapesService.isFocusedFrame = false;
         this.shapesService.isFocusedWall= true;
         this.shapesService.selectedFrame = -1;
+        this.shapesService.loadedWallSetIndex = wallSetIndex;
+        this.shapesService.focusedWallIndex = wallIndex;
         // this.shapesService.loadWall(....);
     }
 }

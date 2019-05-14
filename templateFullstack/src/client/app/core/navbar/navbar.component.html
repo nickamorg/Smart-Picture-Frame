@@ -18,8 +18,11 @@
                 <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active">
                     <a><img src="./assets/images/preview.png"/> Preview Wall</a>
                 </li>
-                <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active">
+                <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active" (click)="shapesService.saveWall()">
                     <a><img src="./assets/images/save.png"/> Save Wall</a>
+                </li>
+                <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active" (click)="shapesService.saveWallSet()">
+                    <a><img src="./assets/images/save_all.png"/> Save WallSet</a>
                 </li>
             </ul>
         </div>
