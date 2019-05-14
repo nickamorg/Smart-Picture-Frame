@@ -1,0 +1,372 @@
+* {
+    font-size: 100%;
+    font-family: 'Roboto' !important;
+}
+
+.overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+}
+
+.overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+.overlay a {
+    color:#C4C4C4;
+}
+
+.overlay a:hover {
+    text-decoration: none;
+}
+
+.form-control {
+    width:auto !important;
+    display:inline-block !important;
+}
+
+.square {
+    position:relative;
+    z-index: 2;
+    width: 50px;
+    height: 50px;
+    background: #B9B9B9;
+    display:inline-block;
+}
+
+
+.circle {
+    position:relative;
+    width: 50px;
+    height: 50px;
+    background: #B9B9B9;
+    border-radius: 50%;
+    display:inline-block;
+}
+
+.heart {
+    position: relative;
+    display:inline-block;
+    width: 50px;
+    height: 50px;
+}
+
+.heart:before,
+.heart:after {
+    position: absolute;
+    content: "";
+    left: 25px;
+    top: 0;
+    width: 25px;
+    height: 40px;
+    background: #B9B9B9;
+    border-radius: 25px 25px 0 0;
+    transform: rotate(-45deg);
+    transform-origin: 0 100%;
+}
+
+.heart:after {
+    left: 0;
+    transform: rotate(45deg);
+    transform-origin: 100% 100%;
+}
+
+.square_frame {
+    background-color: white;
+    position: absolute;
+    z-index: 2;
+    top:10px;
+    left:10px;
+    width: 100px;
+    height: 100px;
+    display:inline-block;
+}
+
+.circle_frame {
+    background-color: white;
+    position: absolute;
+    z-index: 2;
+    top:10px;
+    left:10px;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    display:inline-block;
+}
+
+.focus_frame {
+    box-shadow: 0px 0px 0px 5px #30C2FF;
+}
+
+/// From Gallery
+
+.filters {
+    height: 100%;
+    padding-top: 0 !important;
+    width: 15%;
+    position: fixed;
+    z-index: 1;
+    top: 51px;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 20px; background-color: #F5F5F5;
+}
+
+/* The container */
+.checkbox_container {
+    color: #878787;
+    display: block;
+    position: relative;
+    padding-left: 30px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+  
+  /* Hide the browser's default checkbox */
+.checkbox_container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+  
+  /* Create a custom checkbox */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #eee;
+}
+  
+  /* On mouse-over, add a grey background color */
+.checkbox_container:hover input ~ .checkmark {
+    background-color: #878787;
+}
+  
+  /* When the checkbox is checked, add a blue background */
+.checkbox_container input:checked ~ .checkmark {
+    background-color: #878787;
+}
+  
+  /* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+  
+  /* Show the checkmark when checked */
+.checkbox_container input:checked ~ .checkmark:after {
+    display: block;
+}
+  
+  /* Style the checkmark/indicator */
+.checkbox_container .checkmark:after {
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+
+.checkbox_container span {
+    border: 2px solid #707070;
+    background-color: white;
+}
+
+
+/* scrollbar */
+.scrollbar {
+    overflow-y:auto;
+    overflow-x:hidden;
+}
+
+.scrollbar::-webkit-scrollbar {
+    width: 15px;
+    border-radius: 10px;
+    background-color:#ECECEC;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background-color: #5B5B5B;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5);
+}
+
+// OVERLAY IMAGE
+
+.main-title{
+    color: #2d2d2d;
+    text-align: center;
+    text-transform: capitalize;
+    padding: 0.7em 0;
+}
+
+.content {
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+}
+
+.content .content-overlay {
+    background: rgba(0,0,0,0.7);
+    position: absolute;
+    height: 99%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    opacity: 0;
+    -webkit-transition: all 0.4s ease-in-out 0s;
+    -moz-transition: all 0.4s ease-in-out 0s;
+    transition: all 0.4s ease-in-out 0s;
+}
+
+.content:hover .content-overlay{
+    opacity: 1;
+}
+
+.content-image{
+    width: 100%;
+}
+
+.content-details {
+    position: absolute;
+    text-align: center;
+    padding-left: 1em;
+    padding-right: 1em;
+    width: 100%;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+.content:hover .content-details{
+    top: 50%;
+    left: 50%;
+    opacity: 1;
+}
+
+.content-details h3{
+    color: #fff;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5em;
+    text-transform: uppercase;
+}
+
+.content-details p{
+    color: #fff;
+    font-size: 0.8em;
+}
+
+.fadeIn-bottom{
+     top: 80%;
+}
+
+.fadeIn-top{
+     top: 20%;
+     padding: 0 !important;
+}
+
+.fadeIn-left{
+     left: 20%;
+}
+
+.fadeIn-right{
+     left: 80%;
+}
+
+// Modal Style
+
+#modal_overlay_content {
+	position: relative;
+    top: 5%;
+    max-height: 90%;
+    left:15%;
+    width: 70%;
+    margin-top: 30px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+#modal_overlay_content h3 {
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+#modal_overlay_content select {
+    width: 150px !important;
+}
+
+#modal_overlay_content input {
+    width: 150px !important;
+}
+
+.modal_checked {
+    outline: 5px solid #30C2FF;
+}
+
+.modal_inactive_option {
+    opacity: 0.5;
+}
+
+.img-responsive {
+    display: inline !important;
+}
+
+.modal_overlay {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0, 0.9);
+}
+
+.modal_overlay .closebtn {
+    position: absolute;
+    top: 20px;
+    right: 45px;
+    font-size: 60px;
+}
+
+.modal_overlay a {
+    color:#C4C4C4;
+}
+
+.modal_overlay a:hover {
+    text-decoration: none;
+}
