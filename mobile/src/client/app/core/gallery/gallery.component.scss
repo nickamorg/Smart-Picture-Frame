@@ -1,9 +1,7 @@
 .gallery_display {
-    width: 68%;
+    padding: 20px 10px 0 10px;
     z-index: 1;
     top: 51px;
-    margin-left: 20%;
-    padding-top: 20px;
 }
 
 .gallery_inactive_option {
@@ -58,8 +56,8 @@
 
 .gallery-image_overlay .closebtn {
     position: absolute;
-    top: 20px;
-    right: 45px;
+    top: -20px;
+    right: 15px;
     font-size: 60px;
 }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NavigationService } from '../../navigation.service';
 
 @Component({
   selector: 'app-wallpapers',
@@ -10,7 +11,9 @@ export class WallpapersComponent implements OnInit {
     uploadedWallpapers: Wallpaper[];
     showUploadedWallpapersModal: boolean = false;
 
-    constructor() { 
+    constructor(private navigationService: NavigationService) {
+        this.navigationService.showNavBar = false;
+        
         this.wallpapers = [
             new Wallpaper("/assets/wallpapers/waterfalls.jpg", "Waterfalls"),
             new Wallpaper("/assets/wallpapers/inferno.jpg", "Inferno"),

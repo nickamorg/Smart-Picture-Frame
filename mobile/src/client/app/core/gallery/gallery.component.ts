@@ -1,4 +1,5 @@
 import { Component, OnInit, ɵConsole } from '@angular/core';
+import { NavigationService } from '../../navigation.service';
 
 @Component({
     selector: 'app-gallery',
@@ -27,7 +28,9 @@ export class GalleryComponent implements OnInit {
     editImage: boolean = false;
     displayedImage: Image = null;
 
-    constructor() {
+    constructor(private navigationService: NavigationService) {
+        this.navigationService.showNavBar = false;
+        
         this.allGalleryImagesIndexes = [0, 1, 2, 3];
 
         this.galleryImages = [
