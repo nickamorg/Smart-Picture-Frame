@@ -7,7 +7,6 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { NewWallComponent } from './new-wall/new-wall.component';
 import { LoadWallComponent } from './load-wall/load-wall.component';
-import { UploadImagesComponent } from './upload-images/upload-images.component';
 import { MaterialsComponent } from './materials/materials.component';
 import { WallpapersComponent } from './wallpapers/wallpapers.component';
 import { GalleryComponent } from './gallery/gallery.component';
@@ -17,6 +16,7 @@ import { EditorComponent } from './editor/editor.component';
 import { ShapesService } from '../shapes.service';
 import { FrameImagesComponent } from './frame-images/frame-images.component';
 import { WallImagesComponent } from './wall-images/wall-images.component';
+import { NavigationService} from '../navigation.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,6 @@ import { WallImagesComponent } from './wall-images/wall-images.component';
     FooterComponent,
     NewWallComponent,
     LoadWallComponent,
-    UploadImagesComponent,
     MaterialsComponent,
     GalleryComponent,
     WorkspaceComponent,
@@ -45,6 +44,6 @@ import { WallImagesComponent } from './wall-images/wall-images.component';
     FooterComponent,
     WorkspaceComponent
   ],
-  providers: [ShapesService]
+  providers: [ShapesService, NavigationService]
 })
 export class CoreModule { }

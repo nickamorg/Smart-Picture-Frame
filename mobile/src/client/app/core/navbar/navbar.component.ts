@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ShapesService } from '../../shapes.service';
 import { Router } from '@angular/router';
+import { NavigationService } from '../../navigation.service';
 
 @Component({
     selector: 'navbar',
@@ -11,7 +12,9 @@ export class NavbarComponent implements OnInit {
     showNewWallModal: boolean = false;
     showLoadWallModal: boolean = false;
 
-    constructor(private shapesService: ShapesService, private router: Router) { }
+    constructor(private shapesService: ShapesService, 
+                private navigationService: NavigationService, 
+                private router: Router) { }
 
     ngOnInit() { }
 

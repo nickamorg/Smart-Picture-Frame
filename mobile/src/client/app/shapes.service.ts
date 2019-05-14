@@ -245,8 +245,6 @@ class WallSet {
 
 @Injectable()
 export class ShapesService {
-    showNavBar: boolean = true;
-
 
     wallSets: WallSet[] = [];
     loadedWallSet: WallSet;

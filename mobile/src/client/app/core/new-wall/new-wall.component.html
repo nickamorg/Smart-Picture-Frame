@@ -1,11 +1,7 @@
 <div *ngIf="showNewWallModalPartially" id="new_wall_page" class="overlay" style="z-index:5">
-    <div class="clearfix">
-        <a href="javascript:void(0)" class="closebtn" (click)="sendMessage()">&times;</a>
-    </div>
-  
-    <div id="new-wall_overlay_content" class="clearfix">
+      <div id="new-wall_overlay_content" class="clearfix">
+        <a href="javascript:void(0)" class="closebtn" (click)="sendMessage()" style="top:-20px; right:10px;">&times;</a>
         <h3>NEW WALL</h3>
-        
         <table align="center">
             <tr>
                 <td><label for="wall_creator">Creator</label></td>
@@ -49,7 +45,7 @@
 
             <tr>
                 <td colspan="2" style="padding: 10px 0 30px 0">
-                    <button routerLink="/home" (click)="createNewWall()" type="button" class="btn btn-block" style="color:white; background-color:#707070">Create Wall</button>
+                    <button routerLink="/editor" (click)="createNewWall()" type="button" class="btn btn-block" style="color:white; background-color:#707070">Create Wall</button>
                 </td>
             </tr>
         </table>

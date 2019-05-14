@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ShapesService } from '../../shapes.service';
+import { NavigationService } from '../../navigation.service';
 
 @Component({
     selector: 'app-editor',
@@ -9,7 +10,9 @@ import { ShapesService } from '../../shapes.service';
 
 export class EditorComponent implements OnInit {
 
-    constructor(private shapesService: ShapesService) {}
+    constructor(private shapesService: ShapesService, private navigationService: NavigationService) {
+        this.navigationService.showNavBar = false;
+    }
     
     ngOnInit() { }
 

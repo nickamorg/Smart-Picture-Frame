@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ShapesService } from '../../shapes.service';
+import { NavigationService } from '../../navigation.service';
 
 @Component({
     selector: 'app-new-wall',
@@ -20,7 +21,7 @@ export class NewWallComponent implements OnInit {
     title: string;
     description: string;
     
-    constructor(private shapesService: ShapesService) {}
+    constructor(private shapesService: ShapesService, private navigationService: NavigationService) { }
 
     ngOnInit() { }
 
@@ -36,6 +37,7 @@ export class NewWallComponent implements OnInit {
         this.sendMessage();
         this.shapesService.initNewWall( this.selectedCreator, this.selectedType, 
                                         this.selectedTarget, this.title, this.description);
+        this.navigationService.showNavBar = false;
     }
 
     selectWallCreator(creator) {
