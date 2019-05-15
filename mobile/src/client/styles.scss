@@ -326,11 +326,11 @@
 }
 
 #modal_overlay_content select {
-    width: 150px !important;
+    width: 100% !important;
 }
 
 #modal_overlay_content input {
-    width: 150px !important;
+    width: 100% !important;
 }
 
 .modal_checked {
@@ -370,3 +370,7 @@
 .modal_overlay a:hover {
     text-decoration: none;
 }
+
+::-webkit-input-placeholder {
+    font-style: italic;
+ }

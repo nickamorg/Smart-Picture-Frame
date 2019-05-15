@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { CoreRoutingModule } from './core.routes.module';
 import { NavbarComponent } from './navbar/navbar.component';
-import { FooterComponent } from './footer/footer.component';
 import { NewWallComponent } from './new-wall/new-wall.component';
 import { LoadWallComponent } from './load-wall/load-wall.component';
 import { MaterialsComponent } from './materials/materials.component';
@@ -22,7 +21,6 @@ import { NavigationService} from '../navigation.service';
   declarations: [
     HomeComponent,
     NavbarComponent,
-    FooterComponent,
     NewWallComponent,
     LoadWallComponent,
     MaterialsComponent,
@@ -41,7 +39,6 @@ import { NavigationService} from '../navigation.service';
   exports: [
     CoreRoutingModule,
     NavbarComponent,
-    FooterComponent,
     WorkspaceComponent
   ],
   providers: [ShapesService, NavigationService]
