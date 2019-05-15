@@ -33,3 +33,31 @@ ul li {
     left: 0;
     background-color: #707070;
 }
+
+.topnav {
+    overflow: hidden;
+    background-color: #333;
+    position: relative;
+}
+
+.topnav #myLinks {
+    display: none;
+    border-top:1px solid #000000;
+}
+
+.topnav a {
+    color: white;
+    background-color: #333 !important;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    display: block;
+}
+
+.topnav a.icon {
+    background: black;
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
