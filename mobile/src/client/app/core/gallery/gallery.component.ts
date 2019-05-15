@@ -9,6 +9,7 @@ import { NavigationService } from '../../navigation.service';
 
 export class GalleryComponent implements OnInit {
     uploadedImages: Image[];
+    uploadedImagesEditIndex: number = 0;
     showUploadedImagesModal: boolean = false;
 
     imagesCol: number = 6;
@@ -170,6 +171,7 @@ export class GalleryComponent implements OnInit {
 
     processFile(imageInput) {
         this.uploadedImages = [];
+        this.uploadedImagesEditIndex = 0;
         this.showUploadedImagesModal = true;
 
         for(var i = 0; i < imageInput.files.length; i++) {
@@ -204,24 +206,64 @@ export class GalleryComponent implements OnInit {
         });
     }
 
-    addUploadedImageTitle(index, event) {
-        this.uploadedImages[index].title = event.target.value;
+    setUploadedImageTitle(event) {
+        this.uploadedImages[this.uploadedImagesEditIndex].title = event.target.value;
     }
 
-    addUploadedImageDescription(index, event) {
-        this.uploadedImages[index].description = event.target.value;
+    setUploadedImageDescription(event) {
+        this.uploadedImages[this.uploadedImagesEditIndex].description = event.target.value;
     }
 
-    addUploadedImageType(index, event) {
-        this.uploadedImages[index].type = event.target.value;
+    setUploadedImageType(event) {
+        this.uploadedImages[this.uploadedImagesEditIndex].type = event.target.value;
     }
     
-    addUploadedImageCountry(index, event) {
-        this.uploadedImages[index].country = event.target.value;
+    setUploadedImageCountry(event) {
+        this.uploadedImages[this.uploadedImagesEditIndex].country = event.target.value;
     }
 
-    addUploadedImageCity(index, event) {
-        this.uploadedImages[index].city = event.target.value;
+    setUploadedImageCity(event) {
+        this.uploadedImages[this.uploadedImagesEditIndex].city = event.target.value;
+    }
+
+    getUploadedImageTitle() {
+        return this.uploadedImages[this.uploadedImagesEditIndex].title;
+    }
+
+    getUploadedImageDescription() {
+        return this.uploadedImages[this.uploadedImagesEditIndex].description;
+    }
+
+    getUploadedImageType() {
+        return this.uploadedImages[this.uploadedImagesEditIndex].type;
+    }
+    
+    getUploadedImageCountry() {
+        return this.uploadedImages[this.uploadedImagesEditIndex].country;
+    }
+
+    getUploadedImageCity() {
+        return this.uploadedImages[this.uploadedImagesEditIndex].city;
+    }
+
+    prevUploadedImageToEdit() {
+        if(this.uploadedImagesEditIndex > 0) {
+            this.uploadedImagesEditIndex--;
+        }
+    }
+
+    nextUploadedImageToEdit() {
+        if(this.uploadedImagesEditIndex < this.uploadedImages.length - 1) {
+            this.uploadedImagesEditIndex++;
+        }
+    }
+
+    setPrevUploadedImageButtonStyle() {
+        if(this.uploadedImagesEditIndex === 0) return {'opacity': '0.5'};
+    }
+
+    setNextUploadedImageButtonStyle() {
+        if(this.uploadedImagesEditIndex === this.uploadedImages.length - 1) return {'opacity': '0.5'};
     }
 }
 
