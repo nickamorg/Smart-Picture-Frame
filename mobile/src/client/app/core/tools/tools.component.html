@@ -1,33 +1,55 @@
 <div class="tools clearfix">
     <div *ngIf="shapesService.isFocusedFrame" style="color:#9A9A9A">
-        <div style="border-bottom: 1px solid #E3E2E2">
-            <table style="width: 100%">
-                <tr style="border-bottom: 10px solid transparent">
-                    <td><label style="padding:0 10px">X</label></td>
-                    <td><input (keyup)="shapesService.setPosX($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="posX" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].left}}"></td>
-                    <td><label style="padding:0 10px">Y</label></td>
-                    <td><input (keyup)="shapesService.setPosY($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="posY" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].top}}"></td>
-                </tr>
+        <div style="padding:0 20px 10px 20px; border-bottom: 1px solid #E3E2E2">
+            <div class="clearfix" style="padding-bottom:10px">
+                <div class="clearfix col-xs-6" style="float:left; padding:0">
+                    <div class="col-xs-2" style="padding:0">X</div>
+                    <div class="col-xs-6" style="padding:0 0 0 6px">
+                        <input (keyup)="shapesService.setPosX($event.target.value)" type="text" style="width:100%; border-radius: 5px" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].left}}">
+                    </div>
+                </div>
+                <div class="clearfix col-xs-6" style="float:right; padding:0">
+                    <div class="col-xs-6" style="padding:0 0 0 6px; float:right">
+                        <input (keyup)="shapesService.setPosY($event.target.value)" type="text" style="width:100%; border-radius: 5px" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].top}}">
+                    </div>
+                    <div class="col-xs-2" style="padding:0; float:right">Y</div>
+                </div>
+            </div>
 
-                <tr style="border-bottom: 10px solid transparent">
-                    <td><label style="padding:0 10px">W</label></td>
-                    <td><input (keyup)="shapesService.setWidth($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="width" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].width}}"></td>
-                    <td><label style="padding:0 10px">H</label></td>
-                    <td><input (keyup)="shapesService.setHeight($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].height}}"></td>
-                </tr>
+            <div class="clearfix" style="padding-bottom:10px">
+                <div class="clearfix col-xs-6" style="float:left; padding:0">
+                    <div class="col-xs-2" style="padding:0">W</div>
+                    <div class="col-xs-6" style="padding:0 0 0 6px">
+                        <input (keyup)="shapesService.setWidth($event.target.value)" type="text" style="width:100%; border-radius: 5px" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].width}}">
+                    </div>
+                </div>
+                <div class="clearfix col-xs-6" style="float:right; padding:0">
+                    <div class="col-xs-6" style="padding:0 0 0 6px; float:right">
+                        <input (keyup)="shapesService.setHeight($event.target.value)" type="text" style="width:100%; border-radius: 5px" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].height}}">
+                    </div>
+                    <div class="col-xs-2" style="padding:0; float:right">H</div>
+                </div>
+            </div>
 
-                <tr style="border-bottom: 10px solid transparent">
-                    <td><label style="padding:0 10px">Z</label></td>
-                    <td><input type="text" style="width:50px; border-radius: 5px" id="zindex" placeholder="0" value="0"></td>
-                    <td><label style="padding:0 10px">P</label></td>
-                    <td><input (keyup)="shapesService.setPadding($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="padding" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].padding}}"></td>
-                </tr>
-            </table>
+            <div class="clearfix">
+                <div class="clearfix col-xs-6" style="float:left; padding:0">
+                    <div class="col-xs-2" style="padding:0">Z</div>
+                    <div class="col-xs-6" style="padding:0 0 0 6px">
+                        <input type="text" style="width:100%; border-radius: 5px" placeholder="0" value="0">
+                    </div>
+                </div>
+                <div class="clearfix col-xs-6" style="float:right; padding:0">
+                    <div class="col-xs-6" style="padding:0 0 0 6px; float:right">
+                            <input (keyup)="shapesService.setPadding($event.target.value)" type="text" style="width:100%; border-radius: 5px" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].padding}}">
+                    </div>
+                    <div class="col-xs-2" style="padding:0; float:right">H</div>
+                </div>
+            </div>
         </div>
 
-        <div style="padding:10px 10px; border-bottom: 1px solid #E3E2E2">
+        <div style="padding:10px 20px 10px 20px; border-bottom: 1px solid #E3E2E2">
             <p style="color:#5C5555">BORDER</p>
-            <div class="dropdown" style="padding-top:10px">
+            <div class="dropdown">
                 <button (click)="shapesService.toggleHasMaterial()" style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" class="btn dropdown-toggle" type="button" data-toggle="dropdown">
                     <div *ngIf="shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].hasMaterial; else elseBlock">
                         <div [ngStyle]="shapesService.returnBorderMaterial()"></div>
@@ -36,23 +58,28 @@
                         Material <img style="float:right" src="/assets/images/arrow_down.svg">
                     </ng-template>
                 </button>
-                <div style="padding-top:10px">
-                    <span style="padding-right:10px">Border Size</span>
-                    <input (keyup)="shapesService.setBorderSize($event.target.value)" type="text" style="width:150px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].borderSize}}">
+                <div class="clearfix" style="padding-top:10px">
+                    <div class="col-xs-4" style="padding:4px 0 0 0">
+                        <span style="padding-right:10px">Border Size</span>
+                    </div>
+                    <div class="col-xs-8" style="padding:0 0 0 6px">
+                        <input (keyup)="shapesService.setBorderSize($event.target.value)" type="text" style="width:100%; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].borderSize}}">
+                    </div>
                 </div>
-                <ul class="dropdown-menu" style="width:100%; text-align: center; top:55px">
-                    <li *ngFor="let type of shapesService.materials; let i = index" (click)='shapesService.addMaterial(i)'  [ngStyle]="shapesService.setDropDownDisplayedMaterial(i)"></li>
+                <ul class="dropdown-menu" style="width:100%; text-align:center; top:40px; padding:0">
+                    <li (click)='shapesService.removeMaterial()' [ngStyle]="shapesService.setDropDownDisplayedMaterial(-1)"></li>
+                    <li *ngFor="let type of shapesService.materials; let i = index" (click)='shapesService.addMaterial(i)' [ngStyle]="shapesService.setDropDownDisplayedMaterial(i)"></li>
                 </ul>
             </div>
         </div>
 
-        <div style="padding:10px 10px">
+        <div style="padding:10px 20px">
             <p style="color:#5C5555">IMAGES</p>
-            <input type="checkbox" id="use_as_mask" value="Use as mask">
-            <label for="use_as_mask">Use as mask</label>
-            <div style="float:right">
+            <div class="col-xs-1" style="padding:0">
                 <img src="/assets/images/duration.png" style="padding-right:5px">
-                <input (keyup)="shapesService.setIterateTime($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="iterateTime" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].iterateTime}}">
+            </div>
+            <div class="col-xs-11" style="padding:0 0 0 6px">
+                <input (keyup)="shapesService.setIterateTime($event.target.value)" type="text" style="width:100%; border-radius: 5px" id="iterateTime" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].iterateTime}}">
             </div>
             <button (click)="toggleChooseFrameImagesModal()" type="button" class="btn" style="outline: none; margin-top: 10px; padding-top: 5px; padding-bottom:5px; border:1px solid #C4C4C4; color:black; background-color:white; width:100%; border-radius: 5px">Choose Images</button>
         </div>
@@ -67,13 +94,13 @@
                         <div class="col-xs-2" style="padding:0">
                             <img src="/assets/images/time.svg" style="padding-right:5px">
                         </div>
-                        <div class="col-xs-4" style="padding:0 0 0 6px">
-                            <input type="text" style="width:50px; border-radius: 5px" id="wallIDisplayTime" placeholder="00:00" value="">
+                        <div class="col-xs-6" style="padding:0 0 0 6px">
+                            <input type="text" style="width:100%; border-radius: 5px" id="wallIDisplayTime" placeholder="00:00" value="">
                         </div>
                     </div>
                     <div class="clearfix col-xs-6" style="float:right; padding:0">
-                        <div class="col-xs-4" style="padding:0 0 0 6px; float:right">
-                            <input type="text" style="width:50px; border-radius: 5px" id="wallDisplayDuration" placeholder="00" value="">
+                        <div class="col-xs-6" style="padding:0 0 0 6px; float:right">
+                            <input type="text" style="width:100%; border-radius: 5px" id="wallDisplayDuration" placeholder="00" value="">
                         </div>
                         <div class="col-xs-2" style="padding:0; float:right">
                                 <img src="/assets/images/duration.svg" style="padding-right:5px">
@@ -112,7 +139,7 @@
                     </div>
                 </div>
                 <ul class="dropdown-menu" style="width:100%; text-align:center; top:40px; padding:0">
-                        <li (click)='shapesService.removeWallMaterial()' [ngStyle]="shapesService.setDropDownDisplayedMaterial(-1)"></li>
+                    <li (click)='shapesService.removeWallMaterial()' [ngStyle]="shapesService.setDropDownDisplayedMaterial(-1)"></li>
                     <li *ngFor="let type of shapesService.materials; let i = index" (click)='shapesService.addWallMaterial(i)' [ngStyle]="shapesService.setDropDownDisplayedMaterial(i)"></li>
                 </ul>
             </div>

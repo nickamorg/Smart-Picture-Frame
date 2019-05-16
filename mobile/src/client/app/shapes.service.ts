@@ -371,20 +371,22 @@ export class ShapesService {
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize = borderSize;
     }
 
-    toggleHasMaterial() {
-        // this.frames[this.selectedFrame].hasMaterial = !this.frames[this.selectedFrame].hasMaterial;
-    }
-
     addMaterial(index:number) {
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial = this.materials[index];
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].hasMaterial = true;
     }
 
+    removeMaterial() {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial = "";
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize = 0;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].hasMaterial = false;
+    }
+
     returnBorderMaterial() {
         let style = {
             'background-image': 'url("./assets/materials/' + this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial + '")',
-            'width': '207px',
-            'height': '27px'
+            'width': '100%',
+            'height': '30px'
         }
 
         return style;

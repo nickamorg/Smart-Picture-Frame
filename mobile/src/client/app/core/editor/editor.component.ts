@@ -16,6 +16,7 @@ export class EditorComponent implements OnInit {
         //For test code
 
         this.shapesService.initNewWall("", "", "", "", "");
+        this.shapesService.loadedWallSet = this.shapesService.wallSets[0].copy();
         this.navigationService.showNavBar = false;
         this.shapesService.isFocusedWall = true;
         this.shapesService.isFocusedFrame = false;
