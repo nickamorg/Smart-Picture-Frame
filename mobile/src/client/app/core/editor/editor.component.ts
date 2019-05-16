@@ -12,6 +12,13 @@ export class EditorComponent implements OnInit {
 
     constructor(private shapesService: ShapesService, private navigationService: NavigationService) {
         this.navigationService.showNavBar = false;
+
+        //For test code
+
+        this.shapesService.initNewWall("", "", "", "", "");
+        this.navigationService.showNavBar = false;
+        this.shapesService.isFocusedWall = true;
+        this.shapesService.isFocusedFrame = false;
     }
     
     ngOnInit() { }

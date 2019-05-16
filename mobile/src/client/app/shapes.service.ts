@@ -165,10 +165,10 @@ class Wall {
 
     getWallStyle() {
         let style = {
-            'width':  (800 - this.borderSize) + 'px',
-            'height': (200 - this.borderSize) + 'px',
-            'top':  (this.borderSize / 2) + 'px', 
-            'left': (this.borderSize / 2) + 'px',
+            'width':  (800 - (this.hasMaterial? this.borderSize : 0)) + 'px',
+            'height': (200 - (this.hasMaterial? this.borderSize : 0)) + 'px',
+            'top':  ((this.hasMaterial? this.borderSize : 0) / 2) + 'px', 
+            'left': ((this.hasMaterial? this.borderSize : 0) / 2) + 'px',
             'background-color': '#C4C4C4',
             'position': 'relative',
             'background-size': 'cover'
@@ -392,14 +392,14 @@ export class ShapesService {
 
     setDropDownDisplayedMaterial(index: number) {
         let style = {
-            'background-image': 'url("./assets/materials/' + this.materials[index] + '")',
-            'width': '207px',
-            'height': '27px',
-            'margin-left': '10px',
-            'margin-bottom': '10px',
+            'width': '90%',
+            'height': '30px',
+            'margin': '10px 0 10px 0',
+            'margin-left': '5%',
             'cursor': 'pointer',
             'padding-bottom': '5px'
         }
+        style['background-image'] = 'url("./assets/materials/' + (index> -1? this.materials[index] : 'no_material.png') + '")';
 
         return style;
     }
@@ -495,10 +495,10 @@ export class ShapesService {
 
     setWallStyle() {
         let style = {
-            'width':  (800 - this.loadedWallSet.walls[this.focusedWallIndex].borderSize) + 'px',
-            'height': (200 - this.loadedWallSet.walls[this.focusedWallIndex].borderSize) + 'px',
-            'top':  (this.loadedWallSet.walls[this.focusedWallIndex].borderSize / 2) + 'px', 
-            'left': (this.loadedWallSet.walls[this.focusedWallIndex].borderSize / 2) + 'px',
+            'width':  (800 - (this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial? this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0)) + 'px',
+            'height': (200 - (this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial? this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0)) + 'px',
+            'top':  ((this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial? this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0) / 2) + 'px', 
+            'left': ((this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial? this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0) / 2) + 'px',
             'background-color': '#C4C4C4',
             'position': 'absolute',
             'background-size': 'cover'
@@ -534,14 +534,20 @@ export class ShapesService {
 
     addWallMaterial(index:number) {
         this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = this.materials[index];
-        this.hasWallMaterial = true;
+        this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial = true;
+    }
+
+    removeWallMaterial() {
+        this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = "";
+        this.loadedWallSet.walls[this.focusedWallIndex].borderSize = 0;
+        this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial = false;
     }
 
     returnWallMaterial() {
         let style = {
             'background-image': 'url("./assets/materials/' + this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial + '")',
-            'width': '190px',
-            'height': '27px'
+            'width': '100%',
+            'height': '30px'
         }
 
         return style;

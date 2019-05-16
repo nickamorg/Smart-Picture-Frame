@@ -38,6 +38,8 @@ export class NewWallComponent implements OnInit {
         this.shapesService.initNewWall( this.selectedCreator, this.selectedType, 
                                         this.selectedTarget, this.title, this.description);
         this.navigationService.showNavBar = false;
+        this.shapesService.isFocusedWall = true;
+        this.shapesService.isFocusedFrame = false;
     }
 
     selectWallCreator(creator) {
