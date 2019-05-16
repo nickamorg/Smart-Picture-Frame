@@ -12,6 +12,7 @@ export class FrameImagesComponent implements OnInit {
     
     showChooseFrameImages: boolean = false;
     constructor(private shapesService: ShapesService) {}
+    showFiltersModal: boolean = false;
 
     ngOnInit() { }
 
@@ -24,4 +25,15 @@ export class FrameImagesComponent implements OnInit {
         this.sendMessage();
     }
 
+    openFiltersModal() {
+        this.showFiltersModal = true;
+    }
+
+    cancelFilters() {
+        this.showFiltersModal = false;
+    }
+
+    applyFilters() {
+        this.showFiltersModal = false;
+    }
 }
