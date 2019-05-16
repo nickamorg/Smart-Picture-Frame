@@ -11,6 +11,7 @@ export class GalleryComponent implements OnInit {
     uploadedImages: Image[];
     uploadedImagesEditIndex: number = 0;
     showUploadedImagesModal: boolean = false;
+    showFiltersModal: boolean = false;
 
     imagesCol: number = 6;
     galleryImages: Image[];
@@ -77,30 +78,6 @@ export class GalleryComponent implements OnInit {
         } else {
             this[cat].splice(index, 1);
             this.selectedFiltersCounter--;
-        }
-
-        // Apply filters to displayed images
-        if(!this.selectedFiltersCounter) {
-            this.displayedGalleryImages = this.allGalleryImagesIndexes;
-        } else {
-            var flag: boolean;
-            this.displayedGalleryImages = [];
-
-            for(var i = 0; i < this.galleryImages.length; i++) {
-                flag = false;
-                
-                var categories = ["selectedTypes", "selectedCountries", "selectedCities"];
-                var imageField = ["type", "country", "city"];
-
-                for(var index in categories) {
-                    if(this[categories[index]].length) {
-                        var match = this[categories[index]].indexOf(this.galleryImages[i][imageField[index]]);
-                        flag = match > -1? true : false;
-                        if(!flag) break;
-                    }
-                }
-                if(flag) this.displayedGalleryImages.push(i);
-            }
         }  
     }
 
@@ -265,6 +242,44 @@ export class GalleryComponent implements OnInit {
     setNextUploadedImageButtonStyle() {
         if(this.uploadedImagesEditIndex === this.uploadedImages.length - 1) return {'opacity': '0.5'};
     }
+
+    openFiltersModal() {
+        this.showFiltersModal = true;
+
+        this.initFiltering();
+    }
+
+    cancelFilters() {
+        this.showFiltersModal = false;
+    }
+
+    applyFilters() {
+        this.showFiltersModal = false;
+
+        if(!this.selectedFiltersCounter) {
+            this.displayedGalleryImages = this.allGalleryImagesIndexes;
+        } else {
+            var flag: boolean;
+            this.displayedGalleryImages = [];
+
+            for(var i = 0; i < this.galleryImages.length; i++) {
+                flag = false;
+                
+                var categories = ["selectedTypes", "selectedCountries", "selectedCities"];
+                var imageField = ["type", "country", "city"];
+
+                for(var index in categories) {
+                    if(this[categories[index]].length) {
+                        var match = this[categories[index]].indexOf(this.galleryImages[i][imageField[index]]);
+                        flag = match > -1? true : false;
+                        if(!flag) break;
+                    }
+                }
+                if(flag) this.displayedGalleryImages.push(i);
+            }
+        }
+    }
+
 }
 
 class Image {

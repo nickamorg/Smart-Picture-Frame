@@ -1,66 +1,12 @@
-<!-- <div class="filters">
-    <div>
-        <div style="width:100%; background-color: #EBEBEB; margin-bottom: 20px">
-            <h5 style="padding:10px 20px 10px 20px; margin:0">FILTERS</h5>
-        </div>
-    </div>
-
-    <div style="padding-left:10px">
-        <div>
-            <div style="border-bottom: 3px solid #878787; padding-bottom: 4px">
-                <span style="border-bottom: 7px solid #878787; font-weight: 600; color:#878787">Type</span>
-            </div>
-            <div style="padding-top:10px">
-                <div>
-                    <label *ngFor="let type of types" class="checkbox_container">
-                        <p style="all:unset" style="width:100%" (click)="selectFilter(type, 'selectedTypes')">{{type}}</p>
-                        <input type="checkbox">
-                        <span (click)="selectFilter(type, 'selectedTypes')" class="checkmark"></span>
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div style="border-bottom: 3px solid #878787; padding-bottom: 4px">
-                <span style="border-bottom: 7px solid #878787; font-weight: 600; color:#878787">Country</span>
-            </div>
-            <div style="padding-top:10px">
-                <div>
-                    <label *ngFor="let country of countries" class="checkbox_container">
-                        <p style="all:unset" style="width:100%" (click)="selectFilter(country, 'selectedCountries')">{{country}}</p>
-                        <input type="checkbox">
-                        <span (click)="selectFilter(country, 'selectedCountries')" class="checkmark"></span>
-                    </label>
-                </div>
-            </div>
-        </div>
-
-        <div>
-            <div style="border-bottom: 3px solid #878787; padding-bottom: 4px">
-                <span style="border-bottom: 7px solid #878787; font-weight:600; color:#878787">City</span>
-            </div>
-            <div style="padding-top:10px">
-                <div>
-                    <label *ngFor="let city of cities" class="checkbox_container">
-                        <p style="all:unset" style="width:100%" (click)="selectFilter(city, 'selectedCities')">{{city}}</p>
-                        <input type="checkbox">
-                        <span (click)="selectFilter(city, 'selectedCities')" class="checkmark"></span>
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-
 <div class="gallery_display">
     <div style="padding:0 0 10px 15px" class="clearfix">
         <img [class.gallery_inactive_option]="imagesCol!==12" (click)="changeImagesCol(12)" style="padding-right:3px; cursor:pointer" src="/assets/images/2x1.png" alt="">
         <img [class.gallery_inactive_option]="imagesCol!==6"  (click)="changeImagesCol(6)"  style="padding-right:3px; cursor:pointer" src="/assets/images/2x2.png" alt="">
         <span style="font-weight: 600">{{displayedGalleryImages.length}} Images</span>
 
-        <label class="image-upload-container btn btn-bwm" style="float:right; padding-right:10px">
-            <span><img src="./assets/images/upload.svg"/></span>
+        <span (click)="openFiltersModal()" style="float:right; padding:0 10px 0 10px"><img src="./assets/images/filters.png"/></span>
+        <label style="float:right; padding:0">
+            <span><img src="./assets/images/upload.png"/></span>
             <input  style="display:none" 
                     #imageInput
                     multiple
@@ -202,6 +148,63 @@
             <img src="./assets/images/prev.png" (click)="prevUploadedImageToEdit()" [ngStyle]="setPrevUploadedImageButtonStyle()"/>
             {{uploadedImagesEditIndex + 1}}/{{uploadedImages.length}}
             <img src="./assets/images/next.png" (click)="nextUploadedImageToEdit()" [ngStyle]="setNextUploadedImageButtonStyle()"/>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showFiltersModal" class="modal_overlay" style="background-color:rgba(0, 0, 0, 0.5)">
+    <div id="modal_overlay_content" class="clearfix col-xs-12" style="padding-top:20px; height:80%; max-height:80%; left:5%; width:90%; background-color:#C4C4C4">
+        <div class="clearfix"><img style="float:right" src="./assets/images/filters_icon.png"/></div>
+        <div style="max-height:400px; overflow: scroll">
+            <div>
+                <div style="border-bottom: 3px solid white; color:white; padding-bottom: 4px">
+                    <span style="border-bottom: 7px solid white; font-weight: 600">Type</span>
+                </div>
+                <div style="padding-top:10px">
+                    <div>
+                        <label *ngFor="let type of types" class="checkbox_container">
+                            <p style="all:unset; color:white; width:100%" (click)="selectFilter(type, 'selectedTypes')">{{type}}</p>
+                            <input type="checkbox">
+                            <span (click)="selectFilter(type, 'selectedTypes')" class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div style="border-bottom: 3px solid white; color:white; padding-bottom: 4px">
+                    <span style="border-bottom: 7px solid white; font-weight: 600;">Country</span>
+                </div>
+                <div style="padding-top:10px">
+                    <div>
+                        <label *ngFor="let country of countries" class="checkbox_container">
+                            <p style="all:unset; color:white; width:100%" (click)="selectFilter(country, 'selectedCountries')">{{country}}</p>
+                            <input type="checkbox">
+                            <span (click)="selectFilter(country, 'selectedCountries')" class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div style="border-bottom: 3px solid white; color:white; padding-bottom: 4px">
+                    <span style="border-bottom: 7px solid white; font-weight:600;">City</span>
+                </div>
+                <div style="padding-top:10px">
+                    <div>
+                        <label *ngFor="let city of cities" class="checkbox_container">
+                            <p style="all:unset; color:white; width:100%" (click)="selectFilter(city, 'selectedCities')">{{city}}</p>
+                            <input type="checkbox">
+                            <span (click)="selectFilter(city, 'selectedCities')" class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding-top:20px">
+            <button (click)="cancelFilters()" class="btn" style="width:135px; background-color:#494949; color:white; border-radius:6px">Cancel</button>
+            <button (click)="applyFilters()" class="btn" style="width:135px; float:right; background-color:#494949; color:white; border-radius:6px">Apply</button>
         </div>
     </div>
 </div>

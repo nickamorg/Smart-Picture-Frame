@@ -24,6 +24,10 @@ ul li {
     font-size:30px;
 }
 
+.nav>li>a:hover {
+    background-color: initial !important;
+}
+
 #menu {
     height: 100%;
     width: 100%;
