@@ -328,6 +328,7 @@ export class ShapesService {
 
     changeImagesCol(col:number) {
         this.imagesCol = col;
+        console.log(col);
     }
 
     uncheckAllImages() {

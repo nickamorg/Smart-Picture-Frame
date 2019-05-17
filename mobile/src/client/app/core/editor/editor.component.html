@@ -8,6 +8,15 @@
     </ul>
 </div>
 
+<div *ngIf="shapesService.isFocusedWall">
+    <div (click)="expandShapes()" style="background-color: gray; border-radius: 100%; padding: 5px 5px 10px 5px; top: 315px; right: 20px; position: absolute"><img style="padding-top:5px" src="/assets/images/shapes.png"></div>
+    <div *ngIf="showExpandedShapes" class="modal_overlay">
+        <div (click)="stopExpandShapes()" style="top: 315px; right: 20px; position: absolute"><img src="/assets/images/cancel_shape.png"></div>
+        <div (click)="addFrame('circle_frame')" style="top: 360px; right: 65px; position: absolute"><img src="/assets/images/circle.png"></div>
+        <div (click)="addFrame('square_frame')" style="top: 270px; right: 65px; position: absolute"><img src="/assets/images/square.png"></div>
+    </div>
+</div>
+
 <div id="editor_main_frame" class="clearfix" (click)="shapesService.focusWall()">
     <div id="editor_full" [ngStyle]="shapesService.setWallBorderStyle()">
         <div *ngIf="shapesService.editMode" [ngStyle]="shapesService.setWallStyle()">

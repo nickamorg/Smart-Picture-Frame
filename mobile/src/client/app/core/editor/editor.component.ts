@@ -9,12 +9,12 @@ import { NavigationService } from '../../navigation.service';
 })
 
 export class EditorComponent implements OnInit {
+    showExpandedShapes: boolean = false;
 
     constructor(private shapesService: ShapesService, private navigationService: NavigationService) {
         this.navigationService.showNavBar = false;
 
         //For test code
-
         this.shapesService.initNewWall("", "", "", "", "");
         this.shapesService.loadedWallSet = this.shapesService.wallSets[0].copy();
         this.navigationService.showNavBar = false;
@@ -29,6 +29,15 @@ export class EditorComponent implements OnInit {
           this.shapesService.frames = [];
         }
         this.shapesService.pushFrame(type);
+        this.showExpandedShapes = false;
+    }
+
+    expandShapes() {
+        this.showExpandedShapes = true;
+    }
+
+    stopExpandShapes() {
+        this.showExpandedShapes = false;
     }
     
 }
