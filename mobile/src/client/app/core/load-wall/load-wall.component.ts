@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { ShapesService } from '../../shapes.service';
+import { NavigationService } from '../../navigation.service';
 
 @Component({
     selector: 'app-load-wall',
@@ -13,7 +14,9 @@ export class LoadWallComponent {
 
     showLoadWall: boolean = false;
 
-    constructor(private shapesService: ShapesService) {}
+    constructor(private shapesService: ShapesService, private navigationService: NavigationService) {
+        this.navigationService.showNavBar = false;
+    }
 
     ngOnInit() { }
 

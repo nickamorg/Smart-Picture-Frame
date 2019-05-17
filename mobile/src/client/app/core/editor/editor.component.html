@@ -1,4 +1,4 @@
-<div class="dropdown">
+<div class="dropdown" style="z-index:2">
     <button class="btn dropdown-toggle" data-toggle="dropdown" style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" type="button">
         {{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].title}} 
         <img src="/assets/images/arrow_down.svg" style="float:right">
@@ -9,7 +9,7 @@
 </div>
 
 <div *ngIf="shapesService.isFocusedWall">
-    <div (click)="expandShapes()" style="z-index:-1; background-color:gray; border-radius:100%; padding:5px 5px 10px 5px; top:315px; right:20px; position:absolute"><img style="padding-top:5px" src="/assets/images/shapes.png"></div>
+    <div (click)="expandShapes()" style="background-color:gray; border-radius:100%; padding:5px 5px 10px 5px; top:315px; right:20px; position:absolute"><img style="padding-top:5px" src="/assets/images/shapes.png"></div>
     <div *ngIf="showExpandedShapes" class="modal_overlay">
         <div (click)="stopExpandShapes()" style="top: 315px; right: 20px; position: absolute"><img src="/assets/images/cancel_shape.png"></div>
         <div (click)="addFrame('circle_frame')" style="top: 360px; right: 65px; position: absolute"><img src="/assets/images/circle.png"></div>

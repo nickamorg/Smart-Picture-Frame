@@ -29,8 +29,12 @@ export class NavbarComponent implements OnInit {
         this.showExpandedMenu = false;
     }
 
-    toggleExpandMenu() {
+    toggleExpandableMenu() {
         this.showExpandedMenu = !this.showExpandedMenu;
+    }
+
+    closeExpandedMenu() {
+        this.showExpandedMenu = false;
     }
 
     receiveMessage($event) {
