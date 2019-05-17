@@ -27,25 +27,25 @@
         </div>
 
     </div>
-
-    <app-new-wall (messageEvent)="receiveMessage($event)" [showNewWallModalPartially]="showNewWallModal"></app-new-wall>
-    <app-load-wall (messageEvent)="receiveMessage($event)" [showLoadWallModalPartially]="showLoadWallModal"></app-load-wall>
 </nav>
 
 
 <!-- Top Navigation Menu -->
 <div class="topnav">
-    <a style="text-align:center; padding-left:20px"><img src="/assets/images/logo.png" height="20" alt=""></a>
-    <div id="myLinks">
+    <a routerLink="/editor" style="text-align:center; padding-left:20px"><img src="/assets/images/logo.png" height="20" alt=""></a>
+    <div *ngIf="showExpandedMenu" style="border-top:1px solid #000000">
         <ul class="nav" style="float:initial; padding:0 0 0 10px">
-            <li onclick="myFunction()" (click)="toggleNewWallModal()"><a>New Wall</a></li>
-            <li onclick="myFunction()" (click)="toggleLoadWallModal()"><a>Load Wall</a></li>
-            <li onclick="myFunction()"><a routerLink="/materials">Materials</a></li>
-            <li onclick="myFunction()"><a routerLink="/wallpapers">Wallpapers</a></li>
-            <li onclick="myFunction()"><a routerLink="/gallery">Gallery</a></li>
+            <li (click)="toggleNewWallModal()"><a>New Wall</a></li>
+            <li (click)="toggleLoadWallModal()"><a>Load Wall</a></li>
+            <li (click)="toggleExpandMenu()"><a routerLink="/materials">Materials</a></li>
+            <li (click)="toggleExpandMenu()"><a routerLink="/wallpapers">Wallpapers</a></li>
+            <li (click)="toggleExpandMenu()"><a routerLink="/gallery">Gallery</a></li>
         </ul>
     </div>
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <a class="icon" (click)="toggleExpandMenu()">
         <img src="/assets/images/bar.png" height="20" alt="">
     </a>
 </div>
+
+<app-new-wall (messageEvent)="receiveMessage($event)" [showNewWallModalPartially]="showNewWallModal"></app-new-wall>
+<app-load-wall (messageEvent)="receiveMessage($event)" [showLoadWallModalPartially]="showLoadWallModal"></app-load-wall>

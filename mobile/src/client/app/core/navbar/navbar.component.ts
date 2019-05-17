@@ -11,6 +11,7 @@ import { NavigationService } from '../../navigation.service';
 export class NavbarComponent implements OnInit {
     showNewWallModal: boolean = false;
     showLoadWallModal: boolean = false;
+    showExpandedMenu: boolean = false;
 
     constructor(private shapesService: ShapesService, 
                 private navigationService: NavigationService, 
@@ -20,10 +21,16 @@ export class NavbarComponent implements OnInit {
 
     toggleNewWallModal() {
         this.showNewWallModal = !this.showNewWallModal;
+        this.showExpandedMenu = false;
     }
 
     toggleLoadWallModal() {
         this.showLoadWallModal = !this.showLoadWallModal;
+        this.showExpandedMenu = false;
+    }
+
+    toggleExpandMenu() {
+        this.showExpandedMenu = !this.showExpandedMenu;
     }
 
     receiveMessage($event) {
