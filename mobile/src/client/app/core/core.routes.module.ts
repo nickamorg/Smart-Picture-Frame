@@ -7,7 +7,6 @@ import { LoadWallComponent } from './load-wall/load-wall.component';
 import { MaterialsComponent } from './materials/materials.component';
 import { WallpapersComponent } from './wallpapers/wallpapers.component';
 import { GalleryComponent } from './gallery/gallery.component';
-import { WorkspaceComponent } from './workspace/workspace.component';
 import { EditorComponent } from './editor/editor.component';
 
 const coreRoutes: Routes = [
@@ -17,7 +16,6 @@ const coreRoutes: Routes = [
   { path: 'materials', component: MaterialsComponent },
   { path: 'wallpapers', component: WallpapersComponent },
   { path: 'gallery', component: GalleryComponent },
-  { path: 'workspace', component: WorkspaceComponent },
   { path: 'editor', component: EditorComponent }
 ];
 

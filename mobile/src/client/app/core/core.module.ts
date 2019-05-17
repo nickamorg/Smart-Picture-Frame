@@ -9,7 +9,6 @@ import { LoadWallComponent } from './load-wall/load-wall.component';
 import { MaterialsComponent } from './materials/materials.component';
 import { WallpapersComponent } from './wallpapers/wallpapers.component';
 import { GalleryComponent } from './gallery/gallery.component';
-import { WorkspaceComponent } from './workspace/workspace.component';
 import { ToolsComponent } from './tools/tools.component';
 import { EditorComponent } from './editor/editor.component';
 import { ShapesService } from '../shapes.service';
@@ -25,7 +24,6 @@ import { NavigationService} from '../navigation.service';
     LoadWallComponent,
     MaterialsComponent,
     GalleryComponent,
-    WorkspaceComponent,
     ToolsComponent,
     EditorComponent,
     FrameImagesComponent,
@@ -38,8 +36,7 @@ import { NavigationService} from '../navigation.service';
   ],
   exports: [
     CoreRoutingModule,
-    NavbarComponent,
-    WorkspaceComponent
+    NavbarComponent
   ],
   providers: [ShapesService, NavigationService]
 })
