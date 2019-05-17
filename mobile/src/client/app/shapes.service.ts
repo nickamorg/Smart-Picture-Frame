@@ -245,7 +245,6 @@ class WallSet {
 
 @Injectable()
 export class ShapesService {
-
     wallSets: WallSet[] = [];
     loadedWallSet: WallSet;
     focusedWallIndex: number = 0;
