@@ -1,0 +1,210 @@
+<div class="gallery_display">
+    <div style="padding:0 0 10px 15px" class="clearfix">
+        <img [class.gallery_inactive_option]="imagesCol!==12" (click)="changeImagesCol(12)" style="padding-right:3px; cursor:pointer" src="/assets/images/2x1.png" alt="">
+        <img [class.gallery_inactive_option]="imagesCol!==6"  (click)="changeImagesCol(6)"  style="padding-right:3px; cursor:pointer" src="/assets/images/2x2.png" alt="">
+        <span style="font-weight: 600">{{displayedGalleryImages.length}} Images</span>
+
+        <span (click)="openFiltersModal()" style="float:right; padding:0 10px 0 10px"><img src="./assets/images/filters.png"/></span>
+        <label style="float:right; padding:0">
+            <span><img src="./assets/images/upload.png"/></span>
+            <input  style="display:none" 
+                    #imageInput
+                    multiple
+                    type="file"
+                    accept="image/*"
+                    (change)="processFile(imageInput)">
+        </label>
+    </div>
+
+    <div class="clearfix">
+        <div *ngFor="let index of displayedGalleryImages" class="col-xs-{{imagesCol}}" style="padding:0 10px 30px 10px; text-align: center">
+            <div class="content">
+                <div class="content-overlay"></div>
+                <img class="content-image img-responsive" src="{{galleryImages[index].src}}" alt="">
+                <div class="content-details fadeIn-top">
+                    <div>
+                        <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index].src, 'display')" src="/assets/images/preview_image.svg"/>
+                        <img style="cursor:pointer" (click)="deleteImage(galleryImages[index].src)" src="/assets/images/delete.svg"/>
+                        <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index].src, 'edit')"  src="/assets/images/edit.svg"/>
+                    </div>
+                    <h3 *ngIf="imagesCol===12">{{galleryImages[index].title}}</h3>
+                    <p *ngIf="imagesCol===12">{{galleryImages[index].description}}</p>
+                </div>    
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="displayImage" id="gallery-image_page" class="gallery-image_overlay">
+    <div id="gallery-image_overlay_content" class="clearfix" style="padding-top:50px">
+        <a href="javascript:void(0)" class="closebtn" (click)="hideDisplayedImage()">&times;</a>
+        <div class="col-xs-12">
+            <img style="border-radius: 10px" class="content-image img-responsive" src="{{displayedImage.src}}" alt="">
+        </div>
+        <div class="col-xs-12" style="padding-top:10px">
+            <h3 style="margin:0">{{displayedImage.title}}</h3>
+            <p>{{displayedImage.description}}</p>
+            <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImage.type}}</div>
+            <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImage.country}}</div>
+            <div style="display:inline-block; background-color: rgb(61, 61, 145); color:white; padding:10px; border-radius: 10px; margin-right: 10px">#{{displayedImage.city}}</div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="editImage" id="gallery-image_page" class="gallery-image_overlay">
+    <div id="gallery-image_overlay_content" class="clearfix">
+        <div class="clearfix col-xs-12" style="padding:10px 20px 10px 0px">
+            <img (click)="saveEditedImage(edit_image_title.value, edit_image_descr.value, edit_image_type.value, edit_image_country.value, edit_image_city.value)" style="padding-right:5px; float:right" src="/assets/images/apply.png" width="25" heigh="25">
+            <img (click)="hideDisplayedImage()" style="padding-right:5px; float:right" src="/assets/images/cancel.png" width="25" heigh="25">
+        </div>
+        <div class="col-xs-12">
+            <div style="padding-bottom: 20px">
+                <img style="border-radius: 10px" class="content-image img-responsive" src="{{displayedImage.src}}" alt="">
+            </div>
+            <div style="border-radius:10px; background-color:#707070; color:white">
+                <input #edit_image_title id="edit_image_title" placeholder="Title" value="{{displayedImage.title}}">
+                <div style="padding: 0px 10px 0 10px">
+                    <textarea #edit_image_descr id="edit_image_descr" placeholder="Description">{{displayedImage.description}}</textarea>
+                    <table align="center">
+                        <tr>
+                            <td style="padding-right:50px"> <label for="edit_image_type">Type</label></td>
+                            <td><div class="form-group">
+                                <input #edit_image_type type="text" class="form-control" id="edit_image_type" placeholder="Type" value="{{displayedImage.type}}">
+                            </div></td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding-right:50px"> <label for="edit_image_country">Country</label></td>
+                            <td><div class="form-group">
+                                <input #edit_image_country type="text" class="form-control" id="edit_image_country" placeholder="Country" value="{{displayedImage.country}}">
+                            </div></td>
+                        </tr>
+
+                        <tr>
+                            <td style="padding-right:50px"> <label for="edit_image_city">City</label></td>
+                            <td><div class="form-group">
+                                <input #edit_image_city type="text" class="form-control" id="edit_image_city" placeholder="City" value="{{displayedImage.city}}">
+                            </div></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showUploadedImagesModal" class="modal_overlay">
+    <div id="modal_overlay_content" class="clearfix col-xs-12" style="padding-top:20px; top:0; height:97%; max-height:97%; margin-top:10px; left:2.5%; width:95%">
+        <div style="padding-bottom:10px" >
+            <span style="color:#707070">UPLOAD IMAGES</span>
+            <img (click)="uploadImages()" style="padding-right:5px; float:right" src="/assets/images/apply.png" width="25" heigh="25">
+            <img (click)="cancelUploadImages()" style="padding-right:5px; float:right" src="/assets/images/cancel.png" width="25" heigh="25">
+            <div>
+                <span style="font-weight: 600; font-style: italic">{{uploadedImages.length}} Images</span>
+            </div>
+        </div>
+        <div class="clearfix" style="padding-top:10px" *ngIf="uploadedImages.length > 0">
+            <div class="col-xs-12" style="padding: 0 0 20px 0">
+                <img style="border-radius: 10px" class="content-image img-responsive" src="{{uploadedImages[uploadedImagesEditIndex].src}}" alt="">
+            </div>
+            <div class="col-xs-12" style="border-radius:10px; background-color: #707070; color:white">
+                <table align="center">
+                    <tr>
+                        <td style="padding-right:50px"> <label for="edit_image_title">Title</label></td>
+                        <td style="padding:10px 0 10px 0"><div class="form-group" style="margin:0">
+                            <input #edit_image_title type="text" class="form-control" id="edit_image_type" placeholder="Title" (change)="setUploadedImageTitle($event)" value="{{getUploadedImageTitle()}}">
+                        </div></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right:50px"> <label for="edit_image_type">Type</label></td>
+                        <td style="padding:10px 0 10px 0"><div class="form-group" style="margin:0">
+                            <input #edit_image_type type="text" class="form-control" id="edit_image_type" placeholder="Type" (change)="setUploadedImageType($event)" value="{{getUploadedImageType()}}">
+                        </div></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right:50px"> <label for="edit_image_country">Country</label></td>
+                        <td style="padding:10px 0 10px 0"><div class="form-group" style="margin:0">
+                            <input #edit_image_country type="text" class="form-control" id="edit_image_country" placeholder="Country" (change)="setUploadedImageCountry($event)" value="{{getUploadedImageCountry()}}">
+                        </div></td>
+                    </tr>
+                    <tr>
+                        <td style="padding-right:50px"> <label for="edit_image_city">City</label></td>
+                        <td style="padding:10px 0 10px 0"><div class="form-group" style="margin:0">
+                            <input #edit_image_city type="text" class="form-control" id="edit_image_city" placeholder="City" (change)="setUploadedImageCity($event)" value="{{getUploadedImageCity()}}">
+                        </div></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="padding-right:50px"> <label for="edit_image_descr">Description</label></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="padding-right:50px">
+                            <textarea #edit_image_descr type="text" id="edit_image_descr" placeholder="Description" (change)="setUploadedImageDescription($event)" value="{{getUploadedImageDescription()}}"></textarea>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div style="text-align:center; padding-top:20px">
+            <img src="./assets/images/prev.png" (click)="prevUploadedImageToEdit()" [ngStyle]="setPrevUploadedImageButtonStyle()"/>
+            {{uploadedImagesEditIndex + 1}}/{{uploadedImages.length}}
+            <img src="./assets/images/next.png" (click)="nextUploadedImageToEdit()" [ngStyle]="setNextUploadedImageButtonStyle()"/>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showFiltersModal" class="modal_overlay" style="background-color:rgba(0, 0, 0, 0.5)">
+    <div id="modal_overlay_content" class="clearfix col-xs-12" style="padding-top:20px; height:80%; max-height:80%; left:5%; width:90%; background-color:#C4C4C4">
+        <div class="clearfix"><img style="float:right" src="./assets/images/filters_icon.png"/></div>
+        <div style="max-height:400px; overflow: scroll">
+            <div>
+                <div style="border-bottom: 3px solid white; color:white; padding-bottom: 4px">
+                    <span style="border-bottom: 7px solid white; font-weight: 600">Type</span>
+                </div>
+                <div style="padding-top:10px">
+                    <div>
+                        <label *ngFor="let type of types" class="checkbox_container">
+                            <p style="all:unset; color:white; width:100%" (click)="selectFilter(type, 'selectedTypes')">{{type}}</p>
+                            <input type="checkbox">
+                            <span (click)="selectFilter(type, 'selectedTypes')" class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div style="border-bottom: 3px solid white; color:white; padding-bottom: 4px">
+                    <span style="border-bottom: 7px solid white; font-weight: 600;">Country</span>
+                </div>
+                <div style="padding-top:10px">
+                    <div>
+                        <label *ngFor="let country of countries" class="checkbox_container">
+                            <p style="all:unset; color:white; width:100%" (click)="selectFilter(country, 'selectedCountries')">{{country}}</p>
+                            <input type="checkbox">
+                            <span (click)="selectFilter(country, 'selectedCountries')" class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div style="border-bottom: 3px solid white; color:white; padding-bottom: 4px">
+                    <span style="border-bottom: 7px solid white; font-weight:600;">City</span>
+                </div>
+                <div style="padding-top:10px">
+                    <div>
+                        <label *ngFor="let city of cities" class="checkbox_container">
+                            <p style="all:unset; color:white; width:100%" (click)="selectFilter(city, 'selectedCities')">{{city}}</p>
+                            <input type="checkbox">
+                            <span (click)="selectFilter(city, 'selectedCities')" class="checkmark"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div style="padding-top:20px">
+            <button (click)="cancelFilters()" class="btn" style="width:135px; background-color:#494949; color:white; border-radius:6px">Cancel</button>
+            <button (click)="applyFilters()" class="btn" style="width:135px; float:right; background-color:#494949; color:white; border-radius:6px">Apply</button>
+        </div>
+    </div>
+</div>

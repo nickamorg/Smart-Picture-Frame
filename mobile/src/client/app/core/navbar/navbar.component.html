@@ -1,0 +1,53 @@
+<nav *ngIf="navigationService.showNavBar" id="menu" class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header" style="text-align:center; padding:20px 0 20px 0">
+            <a routerLink="/">
+                <img src="/assets/images/logo.png" height="30" alt="">
+            </a>
+        </div>
+
+        <div>
+            <ul class="nav" style="float:initial">
+                <li routerLinkActive="active" (click)="toggleNewWallModal()"><a>New Wall</a></li>
+                <!-- <li routerLinkActive="active" (click)="toggleLoadWallModal()"><a>Load Wall</a></li> -->
+                <li routerLinkActive="active" routerLink="/load-wall"><a>Load Wall</a></li>
+                <li routerLinkActive="active"><a routerLink="/materials">Materials</a></li>
+                <li routerLinkActive="active"><a routerLink="/wallpapers">Wallpapers</a></li>
+                <li routerLinkActive="active"><a routerLink="/gallery">Gallery</a></li>
+
+                <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active">
+                    <a><img src="./assets/images/preview.png"/> Preview Wall</a>
+                </li>
+                <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active" (click)="shapesService.saveWall()">
+                    <a><img src="./assets/images/save.png"/> Save Wall</a>
+                </li>
+                <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active" (click)="shapesService.saveWallSet()">
+                    <a><img src="./assets/images/save_all.png"/> Save WallSet</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</nav>
+
+
+<!-- Top Navigation Menu -->
+<div class="topnav">
+    <a routerLink="/editor" style="text-align:center; padding-left:20px"><img src="/assets/images/logo.png" height="20" alt=""></a>
+    <div *ngIf="showExpandedMenu" style="border-top:1px solid #000000">
+        <ul class="nav" style="float:initial; padding:0 0 0 10px">
+            <li (click)="toggleNewWallModal()"><a>New Wall</a></li>
+            <!-- <li (click)="toggleLoadWallModal()"><a>Load Wall</a></li> -->
+            <li (click)="closeExpandedMenu()"><a routerLink="/load-wall">Load Wall</a></li>
+            <li (click)="closeExpandedMenu()"><a routerLink="/materials">Materials</a></li>
+            <li (click)="closeExpandedMenu()"><a routerLink="/wallpapers">Wallpapers</a></li>
+            <li (click)="closeExpandedMenu()"><a routerLink="/gallery">Gallery</a></li>
+        </ul>
+    </div>
+    <a class="icon" (click)="toggleExpandableMenu()">
+        <img src="/assets/images/bar.png" height="20" alt="">
+    </a>
+</div>
+
+<app-new-wall (messageEvent)="receiveMessage($event)" [showNewWallModalPartially]="showNewWallModal"></app-new-wall>
+<!-- <app-load-wall (messageEvent)="receiveMessage($event)" [showLoadWallModalPartially]="showLoadWallModal"></app-load-wall> -->
