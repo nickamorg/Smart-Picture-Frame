@@ -7,60 +7,60 @@ import constants from '../../app.constants';
 
 @Injectable()
 export class SocketService {
-  socket;
-  app_name: string;
+    socket;
+    app_name: string;
 
-  constructor(
-    private activatedRoute: ActivatedRoute) { }
+    constructor(
+        private activatedRoute: ActivatedRoute) { }
 
-  init(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      this.app_name = this.activatedRoute.snapshot.queryParams["app"];
-      this.socket = io('', {
-        path: '/socket.io-client',
-        query: {
-          token: constants.sockets_token,
-          app: this.app_name
-        }
-      });
-      resolve();
-    });
-  }
+    init(): Promise<void> {
+        return new Promise((resolve, reject) => {
+            this.app_name = this.activatedRoute.snapshot.queryParams['app'];
+            this.socket = io('', {
+                path: '/socket.io-client',
+                query: {
+                    token: constants.sockets_token,
+                    app: this.app_name
+                }
+            });
+            resolve();
+        });
+    }
 
-  onConnect(): Observable<any> {
-    return new Observable(observer => {
-      this.socket.on('connect', () => observer.complete());
-    });
-  }
+    onConnect(): Observable<any> {
+        return new Observable(observer => {
+            this.socket.on('connect', () => observer.complete());
+        });
+    }
 
-  onDisconnect(): Observable<any> {
-    return new Observable(observer => {
-      this.socket.on('disconnect', () => observer.complete());
-    });
-  }
-
-  /**
-   * Register listeners to sync an array with updates on a model
-   *
-   * Takes the array we want to sync, the model name that socket updates are sent from,
-   * and an optional callback function after new items are updated.
-   *
-   * @param {String} modelName
-   * @param {Array} array
-   * @param {Function} cb
-   */
-  syncUpdates(cb?, modelName?, array?) {
-    cb = cb || noop;
+    onDisconnect(): Observable<any> {
+        return new Observable(observer => {
+            this.socket.on('disconnect', () => observer.complete());
+        });
+    }
 
     /**
-     * Syncs item creation/updates on 'model:save'
+     * Register listeners to sync an array with updates on a model
+     *
+     * Takes the array we want to sync, the model name that socket updates are sent from,
+     * and an optional callback function after new items are updated.
+     *
+     * @param {String} modelName
+     * @param {Array} array
+     * @param {Function} cb
      */
-    this.socket.on('message', function (event_message, item) {
+    syncUpdates(cb?, modelName?, array?) {
+        cb = cb || noop;
 
-        cb(event_message, item);
-        
-    });
-  }
+        /**
+         * Syncs item creation/updates on 'model:save'
+         */
+        this.socket.on('message', function (event_message, item) {
+
+            cb(event_message, item);
+
+        });
+    }
 
   /**
    * Removes listeners for a models updates on the socket

@@ -265,11 +265,11 @@ class WallSetController {
    */
   public propagateEventToUI(req: Request, res: Response) {
     
-    console.log("propagateEventToUI called!");
+    console.log('propagateEventToUI called!');
 
-    let eventType = "customEventType";
+    let eventType = 'customEventType';
     let event = {
-      attribute: "value"
+      attribute: 'value'
     };
 
     //Inform client for the new event 

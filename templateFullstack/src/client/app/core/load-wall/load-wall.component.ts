@@ -7,18 +7,18 @@ import { ShapesService } from '../../shapes.service';
     styleUrls: ['./load-wall.component.scss'],
 })
 
-export class LoadWallComponent { 
+export class LoadWallComponent {
     @Input() showLoadWallModalPartially: boolean;
     @Output() messageEvent = new EventEmitter<string>();
 
-    showLoadWall: boolean = false;
+    showLoadWall = false;
 
     constructor(private shapesService: ShapesService) {}
 
     ngOnInit() { }
 
     sendMessage() {
-        this.messageEvent.emit("toggleShowLoadWallModalPartially")
+        this.messageEvent.emit("toggleShowLoadWallModalPartially");
     }
 
     toggleDisplayedStatues() {
@@ -32,7 +32,7 @@ export class LoadWallComponent {
         this.shapesService.focusedWallIndex = wallIndex;
         this.shapesService.editMode = true;
         this.shapesService.isFocusedFrame = false;
-        this.shapesService.isFocusedWall= true;
+        this.shapesService.isFocusedWall = true;
         this.shapesService.selectedFrame = -1;
         this.shapesService.loadedWallSetIndex = wallSetIndex;
         this.shapesService.focusedWallIndex = wallIndex;

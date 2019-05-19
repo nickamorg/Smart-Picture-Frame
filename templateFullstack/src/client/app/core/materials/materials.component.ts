@@ -13,19 +13,19 @@ export class MaterialsComponent implements OnInit {
 
     constructor() { 
         this.materials = [
-            new Material("/assets/materials/gold.jpg", "Gold"),
-            new Material("/assets/materials/brick.jpg", "Brick"),
-            new Material("/assets/materials/iron.jpg", "Iron"),
-            new Material("/assets/materials/stone.png", "Stone"),
-            new Material("/assets/materials/aqua.jpg", "Aqua"),
-            new Material("/assets/materials/lava.jpg", "Lava")
+            new Material('/assets/materials/gold.jpg', 'Gold'),
+            new Material('/assets/materials/brick.jpg', 'Brick'),
+            new Material('/assets/materials/iron.jpg', 'Iron'),
+            new Material('/assets/materials/stone.png', 'Stone'),
+            new Material('/assets/materials/aqua.jpg', 'Aqua'),
+            new Material('/assets/materials/lava.jpg', 'Lava')
         ];
     }
 
     ngOnInit() { }
 
     deleteMaterial(src: string) {
-        this.materials = this.materials.filter(function(elem){
+        this.materials = this.materials.filter(function(elem) {
             return elem.src != src;
         });
     }

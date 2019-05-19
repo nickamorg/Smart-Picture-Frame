@@ -10,9 +10,9 @@ let eventClient = eventFederator.createClient(
 
 export function WallSetCreated(newWallSet: any): void {
   let message = {
-    status: "created",
+    status: 'created',
     data: newWallSet
   };
 
-  eventClient.PublishTo("WallSets", JSON.stringify(message));
+  eventClient.PublishTo('WallSets', JSON.stringify(message));
 }

@@ -19,7 +19,7 @@ export class ServiceXComponent implements OnInit  {
         }
 
     onSocketMessage(eventType, data) {
-        console.log("Socket Message received!");
+        console.log('Socket Message received!');
         // Uncomment the following lines to retrieve event data
         // let event: EventType;
         // event = JSON.parse(data);

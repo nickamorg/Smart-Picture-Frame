@@ -10,7 +10,7 @@ import { ShapesService } from '../../shapes.service';
 export class EditorComponent implements OnInit {
 
     constructor(private shapesService: ShapesService) {}
-    
+
     ngOnInit() { }
 
     addFrame(type: string) {
@@ -19,5 +19,5 @@ export class EditorComponent implements OnInit {
         }
         this.shapesService.pushFrame(type);
     }
-    
+
 }
