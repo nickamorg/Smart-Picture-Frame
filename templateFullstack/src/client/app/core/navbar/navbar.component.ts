@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
     styleUrls: ['./navbar.component.scss']
 })
 export class NavbarComponent implements OnInit {
-    showNewWallModal: boolean = false;
-    showLoadWallModal: boolean = false;
+    showNewWallModal = false;
+    showLoadWallModal = false;
 
     constructor(private shapesService: ShapesService, private router: Router) { }
 
@@ -24,7 +24,7 @@ export class NavbarComponent implements OnInit {
     }
 
     receiveMessage($event) {
-        if($event === "toggleShowNewWallModalPartially") {
+        if ($event === 'toggleShowNewWallModalPartially') {
             this.toggleNewWallModal();
         } else {
             this.toggleLoadWallModal();

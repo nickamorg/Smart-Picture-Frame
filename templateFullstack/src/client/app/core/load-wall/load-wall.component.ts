@@ -18,7 +18,7 @@ export class LoadWallComponent {
     ngOnInit() { }
 
     sendMessage() {
-        this.messageEvent.emit("toggleShowLoadWallModalPartially");
+        this.messageEvent.emit('toggleShowLoadWallModalPartially');
     }
 
     toggleDisplayedStatues() {

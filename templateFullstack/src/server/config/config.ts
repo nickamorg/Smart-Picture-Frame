@@ -4,9 +4,9 @@ var config = require('./configuration.js');
 /* --------------------------------------------------------------- */
 
 const ENVIRONMENTS = {
-    production: "production",
-    test: "test",
-    development: "development",
+    production: 'production',
+    test: 'test',
+    development: 'development',
 };
 
 /* --------------------------------------------------------------- */
@@ -25,25 +25,25 @@ var getConfig = function (env) {
         case ENVIRONMENTS.test:
             return test;
         default:
-            throw new config.ConfigException("Erro environment '" + env + "' is not supported");
-    };
-}
+            throw new config.ConfigException('Erro environment "' + env + '" is not supported');
+    }
+};
 
 /* --------------------------------------------------------------- */
 
 var getCurrentEnvironment = function () {
     return getConfig(getEnvironment());
-}
+};
 
 /* --------------------------------------------------------------- */
 
 var getEnvironment = function () {
     return config.getEnvironment();
-}
+};
 
 var setEnvironment = function (env) {
     config.setEnvironment(env);
-}
+};
 
 /* --------------------------------------------------------------- */
 

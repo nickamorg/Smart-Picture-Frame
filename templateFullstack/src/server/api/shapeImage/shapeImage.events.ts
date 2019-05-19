@@ -10,9 +10,9 @@ let eventClient = eventFederator.createClient(
 
 export function ShapeImageCreated(newShapeImage: any): void {
   let message = {
-    status: "created",
+    status: 'created',
     data: newShapeImage
   };
 
-  eventClient.PublishTo("ShapeImages", JSON.stringify(message));
+  eventClient.PublishTo('ShapeImages', JSON.stringify(message));
 }

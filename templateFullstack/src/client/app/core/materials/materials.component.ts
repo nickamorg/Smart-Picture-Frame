@@ -9,9 +9,9 @@ import { Component, OnInit } from '@angular/core';
 export class MaterialsComponent implements OnInit {
     materials: Material[];
     uploadedMaterials: Material[];
-    showUploadedMaterialsModal: boolean = false;
+    showUploadedMaterialsModal = false;
 
-    constructor() { 
+    constructor() {
         this.materials = [
             new Material('/assets/materials/gold.jpg', 'Gold'),
             new Material('/assets/materials/brick.jpg', 'Brick'),
@@ -26,28 +26,28 @@ export class MaterialsComponent implements OnInit {
 
     deleteMaterial(src: string) {
         this.materials = this.materials.filter(function(elem) {
-            return elem.src != src;
+            return elem.src !== src;
         });
     }
 
     processFile(imageInput) {
         this.uploadedMaterials = [];
         this.showUploadedMaterialsModal = true;
-        
-        for(var i = 0; i < imageInput.files.length; i++) {
+
+        for (var i = 0; i < imageInput.files.length; i++) {
             var file: File = imageInput.files[i];
             var reader = new FileReader();
             reader.addEventListener('load', (event: any) => {
-                this.uploadedMaterials.push(new Material(event.target.result, ""));
+                this.uploadedMaterials.push(new Material(event.target.result, ''));
                 /*
                 this.selectedFile = new ImageSnippet(event.target.result, file);
-            
+
                 this.imageService.uploadImage(this.selectedFile.file).subscribe(
                     (res) => {
-                    
+        
                     },
                     (err) => {
-                    
+
                 })
 
                 */
@@ -59,9 +59,9 @@ export class MaterialsComponent implements OnInit {
     uploadMaterials() {
         //Mongodb code missed
         this.showUploadedMaterialsModal = false;
-        
+
         this.uploadedMaterials.forEach(element => {
-           this.materials.push(element); 
+            this.materials.push(element);
         });
     }
 
@@ -74,8 +74,8 @@ export class MaterialsComponent implements OnInit {
     }
 
     deleteUploadedMaterial(src: string) {
-        this.uploadedMaterials = this.uploadedMaterials.filter(function(elem){
-            return elem.src != src;
+        this.uploadedMaterials = this.uploadedMaterials.filter(function(elem) {
+            return elem.src !== src;
         });
     }
 }

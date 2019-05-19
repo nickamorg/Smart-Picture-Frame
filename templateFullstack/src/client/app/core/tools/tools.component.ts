@@ -7,9 +7,9 @@ import { ShapesService } from '../../shapes.service';
     styleUrls: ['./tools.component.scss']
 })
 export class ToolsComponent implements OnInit {
-    showChooseFrameImagesModal: boolean = false;
-    showChooseWallImagesModal: boolean = false;
-    
+    showChooseFrameImagesModal = false;
+    showChooseWallImagesModal = false;
+
     constructor(private shapesService: ShapesService) { }
 
     ngOnInit() { }
@@ -23,7 +23,7 @@ export class ToolsComponent implements OnInit {
     }
 
     receiveMessage($event) {
-        if($event === 'toggleChooseFrameImagesModal') {
+        if ($event === 'toggleChooseFrameImagesModal') {
             this.toggleChooseFrameImagesModal();
         } else {
             this.toggleChooseWallImagesModal();

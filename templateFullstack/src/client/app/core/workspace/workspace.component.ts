@@ -6,7 +6,7 @@ import { ShapesService } from '../../shapes.service';
     selector: 'app-workspace',
     templateUrl: './workspace.component.html',
     styleUrls: ['./workspace.component.scss'],
-    providers:[EditorComponent],
+    providers: [EditorComponent],
 })
 export class WorkspaceComponent implements OnInit {
 

@@ -9,23 +9,23 @@ import { ShapesService } from '../../shapes.service';
 export class NewWallComponent implements OnInit {
     @Input() showNewWallModalPartially: boolean;
     @Output() messageEvent = new EventEmitter<string>();
-    
-    showNewWall: boolean = false;
-    creators: string[] = ["Home", "Dad", "Mom", "Nick"];
-    types: string[] = ["General", "Personal", "Special"];
-    targets: string[] = ["Family"];
-    selectedCreator: string = "Home";
-    selectedType: string = "General";
-    selectedTarget: string = "Family";
+
+    showNewWall = false;
+    creators: string[] = ['Home', 'Dad', 'Mom', 'Nick'];
+    types: string[] = ['General', 'Personal', 'Special'];
+    targets: string[] = ['Family'];
+    selectedCreator = 'Home';
+    selectedType = 'General';
+    selectedTarget = 'Family';
     title: string;
     description: string;
-    
+
     constructor(private shapesService: ShapesService) {}
 
     ngOnInit() { }
 
     sendMessage() {
-        this.messageEvent.emit("toggleShowNewWallModalPartially")
+        this.messageEvent.emit('toggleShowNewWallModalPartially');
     }
 
     toggleDisplayedStatues() {
@@ -34,7 +34,7 @@ export class NewWallComponent implements OnInit {
 
     createNewWall() {
         this.sendMessage();
-        this.shapesService.initNewWall( this.selectedCreator, this.selectedType, 
+        this.shapesService.initNewWall(this.selectedCreator, this.selectedType,
                                         this.selectedTarget, this.title, this.description);
     }
 

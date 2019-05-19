@@ -16,7 +16,7 @@ export class FrameImagesComponent implements OnInit {
     ngOnInit() { }
 
     sendMessage() {
-        this.messageEvent.emit("toggleChooseFrameImagesModal");
+        this.messageEvent.emit('toggleChooseFrameImagesModal');
     }
 
     applySelectedImages() {

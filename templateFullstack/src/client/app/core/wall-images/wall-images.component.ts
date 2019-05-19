@@ -10,14 +10,14 @@ export class WallImagesComponent implements OnInit {
 
     @Input() showChooseWallImagesModalPartially: boolean;
     @Output() messageEvent = new EventEmitter<string>();
-    
-    showChooseWallImages: boolean = false;
+
+    showChooseWallImages = false;
     constructor(private shapesService: ShapesService) {}
 
     ngOnInit() { }
 
     sendMessage() {
-        this.messageEvent.emit("toggleChooseWallImagesModal")
+        this.messageEvent.emit('toggleChooseWallImagesModal');
     }
 
     applySelectedWallImages() {

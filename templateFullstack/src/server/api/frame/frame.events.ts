@@ -10,9 +10,9 @@ let eventClient = eventFederator.createClient(
 
 export function FrameCreated(newFrame: any): void {
   let message = {
-    status: "created",
+    status: 'created',
     data: newFrame
   };
 
-  eventClient.PublishTo("Frames", JSON.stringify(message));
+  eventClient.PublishTo('Frames', JSON.stringify(message));
 }

@@ -264,7 +264,7 @@ class WallController {
    * @return {Wall} The updated wall
    */
   public propagateEventToUI(req: Request, res: Response) {
-    
+
     console.log('propagateEventToUI called!');
 
     let eventType = 'customEventType';
@@ -272,7 +272,7 @@ class WallController {
       attribute: 'value'
     };
 
-    //Inform client for the new event 
+    //Inform client for the new event
     let data2String = JSON.stringify(event);
     global.__socketController.broadcastMessage(eventType, data2String);
 
