@@ -1,21 +1,21 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/things              ->  index
- * POST    /api/things              ->  create
- * GET     /api/things/:id          ->  show
- * PUT     /api/things/:id          ->  upsert
- * PATCH   /api/things/:id          ->  patch
- * DELETE  /api/things/:id          ->  destroy
+ * GET     /api/wallSets              ->  index
+ * POST    /api/wallSets              ->  create
+ * GET     /api/wallSets/:id          ->  show
+ * PUT     /api/wallSets/:id          ->  upsert
+ * PATCH   /api/wallSets/:id          ->  patch
+ * DELETE  /api/wallSets/:id          ->  destroy
  */
 
 import { Request, Response } from 'express';
 import * as jsonpatch from 'fast-json-patch';
-import * as thingEvents from './thing.events';
+import * as wallSetEvents from './wallSet.events';
 import config from '../../config/environment';
-import Thing from './thing.model';
+import WallSet from './wallSet.model';
 
 const isConnectedDB = config.mongo.connect;
-let ThingsData = require('./data.json');
+let WallSetsData = require('./data.json');
 
 
 /*---------------------------------------------------------
@@ -23,11 +23,11 @@ let ThingsData = require('./data.json');
  ---------------------------------------------------------*/
 
 /**
- * Data structure of thing object.
- * @typedef {Object} Thing
- * @property {String} name - The name of the thing.
- * @property {String} info - Detailed info about the thing.
- * @property {boolean} active - Indicates whether the thing is active.
+ * Data structure of wallSet object.
+ * @typedef {Object} WallSet
+ * @property {String} name - The name of the wallSet.
+ * @property {String} info - Detailed info about the wallSet.
+ * @property {boolean} active - Indicates whether the wallSet is active.
  */
 
 /*---------------------------------------------------------
@@ -39,10 +39,10 @@ let ThingsData = require('./data.json');
  * BEGIN Helper functions
  ---------------------------------------------------------*/
 
-function publishThingCreated() {
+function publishWallSetCreated() {
   return function (entity) {
     if (entity) {
-      thingEvents.ThingCreated(entity);
+      wallSetEvents.WallSetCreated(entity);
     }
     return entity;
   };
@@ -104,91 +104,93 @@ function handleError(res: Response, statusCode: number) {
 
 
 /**
- * Creates a controller for Things
+ * Creates a controller for WallSets
  *
- * @class ThingController
+ * @class WallSetController
  */
-class ThingController {
+class WallSetController {
 
   /**
-   * Creates an instance of ThingController.
-   * @memberof ThingController
+   * Creates an instance of WallSetController.
+   * @memberof WallSetController
    */
   constructor() { }
 
   /**
-   * Gets a list of Things
+   * Gets a list of WallSets
    *
    * @param {Object} req - http request object
    * @param {Object} res - http response object to report any issues
-   * @return {Thing[]} The list of available things
+   * @return {WallSet[]} The list of available wallSets
    */
   public index(req: Request, res: Response) {
     if (isConnectedDB === false) {
-      return res.send(ThingsData);
+      return res.send(WallSetsData);
     }
 
-    return Thing.find().exec()
+    return WallSet.find().exec()
       .then(respondWithResult(res, 200))
       .catch(handleError(res, 500));
   }
 
   /**
-   * Gets a specific thing
+   * Gets a specific wallSet
    *
    * @param {Object} req - http request object
    * @param {Object} res - http response object to report any issues
-   * @return {Thing} A specific thing with id
+   * @return {WallSet} A specific wallSet with id
    */
   public show(req: Request, res: Response) {
     if (isConnectedDB === false) {
       let query: number = parseInt(req.params.id, 10);
-      let thing: any = ThingsData.find(thing => thing._id === query);
-      if (thing) {
-        return res.status(200).send(thing);
+      let wallSet: any = WallSetsData.find(wallSet => wallSet._id === query);
+      if (wallSet) {
+        return res.status(200).send(wallSet);
       } else {
         return res.sendStatus(404).end();
       }
     }
 
-    return Thing.findById(req.params.id).exec()
+    return WallSet.findById(req.params.id).exec()
       .then(handleEntityNotFound(res))
       .then(respondWithResult(res, 200))
       .catch(handleError(res, 500));
   }
 
   /**
-   * Creates a new Thing in the DB
+   * Creates a new WallSet in the DB
    *
    * @export
    * @param {Object} req - http request object
-   * @param {String} req.body.name - The name of the thing.
-   * @param {String} req.body.info - Detailed info about the thing.
-   * @param {boolean} req.body.active - Indicates whether the thing is active.
+   * @param {String} req.body.name - The name of the wallSet.
+   * @param {String} req.body.info - Detailed info about the wallSet.
+   * @param {boolean} req.body.active - Indicates whether the wallSet is active.
    * @param {Object} res - http response object to report any issues
-   * @return {Thing} The created thing
+   * @return {WallSet} The created wallSet
    */
   public create(req: Request, res: Response) {
     if (isConnectedDB === false) {
       return res.sendStatus(400).end();
     }
 
-    return Thing.create(req.body)
-      .then(publishThingCreated())
+    // global.__socketController.sendMessage("", "", "asdfa")
+
+    return WallSet.create(req.body)
+      //.then(publishWallSetCreated())
       .then(respondWithResult(res, 201))
       .catch(handleError(res, 500));
   }
 
   /**
-   * Upserts an existing Thing in the DB
+   * Upserts an existing WallSet in the DB
    *
    * @export
    * @param {Object} req - http request object
-   * @param {String} req.body.name - The name of the thing.
-   * @param {String} req.body.info - Detailed info about the thing.
-   * @param {boolean} req.body.active - Indicates whether the thing is active.
+   * @param {String} req.body.name - The name of the wallSet.
+   * @param {String} req.body.info - Detailed info about the wallSet.
+   * @param {boolean} req.body.active - Indicates whether the wallSet is active.
    * @param {Object} res - http response object to report any issues
-   * @return {Thing} The updated thing
+   * @return {WallSet} The updated wallSet
    */
   public upsert(req: Request, res: Response) {
     if (isConnectedDB === false) {
@@ -198,7 +200,7 @@ class ThingController {
     if (req.body._id) {
       delete req.body._id;
     }
-    return Thing.findOneAndUpdate(
+    return WallSet.findOneAndUpdate(
       { _id: req.params.id },
       req.body, { new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true }
     ).exec()
@@ -207,15 +209,15 @@ class ThingController {
   }
 
   /**
-   * Updates an existing Thing in the DB
+   * Updates an existing WallSet in the DB
    *
    * @export
    * @param {Object} req - http request object
-   * @param {String} req.body.name - The name of the thing.
-   * @param {String} req.body.info - Detailed info about the thing.
-   * @param {boolean} req.body.active - Indicates whether the thing is active.
+   * @param {String} req.body.name - The name of the wallSet.
+   * @param {String} req.body.info - Detailed info about the wallSet.
+   * @param {boolean} req.body.active - Indicates whether the wallSet is active.
    * @param {Object} res - http response object to report any issues
-   * @return {Thing} The updated thing
+   * @return {WallSet} The updated wallSet
    */
   public patch(req: Request, res: Response) {
     if (isConnectedDB === false) {
@@ -225,7 +227,7 @@ class ThingController {
     if (req.body._id) {
       delete req.body._id;
     }
-    return Thing.findById(req.params.id).exec()
+    return WallSet.findById(req.params.id).exec()
       .then(handleEntityNotFound(res))
       .then(patchUpdates(req.body))
       .then(respondWithResult(res, 200))
@@ -233,7 +235,7 @@ class ThingController {
   }
 
   /**
-   * Deletes a Thing from the DB
+   * Deletes a WallSet from the DB
    *
    * @export
    * @param {Object} req - http request object
@@ -245,21 +247,21 @@ class ThingController {
       return res.sendStatus(400).end();
     }
 
-    return Thing.findById(req.params.id).exec()
+    return WallSet.findById(req.params.id).exec()
       .then(handleEntityNotFound(res))
       .then(removeEntity(res))
       .catch(handleError(res, 500));
   }
 
   /**
-   * Updates an existing Thing in the DB
+   * Updates an existing WallSet in the DB
    *
    * @export
    * @param {Object} req - http request object
    * @param {String} req.body.attribute - The name of the attribute.
    * @param {String} req.body.value - The value of the attribute.
    * @param {Object} res - http response object to report any issues
-   * @return {Thing} The updated thing
+   * @return {WallSet} The updated wallSet
    */
   public propagateEventToUI(req: Request, res: Response) {
     
@@ -279,4 +281,4 @@ class ThingController {
   }
 }
 
-export default new ThingController();
+export default new WallSetController();
