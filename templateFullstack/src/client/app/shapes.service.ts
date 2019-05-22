@@ -253,7 +253,7 @@ export class ShapesService {
     wallBorderSize = 0;
     frames: Frame[] = [];
     selectedFrame = -1;
-    frameImages: FrameImage[];
+    frameImages: string[];
     selectedImages = 0;
     imagesCol = 6;
     currFrameImages: string[] = [];
@@ -269,11 +269,11 @@ export class ShapesService {
     feedInit() {
         var tmpFrame = new Frame();
         tmpFrame.init(100, 5, './assets/materials/gold.jpg', 'rgb(34, 0, 78)', 15, 20, 200, 150, 150,
-        ['waterfall4.png', 'waterfall3.png'], 30);
+        ['5ce50fcce2c5662518b5f3a0', '5ce50fd0e2c5662518b5f3a1'], 30);
 
         var tmpFrame1 = new Frame();
         tmpFrame1.init(0, 5, './assets/materials/brick.jpg', 'rgb(34, 0, 78)', 10, 50, 400, 100, 100,
-        ['waterfall3.png', 'waterfall1.png'], 15);
+        ['5ce50fc6e2c5662518b5f39f', '5ce50fb9e2c5662518b5f39e'], 15);
 
         var tmpFrames = [];
         tmpFrames.push(tmpFrame);
@@ -294,29 +294,17 @@ export class ShapesService {
     constructor() {
         this.feedInit();
 
-        this.frameImages = [new FrameImage('waterfall1.png'),
-                            new FrameImage('waterfall2.png'),
-                            new FrameImage('waterfall3.png'),
-                            new FrameImage('waterfall4.png')];
-
         this.wallImages = [ new WallImage('inferno.jpg'),
                             new WallImage('waterfalls.jpg')];
     }
 
     selectImage(id) {
-        this.frameImages[id].selected = !this.frameImages[id].selected;
-
-        if (this.frameImages[id].selected) {
-            const index = this.currFrameImages.indexOf(this.frameImages[id].src, 0);
-            if (index === -1) {
-                this.currFrameImages.push(this.frameImages[id].src);
-            }
+        const index = this.currFrameImages.indexOf(id, 0);
+        if (index === -1) {
+            this.currFrameImages.push(id);
             this.selectedImages++;
         } else {
-            const index = this.currFrameImages.indexOf(this.frameImages[id].src, 0);
-            if (index > -1) {
-                this.currFrameImages.splice(index, 1);
-            }
+            this.currFrameImages.splice(index, 1);
             this.selectedImages--;
         }
     }
@@ -328,9 +316,6 @@ export class ShapesService {
     uncheckAllImages() {
         this.selectedImages = 0;
         this.currFrameImages = [];
-        this.frameImages.forEach(function (value) {
-            value.selected = false;
-        });
     }
 
     addSelectedImages() {
@@ -437,15 +422,11 @@ export class ShapesService {
 
     initCurrFrameImages(index: number) {
         this.currFrameImages = this.loadedWallSet.walls[this.focusedWallIndex].frames[index].images;
+        this.frameImages = [];
         this.selectedImages = this.currFrameImages.length;
 
-        for (var i = 0; i < this.frameImages.length; i++) {
-            this.frameImages[i].selected = false;
-            for (var j = 0; j < this.currFrameImages.length; j++) {
-                if (this.frameImages[i].src === this.currFrameImages[j]) {
-                    this.frameImages[i].selected = true;
-                }
-            }
+        for (var i = 0; i < this.currFrameImages.length; i++) {
+            this.frameImages.push(this.currFrameImages[i]);
         }
     }
 
@@ -633,6 +614,10 @@ export class ShapesService {
 
     saveWallSet() {
         this.wallSets[this.loadedWallSetIndex] = this.loadedWallSet.copy();
+    }
+
+    isImageSelected(id: string) {
+        return this.currFrameImages.indexOf(id) > -1 ? true : false;
     }
 }
 

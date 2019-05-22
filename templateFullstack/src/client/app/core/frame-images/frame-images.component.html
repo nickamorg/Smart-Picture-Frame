@@ -96,8 +96,8 @@
             </div>
         
             <div class="scrollbar frame-images-2" style="height:400px; padding-top:10px">
-                <div *ngFor="let image of shapesService.frameImages" class="col-xs-{{shapesService.imagesCol}}" style="padding-bottom:30px; text-align: center">
-                    <img [class.frame-images_checked]="image.selected" (click)="shapesService.selectImage(image.id)" class="img-responsive" src="/assets/images/{{image.src}}" alt="">
+                <div *ngFor="let image of images" class="col-xs-{{shapesService.imagesCol}}" style="padding-bottom:30px; text-align: center">
+                    <img [class.frame-images_checked]="shapesService.isImageSelected(image._id)" (click)="shapesService.selectImage(image._id)" class="img-responsive" src="{{image.src}}" alt="">
                 </div>
             </div>
         </div>

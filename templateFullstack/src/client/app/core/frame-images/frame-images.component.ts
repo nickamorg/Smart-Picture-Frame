@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ShapesService } from '../../shapes.service';
+import { DatabaseService } from '../../database.service';
+import { GalleryImage } from '../../galleryImage';
 
 @Component({
     selector: 'app-frame-images',
@@ -11,7 +13,19 @@ export class FrameImagesComponent implements OnInit {
     @Output() messageEvent = new EventEmitter<string>();
 
     showChooseFrameImages = false;
-    constructor(private shapesService: ShapesService) {}
+    images: GalleryImage[] = [];
+
+    constructor(private shapesService: ShapesService, private databaseService: DatabaseService) {
+        this.getImages();
+    }
+
+    getImages() {
+        this.databaseService.getImages().subscribe(
+            images => {
+                this.images = images;
+            }
+        );
+    }
 
     ngOnInit() { }
 
