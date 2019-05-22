@@ -1,28 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { WallpaperDBService } from '../../wallpaperDB.service';
+import { Wallpaper } from './../../wallpaper';
 
 @Component({
   selector: 'app-wallpapers',
   templateUrl: './wallpapers.component.html',
   styleUrls: ['./wallpapers.component.scss']
 })
-export class WallpapersComponent implements OnInit {
-    wallpapers: Wallpaper[];
+export class WallpapersComponent {
+    wallpapers: Wallpaper[] = [];
     uploadedWallpapers: Wallpaper[];
     showUploadedWallpapersModal = false;
 
-    constructor() {
-        this.wallpapers = [
-            new Wallpaper('/assets/wallpapers/waterfalls.jpg', 'Waterfalls'),
-            new Wallpaper('/assets/wallpapers/inferno.jpg', 'Inferno'),
-        ];
+    constructor(private wallpaperDBService: WallpaperDBService) {
+        this.getWallpapers();
     }
 
-    ngOnInit() { }
+    getWallpapers() {
+        this.wallpaperDBService.getWallpapers().subscribe(
+            wallpapers => {
+                this.wallpapers = wallpapers;
+            }
+        );
+    }
 
-    deleteWallpaper(src: string) {
-        this.wallpapers = this.wallpapers.filter(function(elem) {
-            return elem.src !== src;
-        });
+    deleteWallpaper(selectedWallpaper: Wallpaper) {
+        this.wallpaperDBService.deleteWallpaper(selectedWallpaper._id);
+        this.getWallpapers();
     }
 
     processFile(imageInput) {
@@ -33,7 +37,7 @@ export class WallpapersComponent implements OnInit {
             var file: File = imageInput.files[i];
             var reader = new FileReader();
             reader.addEventListener('load', (event: any) => {
-                this.uploadedWallpapers.push(new Wallpaper(event.target.result, ''));
+                this.uploadedWallpapers.push(new Wallpaper('', '', event.target.result));
             });
             reader.readAsDataURL(file);
         }
@@ -60,15 +64,5 @@ export class WallpapersComponent implements OnInit {
         this.uploadedWallpapers = this.uploadedWallpapers.filter(function(elem) {
             return elem.src !== src;
         });
-    }
-}
-
-class Wallpaper {
-    src: string;
-    title: string;
-
-    constructor(src: string, title: string) {
-        this.src = src;
-        this.title = title;
     }
 }

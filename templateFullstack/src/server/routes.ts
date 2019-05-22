@@ -5,6 +5,7 @@ import * as path from 'path';
 import * as errors from './components/errors';
 import galleryImageRouter from './api/galleryImage';
 import materialRouter from './api/material';
+import wallpaperRouter from './api/wallpaper';
 import frameRouter from './api/frame';
 import shapeImageRouter from './api/shapeImage';
 import wallRouter from './api/wall';
@@ -14,6 +15,7 @@ export default app => {
     // Insert routes below
     app.use('/api/galleryImages', galleryImageRouter);
     app.use('/api/materials', materialRouter);
+    app.use('/api/wallpapers', wallpaperRouter);
     app.use('/api/frames', frameRouter);
     app.use('/api/shapeImages', shapeImageRouter);
     app.use('/api/walls', wallRouter);

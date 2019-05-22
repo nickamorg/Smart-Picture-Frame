@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
-import {Material} from './material';
+import { Material } from './material';
 
 @Injectable()
-export class MaterialDatabaseService {
+export class MaterialDBService {
     images: Material[];
 
     constructor(private http: Http) { }

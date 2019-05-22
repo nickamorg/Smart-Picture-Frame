@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { MaterialDatabaseService } from '../../materialDatabase.service';
+import { MaterialDBService } from '../../materialDB.service';
 import { Material } from './../../material';
 
 @Component({
@@ -13,12 +13,12 @@ export class MaterialsComponent {
     uploadedMaterials: Material[];
     showUploadedMaterialsModal = false;
 
-    constructor(private materialDatabaseService: MaterialDatabaseService) {
+    constructor(private materialDBService: MaterialDBService) {
         this.getMaterials();
     }
 
     getMaterials() {
-        this.materialDatabaseService.getMaterials().subscribe(
+        this.materialDBService.getMaterials().subscribe(
             materials => {
                 this.materials = materials;
             }
@@ -26,7 +26,7 @@ export class MaterialsComponent {
     }
 
     deleteMaterial(selectedMaterial: Material) {
-        this.materialDatabaseService.deleteMaterial(selectedMaterial._id);
+        this.materialDBService.deleteMaterial(selectedMaterial._id);
         this.getMaterials();
     }
 
@@ -48,7 +48,7 @@ export class MaterialsComponent {
         this.showUploadedMaterialsModal = false;
 
         this.uploadedMaterials.forEach(element => {
-            this.materialDatabaseService.uploadMaterial(element.src, element.title);
+            this.materialDBService.uploadMaterial(element.src, element.title);
         });
         
         this.getMaterials();
