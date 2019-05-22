@@ -47,7 +47,7 @@ class Frame {
         };
 
         if (this.borderMaterial !== '' && this.borderMaterial !== undefined) {
-            style['background-image'] = 'url("./assets/materials/' + this.borderMaterial + '")';
+            style['background-image'] = 'url(' + this.borderMaterial + ')';
         }
 
         return style;
@@ -157,7 +157,7 @@ class Wall {
         };
 
         if (this.borderMaterial !== '' && this.borderMaterial !== undefined) {
-            style['background-image'] = 'url("./assets/materials/' + this.borderMaterial + '")';
+            style['background-image'] = 'url(' + this.borderMaterial + ')';
         }
 
         return style;
@@ -259,7 +259,6 @@ export class ShapesService {
     currFrameImages: string[] = [];
     isFocusedFrame = false;
     isFocusedWall = true;
-    materials: string[];
     wallImages: WallImage[];
     wallImagesCol = 12;
     selectedWallImages = 0;
@@ -269,11 +268,11 @@ export class ShapesService {
 
     feedInit() {
         var tmpFrame = new Frame();
-        tmpFrame.init(100, 5, 'gold.jpg', 'rgb(34, 0, 78)', 15, 20, 200, 150, 150,
+        tmpFrame.init(100, 5, './assets/materials/gold.jpg', 'rgb(34, 0, 78)', 15, 20, 200, 150, 150,
         ['waterfall4.png', 'waterfall3.png'], 30);
 
         var tmpFrame1 = new Frame();
-        tmpFrame1.init(0, 5, 'brick.jpg', 'rgb(34, 0, 78)', 10, 50, 400, 100, 100,
+        tmpFrame1.init(0, 5, './assets/materials/brick.jpg', 'rgb(34, 0, 78)', 10, 50, 400, 100, 100,
         ['waterfall3.png', 'waterfall1.png'], 15);
 
         var tmpFrames = [];
@@ -282,7 +281,7 @@ export class ShapesService {
 
         var images = [ 'inferno.jpg', 'waterfalls.jpg'];
         var tmpWall = new Wall();
-        tmpWall.init('lava.jpg', 10, tmpFrames, images, 'Waterfalls Display');
+        tmpWall.init('./assets/materials/lava.jpg', 10, tmpFrames, images, 'Waterfalls Display');
 
         this.wallSets.push(new WallSet());
         this.wallSets[0].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
@@ -299,7 +298,6 @@ export class ShapesService {
                             new FrameImage('waterfall2.png'),
                             new FrameImage('waterfall3.png'),
                             new FrameImage('waterfall4.png')];
-        this.materials = ['aqua.jpg', 'lava.jpg', 'brick.jpg', 'iron.jpg', 'stone.png', 'gold.jpg'];
 
         this.wallImages = [ new WallImage('inferno.jpg'),
                             new WallImage('waterfalls.jpg')];
@@ -367,35 +365,12 @@ export class ShapesService {
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize = borderSize;
     }
 
-    toggleHasMaterial() {
-        // this.frames[this.selectedFrame].hasMaterial = !this.frames[this.selectedFrame].hasMaterial;
-    }
-
-    addMaterial(index: number) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial = this.materials[index];
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].hasMaterial = true;
-    }
-
     returnBorderMaterial() {
         let style = {
-            'background-image': 'url("./assets/materials/' + this.loadedWallSet.walls[this.focusedWallIndex].
-                                                                frames[this.selectedFrame].borderMaterial + '")',
+            'background-image': 'url(' + this.loadedWallSet.walls[this.focusedWallIndex].
+                                            frames[this.selectedFrame].borderMaterial + ')',
             'width': '207px',
             'height': '27px'
-        };
-
-        return style;
-    }
-
-    setDropDownDisplayedMaterial(index: number) {
-        let style = {
-            'background-image': 'url("./assets/materials/' + this.materials[index] + '")',
-            'width': '207px',
-            'height': '27px',
-            'margin-left': '10px',
-            'margin-bottom': '10px',
-            'cursor': 'pointer',
-            'padding-bottom': '5px'
         };
 
         return style;
@@ -413,7 +388,7 @@ export class ShapesService {
 
         var frameBorderMaterial = this.loadedWallSet.walls[this.focusedWallIndex].frames[index].borderMaterial;
         if (frameBorderMaterial !== '' && frameBorderMaterial !== undefined) {
-            style['background-image'] = 'url("./assets/materials/' + frameBorderMaterial + '")';
+            style['background-image'] = 'url(' + frameBorderMaterial + ')';
         }
 
         if (this.selectedFrame === index) {
@@ -530,7 +505,7 @@ export class ShapesService {
 
         var wallBorderMaterial = this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial;
         if (wallBorderMaterial !== '' && wallBorderMaterial !== undefined) {
-            style['background-image'] = 'url("./assets/materials/' + wallBorderMaterial + '")';
+            style['background-image'] = 'url(' + wallBorderMaterial + ')';
         }
 
         if (this.isFocusedWall) {
@@ -540,14 +515,21 @@ export class ShapesService {
         return style;
     }
 
-    addWallMaterial(index: number) {
-        this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = this.materials[index];
+    addWallMaterial(src: string) {
+        this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = src;
         this.hasWallMaterial = true;
+    }
+
+    
+
+    addFrameMaterial(src: string) {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial = src;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].hasMaterial = true;
     }
 
     returnWallMaterial() {
         let style = {
-            'background-image': 'url("./assets/materials/' + this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial + '")',
+            'background-image': 'url(' + this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial + ')',
             'width': '190px',
             'height': '27px'
         };

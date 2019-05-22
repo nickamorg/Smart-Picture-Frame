@@ -46,7 +46,7 @@
                             <input (keyup)="shapesService.setBorderSize($event.target.value)" type="text" style="width:150px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].borderSize}}">
                         </div>
                         <ul class="dropdown-menu" style="width:100%; text-align: center; top:55px">
-                            <li *ngFor="let type of shapesService.materials; let i = index" (click)='shapesService.addMaterial(i)'  [ngStyle]="shapesService.setDropDownDisplayedMaterial(i)"></li>
+                            <li *ngFor="let type of materials; let i = index" (click)='shapesService.addFrameMaterial(type.src)' [ngStyle]="setDropDownDisplayedMaterial(type.src)"></li>
                         </ul>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
                             <input (keyup)="shapesService.setWallBorderSize($event.target.value)" type="text" style="width:131px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].borderSize}}">
                         </div>
                         <ul class="dropdown-menu" style="width:100%; text-align: center; top:40px">
-                            <li *ngFor="let type of shapesService.materials; let i = index" (click)='shapesService.addWallMaterial(i)' [ngStyle]="shapesService.setDropDownDisplayedMaterial(i)"></li>
+                            <li *ngFor="let type of materials; let i = index" (click)='shapesService.addWallMaterial(type.src)' [ngStyle]="setDropDownDisplayedMaterial(type.src)"></li>
                         </ul>
                     </div>
                 </div>

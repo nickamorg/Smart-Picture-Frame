@@ -6,7 +6,6 @@ import { Wallpaper } from './wallpaper';
 
 @Injectable()
 export class WallpaperDBService {
-    images: Wallpaper[];
 
     constructor(private http: Http) { }
 

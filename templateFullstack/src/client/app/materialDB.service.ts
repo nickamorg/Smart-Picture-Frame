@@ -6,8 +6,7 @@ import { Material } from './material';
 
 @Injectable()
 export class MaterialDBService {
-    images: Material[];
-
+    
     constructor(private http: Http) { }
 
     getMaterials(): Observable<Material[]> {
