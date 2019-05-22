@@ -1,0 +1,16 @@
+'use strict';
+
+import * as mongoose from 'mongoose';
+import { registerEvents } from './material.sockets';
+
+enum MaterialCategory {
+    IMAGE, WALLPAPER, MATERIAL
+}
+
+var MaterialSchema = new mongoose.Schema({
+    src: String,
+    title: String
+});
+
+registerEvents(MaterialSchema);
+export default mongoose.model('Material', MaterialSchema);

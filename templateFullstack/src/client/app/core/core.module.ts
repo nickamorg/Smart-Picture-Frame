@@ -18,6 +18,7 @@ import { ShapesService } from '../shapes.service';
 import { FrameImagesComponent } from './frame-images/frame-images.component';
 import { WallImagesComponent } from './wall-images/wall-images.component';
 import { DatabaseService } from '../database.service';
+import { MaterialDatabaseService } from '../materialDatabase.service';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,6 @@ import { DatabaseService } from '../database.service';
     FooterComponent,
     WorkspaceComponent
   ],
-  providers: [ShapesService, DatabaseService]
+  providers: [ShapesService, DatabaseService, MaterialDatabaseService]
 })
 export class CoreModule { }

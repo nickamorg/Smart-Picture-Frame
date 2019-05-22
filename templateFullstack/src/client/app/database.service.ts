@@ -18,7 +18,6 @@ export class DatabaseService {
 
     deleteImage(id) {
         this.http.delete('api/galleryImages/' + id).subscribe();
-        this.getImages();
     }
 
     uploadImage(src, title, description,

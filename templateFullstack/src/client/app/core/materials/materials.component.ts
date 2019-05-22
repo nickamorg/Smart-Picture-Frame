@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MaterialDatabaseService } from '../../materialDatabase.service';
+import { Material } from './../../material';
 
 @Component({
     selector: 'app-materials',
@@ -6,28 +8,26 @@ import { Component, OnInit } from '@angular/core';
     styleUrls: ['./materials.component.scss']
 })
 
-export class MaterialsComponent implements OnInit {
-    materials: Material[];
+export class MaterialsComponent {
+    materials: Material[] = [];
     uploadedMaterials: Material[];
     showUploadedMaterialsModal = false;
 
-    constructor() {
-        this.materials = [
-            new Material('/assets/materials/gold.jpg', 'Gold'),
-            new Material('/assets/materials/brick.jpg', 'Brick'),
-            new Material('/assets/materials/iron.jpg', 'Iron'),
-            new Material('/assets/materials/stone.png', 'Stone'),
-            new Material('/assets/materials/aqua.jpg', 'Aqua'),
-            new Material('/assets/materials/lava.jpg', 'Lava')
-        ];
+    constructor(private materialDatabaseService: MaterialDatabaseService) {
+        this.getMaterials();
     }
 
-    ngOnInit() { }
+    getMaterials() {
+        this.materialDatabaseService.getMaterials().subscribe(
+            materials => {
+                this.materials = materials;
+            }
+        );
+    }
 
-    deleteMaterial(src: string) {
-        this.materials = this.materials.filter(function(elem) {
-            return elem.src !== src;
-        });
+    deleteMaterial(selectedMaterial: Material) {
+        this.materialDatabaseService.deleteMaterial(selectedMaterial._id);
+        this.getMaterials();
     }
 
     processFile(imageInput) {
@@ -38,31 +38,20 @@ export class MaterialsComponent implements OnInit {
             var file: File = imageInput.files[i];
             var reader = new FileReader();
             reader.addEventListener('load', (event: any) => {
-                this.uploadedMaterials.push(new Material(event.target.result, ''));
-                /*
-                this.selectedFile = new ImageSnippet(event.target.result, file);
-
-                this.imageService.uploadImage(this.selectedFile.file).subscribe(
-                    (res) => {
-
-                    },
-                    (err) => {
-
-                })
-
-                */
+                this.uploadedMaterials.push(new Material('', '', event.target.result));
             });
             reader.readAsDataURL(file);
         }
     }
 
     uploadMaterials() {
-        //Mongodb code missed
         this.showUploadedMaterialsModal = false;
 
         this.uploadedMaterials.forEach(element => {
-            this.materials.push(element);
+            this.materialDatabaseService.uploadMaterial(element.src, element.title);
         });
+        
+        this.getMaterials();
     }
 
     cancelUploadMaterials() {
@@ -77,15 +66,5 @@ export class MaterialsComponent implements OnInit {
         this.uploadedMaterials = this.uploadedMaterials.filter(function(elem) {
             return elem.src !== src;
         });
-    }
-}
-
-class Material {
-    src: string;
-    title: string;
-
-    constructor(src: string, title: string) {
-        this.src = src;
-        this.title = title;
     }
 }
