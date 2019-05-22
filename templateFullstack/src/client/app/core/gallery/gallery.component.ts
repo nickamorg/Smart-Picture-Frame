@@ -1,4 +1,6 @@
-import { Component, OnInit, ɵConsole } from '@angular/core';
+import { Component } from '@angular/core';
+import { DatabaseService } from '../../database.service';
+import {GalleryImage} from './../../galleryImage';
 
 @Component({
     selector: 'app-gallery',
@@ -6,12 +8,11 @@ import { Component, OnInit, ɵConsole } from '@angular/core';
     styleUrls: ['./gallery.component.scss']
 })
 
-export class GalleryComponent implements OnInit {
-    uploadedImages: Image[];
+export class GalleryComponent {
+    uploadedImages: GalleryImage[];
     showUploadedImagesModal = false;
 
     imagesCol = 6;
-    galleryImages: Image[];
     types: string[] = [];
     countries: string[] = [];
     cities: string[] = [];
@@ -20,33 +21,26 @@ export class GalleryComponent implements OnInit {
     selectedTypes: string[] = [];
     selectedCountries: string[] = [];
     selectedCities: string[] = [];
-    allGalleryImagesIndexes: number[];
+    allGalleryImagesIndexes: number[] = [];
     displayedGalleryImages: number[];
 
     displayImage = false;
     editImage = false;
-    displayedImage: Image = null;
-
-    constructor() {
-        this.allGalleryImagesIndexes = [0, 1, 2, 3];
-
-        this.galleryImages = [
-            new Image('Amazon Waterfall', 'Description Example 1', '/assets/images/waterfall1.png', 'Attraction', 'Italy',  'Milan'),
-            new Image('Amazon Waterfall', 'Description Example 2', '/assets/images/waterfall2.png', 'Family',     'Greece', 'Athens'),
-            new Image('Amazon Waterfall', 'Description Example 3', '/assets/images/waterfall3.png', 'Travels',    'Norway', 'Oslo'),
-            new Image('Amazon Waterfall', 'Description Example 4', '/assets/images/waterfall4.png', 'Cars',       'Spain',  'Madrid'),
-        ];
-
-        this.initFiltering();
+    displayedImage: GalleryImage = null;
+    galleryImages: GalleryImage[] = [];
+    
+    constructor(private databaseService: DatabaseService) {
+        this.getImages();
     }
 
     initFiltering() {
         this.displayedGalleryImages = [];
-        for (var i = 0; i < this.galleryImages.length; i++) {
+        for (var i = 0; i < this.databaseService.images.length; i++) {
             this.displayedGalleryImages.push(i);
+            this.allGalleryImagesIndexes.push(i);
         }
 
-        this.galleryImages.forEach(element => {
+        this.databaseService.images.forEach(element => {
             var categories = ['types', 'countries', 'cities'];
             var imageField = ['type', 'country', 'city'];
             for (var index in categories) {
@@ -57,14 +51,16 @@ export class GalleryComponent implements OnInit {
         });
     }
 
-    ngOnInit() { }
+    deleteImage(selectedImage: GalleryImage) {
+        this.databaseService.deleteImage(selectedImage._id);
+        this.getImages();
+    }
 
     changeImagesCol(col: number) {
         this.imagesCol = col;
     }
 
     selectFilter(arg: string, cat: string) {
-
         // Select and Store Filter 'arg' to 'cat' category
         var index = this[cat].indexOf(arg);
         if (index === -1) {
@@ -103,51 +99,42 @@ export class GalleryComponent implements OnInit {
         }
     }
 
-    deleteImage(src: string) {
-        this.galleryImages = this.galleryImages.filter(function(elem) {
-            return elem.src !== src;
-        });
+    getImages() {
+        this.databaseService.getImages().subscribe(
+            images => {
+                this.galleryImages = images;
 
-        this.displayedGalleryImages = [];
-        for (var i = 0; i < this.galleryImages.length; i++) {
-            this.displayedGalleryImages[i] = i;
-        }
-
-        this.types = [];
-        this.countries = [];
-        this.cities = [];
-        this.galleryImages.forEach(element => {
-            var categories = ['types', 'countries', 'cities'];
-            var imageField = ['type', 'country', 'city'];
-            for (var index in categories) {
-                if (this[categories[index]].indexOf(element[imageField[index]]) === -1) {
-                    this[categories[index]].push(element[imageField[index]]);
+                this.displayedGalleryImages = [];
+                for (var i = 0; i < this.galleryImages.length; i++) {
+                    this.displayedGalleryImages.push(i);
+                    this.allGalleryImagesIndexes.push(i);
                 }
-            }
-        });
 
-        var selectedFilters = ['selectedTypes', 'selectedCountries', 'selectedCities'];
-        var filters = ['types', 'countries', 'cities'];
-        for (var indexFilter in filters) {
-            this[selectedFilters[indexFilter]] = this[selectedFilters[indexFilter]].filter(item =>
-                    this[filters[indexFilter]].indexOf(item) > -1);
-        }
+                this.galleryImages.forEach(element => {
+                    var categories = ['types', 'countries', 'cities'];
+                    var imageField = ['type', 'country', 'city'];
+                    for (var index in categories) {
+                        if (this[categories[index]].indexOf(element[imageField[index]]) === -1 && element[imageField[index]] !== '') {
+                            this[categories[index]].push(element[imageField[index]]);
+                        }
+                    }
+                });
+            }
+        );
     }
 
-    displaySelectedImage(src: string, action: string) {
+    displaySelectedImage(selectedImage: GalleryImage, action: string) {
         if (action === 'display') {
             this.displayImage = true;
         } else {
             this.editImage = true;
         }
-
-        this.galleryImages.forEach(element => {
-            if (element.src === src) {
-                this.displayedImage = new Image(element.title, element.description, element.src,
-                    element.type, element.country, element.city);
-                    return;
-            }
-        });
+        
+        this.displayedImage = new GalleryImage( selectedImage._id, selectedImage.title, 
+                                                selectedImage.description, selectedImage.src, 
+                                                selectedImage.type, selectedImage.country, 
+                                                selectedImage.city);
+        
     }
 
     hideDisplayedImage() {
@@ -157,14 +144,8 @@ export class GalleryComponent implements OnInit {
     }
 
     saveEditedImage(title: string, description: string, type: string, country: string, city: string) {
-        this.galleryImages.forEach((element, index) => {
-            if (element.src === this.displayedImage.src) {
-                this.galleryImages[index] = new Image(title, description, element.src,
-                    type, country, city);
-                    return;
-            }
-        });
-
+        this.databaseService.updateImage(this.displayedImage._id, this.displayedImage.src, title, description, type, country, city);
+        this.getImages();
         this.hideDisplayedImage();
     }
 
@@ -176,7 +157,7 @@ export class GalleryComponent implements OnInit {
             var file: File = imageInput.files[i];
             var reader = new FileReader();
             reader.addEventListener('load', (event: any) => {
-                this.uploadedImages.push(new Image('', '', event.target.result, '', '', ''));
+                this.uploadedImages.push(new GalleryImage('', '', '', event.target.result, '', '', ''));
             });
             reader.readAsDataURL(file);
         }
@@ -187,11 +168,11 @@ export class GalleryComponent implements OnInit {
         this.showUploadedImagesModal = false;
 
         this.uploadedImages.forEach(element => {
-           this.galleryImages.push(element);
+            this.databaseService.uploadImage(element.src, element.title, element.description,
+                element.type, element.country, element.city)
         });
-
-        this.initFiltering();
-        console.log(this.galleryImages);
+        
+        this.getImages();
     }
 
     cancelUploadImages() {
@@ -222,24 +203,5 @@ export class GalleryComponent implements OnInit {
 
     addUploadedImageCity(index, event) {
         this.uploadedImages[index].city = event.target.value;
-    }
-}
-
-class Image {
-    title: string;
-    description: string;
-    src: string;
-    type: string;
-    country: string;
-    city: string;
-
-    constructor(title: string, descr: string, src: string,
-                type: string, country: string, city: string) {
-        this.title = title;
-        this.description = descr;
-        this.src = src;
-        this.type = type;
-        this.country = country;
-        this.city = city;
     }
 }

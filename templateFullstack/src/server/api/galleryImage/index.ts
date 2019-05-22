@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import controller from './image.controller';
+import controller from './galleryImage.controller';
 
 let router = Router();
 

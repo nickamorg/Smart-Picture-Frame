@@ -1,21 +1,21 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/images              ->  index
- * POST    /api/images              ->  create
- * GET     /api/images/:id          ->  show
- * PUT     /api/images/:id          ->  upsert
- * PATCH   /api/images/:id          ->  patch
- * DELETE  /api/images/:id          ->  destroy
+ * GET     /api/galleryImages              ->  index
+ * POST    /api/galleryImages              ->  create
+ * GET     /api/galleryImages/:id          ->  show
+ * PUT     /api/galleryImages/:id          ->  upsert
+ * PATCH   /api/galleryImages/:id          ->  patch
+ * DELETE  /api/galleryImages/:id          ->  destroy
  */
 
 import { Request, Response } from 'express';
 import * as jsonpatch from 'fast-json-patch';
-import * as imageEvents from './image.events';
+import * as galleryImageEvents from './galleryImage.events';
 import config from '../../config/environment';
-import Image from './image.model';
+import GalleryImage from './galleryImage.model';
 
 const isConnectedDB = config.mongo.connect;
-let ImagesData = require('./data.json');
+let GalleryImagesData = require('./data.json');
 
 
 /*---------------------------------------------------------
@@ -23,11 +23,11 @@ let ImagesData = require('./data.json');
  ---------------------------------------------------------*/
 
 /**
- * Data structure of image object.
- * @typedef {Object} Image
- * @property {String} name - The name of the image.
- * @property {String} info - Detailed info about the image.
- * @property {boolean} active - Indicates whether the image is active.
+ * Data structure of galleryImage object.
+ * @typedef {Object} GalleryImage
+ * @property {String} name - The name of the galleryImage.
+ * @property {String} info - Detailed info about the galleryImage.
+ * @property {boolean} active - Indicates whether the galleryImage is active.
  */
 
 /*---------------------------------------------------------
@@ -39,10 +39,10 @@ let ImagesData = require('./data.json');
  * BEGIN Helper functions
  ---------------------------------------------------------*/
 
-function publishImageCreated() {
+function publishGalleryImageCreated() {
   return function (entity) {
     if (entity) {
-      imageEvents.ImageCreated(entity);
+      galleryImageEvents.GalleryImageCreated(entity);
     }
     return entity;
   };
@@ -104,69 +104,69 @@ function handleError(res: Response, statusCode: number) {
 
 
 /**
- * Creates a controller for Images
+ * Creates a controller for GalleryImages
  *
- * @class ImageController
+ * @class GalleryImageController
  */
-class ImageController {
+class GalleryImageController {
 
   /**
-   * Creates an instance of ImageController.
-   * @memberof ImageController
+   * Creates an instance of GalleryImageController.
+   * @memberof GalleryImageController
    */
   constructor() { }
 
   /**
-   * Gets a list of Images
+   * Gets a list of GalleryImages
    *
    * @param {Object} req - http request object
    * @param {Object} res - http response object to report any issues
-   * @return {Image[]} The list of available images
+   * @return {GalleryImage[]} The list of available galleryImages
    */
   public index(req: Request, res: Response) {
     if (isConnectedDB === false) {
-      return res.send(ImagesData);
+      return res.send(GalleryImagesData);
     }
 
-    return Image.find().exec()
+    return GalleryImage.find().exec()
       .then(respondWithResult(res, 200))
       .catch(handleError(res, 500));
   }
 
   /**
-   * Gets a specific image
+   * Gets a specific galleryImage
    *
    * @param {Object} req - http request object
    * @param {Object} res - http response object to report any issues
-   * @return {Image} A specific image with id
+   * @return {GalleryImage} A specific galleryImage with id
    */
   public show(req: Request, res: Response) {
     if (isConnectedDB === false) {
       let query: number = parseInt(req.params.id, 10);
-      let image: any = ImagesData.find(image => image._id === query);
-      if (image) {
-        return res.status(200).send(image);
+      let galleryImage: any = GalleryImagesData.find(galleryImage => galleryImage._id === query);
+      if (galleryImage) {
+        return res.status(200).send(galleryImage);
       } else {
         return res.sendStatus(404).end();
       }
     }
 
-    return Image.findById(req.params.id).exec()
+    return GalleryImage.findById(req.params.id).exec()
       .then(handleEntityNotFound(res))
       .then(respondWithResult(res, 200))
       .catch(handleError(res, 500));
   }
 
   /**
-   * Creates a new Image in the DB
+   * Creates a new GalleryImage in the DB
    *
    * @export
    * @param {Object} req - http request object
-   * @param {String} req.body.name - The name of the image.
-   * @param {String} req.body.info - Detailed info about the image.
-   * @param {boolean} req.body.active - Indicates whether the image is active.
+   * @param {String} req.body.name - The name of the galleryImage.
+   * @param {String} req.body.info - Detailed info about the galleryImage.
+   * @param {boolean} req.body.active - Indicates whether the galleryImage is active.
    * @param {Object} res - http response object to report any issues
-   * @return {Image} The created image
+   * @return {GalleryImage} The created galleryImage
    */
   public create(req: Request, res: Response) {
     if (isConnectedDB === false) {
@@ -175,22 +175,22 @@ class ImageController {
 
     // global.__socketController.sendMessage("", "", "asdfa")
 
-    return Image.create(req.body)
-      //.then(publishImageCreated())
+    return GalleryImage.create(req.body)
+      //.then(publishGalleryImageCreated())
       .then(respondWithResult(res, 201))
       .catch(handleError(res, 500));
   }
 
   /**
-   * Upserts an existing Image in the DB
+   * Upserts an existing GalleryImage in the DB
    *
    * @export
    * @param {Object} req - http request object
-   * @param {String} req.body.name - The name of the image.
-   * @param {String} req.body.info - Detailed info about the image.
-   * @param {boolean} req.body.active - Indicates whether the image is active.
+   * @param {String} req.body.name - The name of the galleryImage.
+   * @param {String} req.body.info - Detailed info about the galleryImage.
+   * @param {boolean} req.body.active - Indicates whether the galleryImage is active.
    * @param {Object} res - http response object to report any issues
-   * @return {Image} The updated image
+   * @return {GalleryImage} The updated galleryImage
    */
   public upsert(req: Request, res: Response) {
     if (isConnectedDB === false) {
@@ -200,7 +200,7 @@ class ImageController {
     if (req.body._id) {
       delete req.body._id;
     }
-    return Image.findOneAndUpdate(
+    return GalleryImage.findOneAndUpdate(
       { _id: req.params.id },
       req.body, { new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true }
     ).exec()
@@ -209,15 +209,15 @@ class ImageController {
   }
 
   /**
-   * Updates an existing Image in the DB
+   * Updates an existing GalleryImage in the DB
    *
    * @export
    * @param {Object} req - http request object
-   * @param {String} req.body.name - The name of the image.
-   * @param {String} req.body.info - Detailed info about the image.
-   * @param {boolean} req.body.active - Indicates whether the image is active.
+   * @param {String} req.body.name - The name of the galleryImage.
+   * @param {String} req.body.info - Detailed info about the galleryImage.
+   * @param {boolean} req.body.active - Indicates whether the galleryImage is active.
    * @param {Object} res - http response object to report any issues
-   * @return {Image} The updated image
+   * @return {GalleryImage} The updated galleryImage
    */
   public patch(req: Request, res: Response) {
     if (isConnectedDB === false) {
@@ -227,7 +227,7 @@ class ImageController {
     if (req.body._id) {
       delete req.body._id;
     }
-    return Image.findById(req.params.id).exec()
+    return GalleryImage.findById(req.params.id).exec()
       .then(handleEntityNotFound(res))
       .then(patchUpdates(req.body))
       .then(respondWithResult(res, 200))
@@ -235,7 +235,7 @@ class ImageController {
   }
 
   /**
-   * Deletes a Image from the DB
+   * Deletes a GalleryImage from the DB
    *
    * @export
    * @param {Object} req - http request object
@@ -247,21 +247,21 @@ class ImageController {
       return res.sendStatus(400).end();
     }
 
-    return Image.findById(req.params.id).exec()
+    return GalleryImage.findById(req.params.id).exec()
       .then(handleEntityNotFound(res))
       .then(removeEntity(res))
       .catch(handleError(res, 500));
   }
 
   /**
-   * Updates an existing Image in the DB
+   * Updates an existing GalleryImage in the DB
    *
    * @export
    * @param {Object} req - http request object
    * @param {String} req.body.attribute - The name of the attribute.
    * @param {String} req.body.value - The value of the attribute.
    * @param {Object} res - http response object to report any issues
-   * @return {Image} The updated image
+   * @return {GalleryImage} The updated galleryImage
    */
   public propagateEventToUI(req: Request, res: Response) {
 
@@ -281,4 +281,4 @@ class ImageController {
   }
 }
 
-export default new ImageController();
+export default new GalleryImageController();

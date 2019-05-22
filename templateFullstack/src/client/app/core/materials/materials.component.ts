@@ -44,7 +44,7 @@ export class MaterialsComponent implements OnInit {
 
                 this.imageService.uploadImage(this.selectedFile.file).subscribe(
                     (res) => {
-        
+
                     },
                     (err) => {
 

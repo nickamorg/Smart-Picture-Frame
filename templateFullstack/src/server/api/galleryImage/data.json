@@ -1,7 +1,6 @@
 [
     {
-        "_id": 1,
-        "id":"22",
+        "ID":"22",
         "src": "test",
         "title": "test",
         "description": "test",
@@ -11,9 +10,8 @@
         "info": "test"
     },
     {
-        "_id": 2,
-        "id": "22",
-        "src": "test",
+        "ID": "32",
+        "src": "me",
         "title": "test",
         "description": "test",
         "country": "test",

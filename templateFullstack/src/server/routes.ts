@@ -3,7 +3,7 @@
  */
 import * as path from 'path';
 import * as errors from './components/errors';
-import imageRouter from './api/image';
+import galleryImageRouter from './api/galleryImage';
 import frameRouter from './api/frame';
 import shapeImageRouter from './api/shapeImage';
 import wallRouter from './api/wall';
@@ -11,7 +11,7 @@ import wallSetRouter from './api/wallSet';
 
 export default app => {
     // Insert routes below
-    app.use('/api/images', imageRouter);
+    app.use('/api/galleryImages', galleryImageRouter);
     app.use('/api/frames', frameRouter);
     app.use('/api/shapeImages', shapeImageRouter);
     app.use('/api/walls', wallRouter);
