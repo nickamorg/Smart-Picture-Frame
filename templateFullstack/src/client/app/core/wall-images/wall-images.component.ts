@@ -1,5 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ShapesService } from '../../shapes.service';
+import { Wallpaper } from '../../wallpaper';
+import { WallpaperDBService } from '../../wallpaperDB.service';
 
 @Component({
   selector: 'app-wall-images',
@@ -12,7 +14,19 @@ export class WallImagesComponent implements OnInit {
     @Output() messageEvent = new EventEmitter<string>();
 
     showChooseWallImages = false;
-    constructor(private shapesService: ShapesService) {}
+    wallpapers: Wallpaper[] = [];
+
+    constructor(private shapesService: ShapesService, private wallpaperDBService: WallpaperDBService) {
+        this.getWallpapers();
+    }
+
+    getWallpapers() {
+        this.wallpaperDBService.getWallpapers().subscribe(
+            wallpapers => {
+                this.wallpapers = wallpapers;
+            }
+        );
+    }
 
     ngOnInit() { }
 
@@ -20,8 +34,8 @@ export class WallImagesComponent implements OnInit {
         this.messageEvent.emit('toggleChooseWallImagesModal');
     }
 
-    applySelectedWallImages() {
-        this.shapesService.addSelectedWallImages();
+    applySelectedWallpapers() {
+        this.shapesService.addSelectedWallpapers();
         this.sendMessage();
     }
 

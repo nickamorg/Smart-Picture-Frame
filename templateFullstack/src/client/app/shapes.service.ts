@@ -176,7 +176,7 @@ class Wall {
 
         var wallWallpaper = this.images[this.displayedImageIndex];
         if (wallWallpaper !== '' && wallWallpaper !== undefined) {
-            style['background-image'] = 'url("./assets/wallpapers/' + wallWallpaper + '")';
+            style['background-image'] = 'url(' + wallWallpaper + ')';
         }
 
         return style;
@@ -261,10 +261,10 @@ export class ShapesService {
     isFocusedWall = true;
     wallImages: WallImage[];
     wallImagesCol = 12;
-    selectedWallImages = 0;
-    currWallImages: string[] = [];
     displayedWallImageIndex = 0;
     editMode = false;
+    currWallpapers:  string[] = [];
+    selectedWallpapers = 0;
 
     feedInit() {
         var tmpFrame = new Frame();
@@ -279,7 +279,7 @@ export class ShapesService {
         tmpFrames.push(tmpFrame);
         tmpFrames.push(tmpFrame1);
 
-        var images = [ 'inferno.jpg', 'waterfalls.jpg'];
+        var images = [ './assets/wallpapers/inferno.jpg', './assets/wallpapers/waterfalls.jpg'];
         var tmpWall = new Wall();
         tmpWall.init('./assets/materials/lava.jpg', 10, tmpFrames, images, 'Waterfalls Display');
 
@@ -306,6 +306,17 @@ export class ShapesService {
         } else {
             this.currFrameImages.splice(index, 1);
             this.selectedImages--;
+        }
+    }
+
+    selectWallpaper(src) {
+        const index = this.currWallpapers.indexOf(src, 0);
+        if (index === -1) {
+            this.currWallpapers.push(src);
+            this.selectedWallpapers++;
+        } else {
+            this.currWallpapers.splice(index, 1);
+            this.selectedWallpapers--;
         }
     }
 
@@ -468,7 +479,7 @@ export class ShapesService {
         var wallWallpaper = this.loadedWallSet.walls[this.focusedWallIndex].images[this.loadedWallSet.
                                                     walls[this.focusedWallIndex].displayedImageIndex];
         if (wallWallpaper !== '' && wallWallpaper !== undefined) {
-            style['background-image'] = 'url("./assets/wallpapers/' + wallWallpaper + '")';
+            style['background-image'] = 'url(' + wallWallpaper + ')';
         }
 
         return style;
@@ -522,33 +533,18 @@ export class ShapesService {
         this.loadedWallSet.walls[this.focusedWallIndex].borderSize = borderSize;
     }
 
-    selectWallImage(id) {
-        this.wallImages[id].selected = !this.wallImages[id].selected;
-        this.selectedWallImages += this.wallImages[id].selected ? 1 : -1;
-    }
-
     changeWallImagesCol(col: number) {
         this.wallImagesCol = col;
     }
 
-    uncheckAllWallImages() {
-        this.selectedWallImages = 0;
-        this.currWallImages = [];
-
-        this.wallImages.forEach(function (value) {
-            value.selected = false;
-        });
+    uncheckAllWallpapers() {
+        this.selectedWallpapers = 0;
+        this.currWallpapers = [];
     }
 
-    addSelectedWallImages() {
-        var self = this;
-        self.loadedWallSet.walls[this.focusedWallIndex].images = [];
-
-        this.wallImages.forEach(function (value) {
-            if (value.selected) {
-                self.loadedWallSet.walls[self.focusedWallIndex].images.push(value.src);
-            }
-        });
+    addSelectedWallpapers() {
+            this.loadedWallSet.walls[this.focusedWallIndex].images = this.currWallpapers;
+            console.log(this.loadedWallSet.walls[this.focusedWallIndex].images);
     }
 
     changeDisplayedWallImage(index: number) {
@@ -618,6 +614,10 @@ export class ShapesService {
 
     isImageSelected(id: string) {
         return this.currFrameImages.indexOf(id) > -1 ? true : false;
+    }
+
+    isWallpaperSelected(src: string) {
+        return this.currWallpapers.indexOf(src) > -1 ? true : false;
     }
 }
 

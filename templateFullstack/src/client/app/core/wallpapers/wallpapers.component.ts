@@ -44,12 +44,13 @@ export class WallpapersComponent {
     }
 
     uploadWallpapers() {
-        //Mongodb code missed
         this.showUploadedWallpapersModal = false;
 
         this.uploadedWallpapers.forEach(element => {
-           this.wallpapers.push(element);
+            this.wallpaperDBService.uploadWallpaper(element.src, element.title);
         });
+        
+        this.getWallpapers();
     }
 
     cancelUploadWallpapers() {
