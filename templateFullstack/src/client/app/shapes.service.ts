@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { WallSetDBService } from './wallSetDB.service';
 import { WallDBService } from './wallDB.service';
+import { FrameDBService } from './frameDB.service';
 
 var imageID = -1;
 var wallImageID = -1;
@@ -293,7 +294,8 @@ export class ShapesService {
         this.loadedWallSet = this.wallSets[0].copy();
     }
 
-    constructor(private wallDBService: WallDBService, private wallSetDBService: WallSetDBService) {
+    constructor(private wallDBService: WallDBService, private wallSetDBService: WallSetDBService,
+                private frameDBService: FrameDBService ) {
         this.feedInit();
 
         this.wallImages = [ new WallImage('inferno.jpg'),
@@ -451,6 +453,19 @@ export class ShapesService {
         this.loadedWallSet.walls[this.focusedWallIndex].frames.push(newFrame);
         this.selectedFrame = this.loadedWallSet.walls[this.focusedWallIndex].frames.length - 1;
         this.initCurrFrameImages(this.selectedFrame);
+        this.frameDBService.uploadFrame(
+            this.wallDBService.currWallsID[this.focusedWallIndex],
+            newFrame.borderRadius,
+            newFrame.borderSize,
+            newFrame.borderMaterial,
+            newFrame.borderColor,
+            newFrame.padding,
+            newFrame.top,
+            newFrame.left,
+            newFrame.width,
+            newFrame.height,
+            newFrame.iterateTime
+        );
     }
 
     changeDisplayedImage(index: number) {
@@ -569,6 +584,8 @@ export class ShapesService {
         this.focusedWallIndex = 0;
         
         this.wallSetDBService.uploadWallSet(creator, type, target, title, description);
+        this.wallDBService.currWallsID = [];
+        this.frameDBService.currFramesID = [];
     }
 
     setWallTitleStyle(index) {
@@ -601,7 +618,9 @@ export class ShapesService {
     setCurrWallSetFocusedWallNewTitle(index, title) {
         this.loadedWallSet.walls[index].title = title;
         console.log(this.wallSetDBService.currWallSetID);
-        this.wallDBService.updateWall(this.wallSetDBService.currWallSetID, this.wallDBService.currWallsID[index], title);
+        this.wallDBService.updateWall(  this.wallSetDBService.currWallSetID, this.wallDBService.currWallsID[index],
+                                        this.loadedWallSet.walls[index].borderMaterial,
+                                        this.loadedWallSet.walls[index].borderSize, title);
     }
 
     saveWall() {

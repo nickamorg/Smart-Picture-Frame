@@ -8,7 +8,6 @@ enum FrameCategory {
 }
 
 var FrameSchema = new mongoose.Schema({
-    ID: String,
     wallID: String,
     borderRadius: Number,
     borderSize: Number,
@@ -20,9 +19,7 @@ var FrameSchema = new mongoose.Schema({
     left: Number,
     width: Number,
     height: Number,
-    displayedImageIndex: String,
-    iterateTime: String,
-    active: Boolean
+    iterateTime: Number
 });
 
 registerEvents(FrameSchema);

@@ -22,35 +22,36 @@ import { MaterialDBService } from '../materialDB.service';
 import { WallpaperDBService } from '../wallpaperDB.service';
 import { WallSetDBService } from '../wallSetDB.service';
 import { WallDBService } from '../wallDB.service';
+import { FrameDBService } from '../frameDB.service';
 
 @NgModule({
-  declarations: [
-    HomeComponent,
-    NavbarComponent,
-    FooterComponent,
-    NewWallComponent,
-    LoadWallComponent,
-    UploadImagesComponent,
-    MaterialsComponent,
-    GalleryComponent,
-    WorkspaceComponent,
-    ToolsComponent,
-    EditorComponent,
-    FrameImagesComponent,
-    WallpapersComponent,
-    WallImagesComponent
-  ],
-  imports: [
-    CommonModule,
-    CoreRoutingModule
-  ],
-  exports: [
-    CoreRoutingModule,
-    NavbarComponent,
-    FooterComponent,
-    WorkspaceComponent
-  ],
-  providers: [ShapesService, DatabaseService, MaterialDBService, 
-              WallpaperDBService, WallSetDBService, WallDBService]
+    declarations: [
+        HomeComponent,
+        NavbarComponent,
+        FooterComponent,
+        NewWallComponent,
+        LoadWallComponent,
+        UploadImagesComponent,
+        MaterialsComponent,
+        GalleryComponent,
+        WorkspaceComponent,
+        ToolsComponent,
+        EditorComponent,
+        FrameImagesComponent,
+        WallpapersComponent,
+        WallImagesComponent
+    ],
+    imports: [
+        CommonModule,
+        CoreRoutingModule
+    ],
+    exports: [
+        CoreRoutingModule,
+        NavbarComponent,
+        FooterComponent,
+        WorkspaceComponent
+    ],
+    providers: [ShapesService, DatabaseService, MaterialDBService, WallpaperDBService, 
+                WallSetDBService, WallDBService, FrameDBService]
 })
 export class CoreModule { }

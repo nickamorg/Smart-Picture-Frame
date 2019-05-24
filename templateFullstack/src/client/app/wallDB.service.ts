@@ -31,9 +31,11 @@ export class WallDBService {
         });
     }
 
-    updateWall(id, wallSetID, title) {
+    updateWall(id, wallSetID, borderMaterial, borderSize, title) {
         this.http.put('api/walls/' + id, {
             wallSetID: wallSetID,
+            borderMaterial: borderMaterial,
+            borderSize: borderSize,
             title: title
         })
         .subscribe();
