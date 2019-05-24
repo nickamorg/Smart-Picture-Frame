@@ -8,13 +8,11 @@ enum WallSetCategory {
 }
 
 var WallSetSchema = new mongoose.Schema({
-    ID: String,
     creator: String,
     type: String,
     target: String,
     title: String,
-    description: String,
-    active: Boolean
+    description: String
 });
 
 registerEvents(WallSetSchema);

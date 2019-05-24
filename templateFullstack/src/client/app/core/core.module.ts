@@ -20,6 +20,7 @@ import { WallImagesComponent } from './wall-images/wall-images.component';
 import { DatabaseService } from '../database.service';
 import { MaterialDBService } from '../materialDB.service';
 import { WallpaperDBService } from '../wallpaperDB.service';
+import { WallSetDBService } from '../wallSetDB.service';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,6 @@ import { WallpaperDBService } from '../wallpaperDB.service';
     FooterComponent,
     WorkspaceComponent
   ],
-  providers: [ShapesService, DatabaseService, MaterialDBService, WallpaperDBService]
+  providers: [ShapesService, DatabaseService, MaterialDBService, WallpaperDBService, WallSetDBService]
 })
 export class CoreModule { }

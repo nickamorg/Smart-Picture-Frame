@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { WallSetDBService } from './wallSetDB.service';
 
 var imageID = -1;
 var wallImageID = -1;
@@ -291,7 +292,7 @@ export class ShapesService {
         this.loadedWallSet = this.wallSets[0].copy();
     }
 
-    constructor() {
+    constructor(private wallSetDBService: WallSetDBService) {
         this.feedInit();
 
         this.wallImages = [ new WallImage('inferno.jpg'),
@@ -565,6 +566,8 @@ export class ShapesService {
         this.editMode = true;
         this.loadedWallSetIndex = this.wallSets.length - 1;
         this.focusedWallIndex = 0;
+        
+        this.wallSetDBService.uploadWallSet(creator, type, target, title, description);
     }
 
     setWallTitleStyle(index) {
