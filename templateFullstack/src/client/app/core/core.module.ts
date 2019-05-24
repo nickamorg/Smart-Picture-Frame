@@ -21,6 +21,7 @@ import { DatabaseService } from '../database.service';
 import { MaterialDBService } from '../materialDB.service';
 import { WallpaperDBService } from '../wallpaperDB.service';
 import { WallSetDBService } from '../wallSetDB.service';
+import { WallDBService } from '../wallDB.service';
 
 @NgModule({
   declarations: [
@@ -49,6 +50,7 @@ import { WallSetDBService } from '../wallSetDB.service';
     FooterComponent,
     WorkspaceComponent
   ],
-  providers: [ShapesService, DatabaseService, MaterialDBService, WallpaperDBService, WallSetDBService]
+  providers: [ShapesService, DatabaseService, MaterialDBService, 
+              WallpaperDBService, WallSetDBService, WallDBService]
 })
 export class CoreModule { }

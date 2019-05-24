@@ -3,12 +3,13 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { WallSet } from './wallSet';
+import { WallDBService } from './wallDB.service';
 
 @Injectable()
 export class WallSetDBService {
     currWallSetID: string;
 
-    constructor(private http: Http) { }
+    constructor(private http: Http, private wallDBService: WallDBService) { }
 
     getWallSets(): Observable<WallSet[]> {
         return this.http
@@ -27,10 +28,13 @@ export class WallSetDBService {
             target:target,
             title:title,
             description:description
-        }).subscribe(data => {this.currWallSetID = data.json()._id});
+        }).subscribe(data => {
+            this.currWallSetID = data.json()._id;
+            this.wallDBService.uploadWall(data.json()._id, ' ', ' ', ' '); 
+        });
     }
 
-    updateWallSet(id,creator, type, target, title, description) {
+    updateWallSet(id, creator, type, target, title, description) {
         this.http.put('api/wallSets/' + id, {
             creator:creator,
             type:type,
