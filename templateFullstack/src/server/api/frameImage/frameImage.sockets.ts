@@ -1,5 +1,5 @@
 /**
- * ShapeImage model events
+ * FrameImage model events
  */
 
 // Model events
@@ -12,14 +12,14 @@ var events = {
 function emitEvent(event) {
   return function (doc) {
     global.__socketController.broadcastMessage(`${event}:${doc._id}`, doc);
-    global.__socketController.broadcastMessage(`shapeImage:${event}`, doc);
+    global.__socketController.broadcastMessage(`frameImage:${event}`, doc);
   };
 }
 
 // Register the event emitter to the model events
-export function registerEvents(ShapeImage) {
+export function registerEvents(FrameImage) {
   for (var e in events) {
     let event = events[e];
-    ShapeImage.post(e, emitEvent(event));
+    FrameImage.post(e, emitEvent(event));
   }
 }

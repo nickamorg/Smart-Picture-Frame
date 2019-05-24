@@ -1,21 +1,21 @@
 /**
  * Using Rails-like standard naming convention for endpoints.
- * GET     /api/shapeImages              ->  index
- * POST    /api/shapeImages              ->  create
- * GET     /api/shapeImages/:id          ->  show
- * PUT     /api/shapeImages/:id          ->  upsert
- * PATCH   /api/shapeImages/:id          ->  patch
- * DELETE  /api/shapeImages/:id          ->  destroy
+ * GET     /api/frameImages              ->  index
+ * POST    /api/frameImages              ->  create
+ * GET     /api/frameImages/:id          ->  show
+ * PUT     /api/frameImages/:id          ->  upsert
+ * PATCH   /api/frameImages/:id          ->  patch
+ * DELETE  /api/frameImages/:id          ->  destroy
  */
 
 import { Request, Response } from 'express';
 import * as jsonpatch from 'fast-json-patch';
-import * as shapeImageEvents from './shapeImage.events';
+import * as frameImageEvents from './frameImage.events';
 import config from '../../config/environment';
-import ShapeImage from './shapeImage.model';
+import FrameImage from './frameImage.model';
 
 const isConnectedDB = config.mongo.connect;
-let ShapeImagesData = require('./data.json');
+let FrameImagesData = require('./data.json');
 
 
 /*---------------------------------------------------------
@@ -23,11 +23,11 @@ let ShapeImagesData = require('./data.json');
  ---------------------------------------------------------*/
 
 /**
- * Data structure of shapeImage object.
- * @typedef {Object} ShapeImage
- * @property {String} name - The name of the shapeImage.
- * @property {String} info - Detailed info about the shapeImage.
- * @property {boolean} active - Indicates whether the shapeImage is active.
+ * Data structure of frameImage object.
+ * @typedef {Object} FrameImage
+ * @property {String} name - The name of the frameImage.
+ * @property {String} info - Detailed info about the frameImage.
+ * @property {boolean} active - Indicates whether the frameImage is active.
  */
 
 /*---------------------------------------------------------
@@ -39,10 +39,10 @@ let ShapeImagesData = require('./data.json');
  * BEGIN Helper functions
  ---------------------------------------------------------*/
 
-function publishShapeImageCreated() {
+function publishFrameImageCreated() {
   return function (entity) {
     if (entity) {
-      shapeImageEvents.ShapeImageCreated(entity);
+      frameImageEvents.FrameImageCreated(entity);
     }
     return entity;
   };
@@ -104,69 +104,69 @@ function handleError(res: Response, statusCode: number) {
 
 
 /**
- * Creates a controller for ShapeImages
+ * Creates a controller for FrameImages
  *
- * @class ShapeImageController
+ * @class FrameImageController
  */
-class ShapeImageController {
+class FrameImageController {
 
   /**
-   * Creates an instance of ShapeImageController.
-   * @memberof ShapeImageController
+   * Creates an instance of FrameImageController.
+   * @memberof FrameImageController
    */
   constructor() { }
 
   /**
-   * Gets a list of ShapeImages
+   * Gets a list of FrameImages
    *
    * @param {Object} req - http request object
    * @param {Object} res - http response object to report any issues
-   * @return {ShapeImage[]} The list of available shapeImages
+   * @return {FrameImage[]} The list of available frameImages
    */
   public index(req: Request, res: Response) {
     if (isConnectedDB === false) {
-      return res.send(ShapeImagesData);
+      return res.send(FrameImagesData);
     }
 
-    return ShapeImage.find().exec()
+    return FrameImage.find().exec()
       .then(respondWithResult(res, 200))
       .catch(handleError(res, 500));
   }
 
   /**
-   * Gets a specific shapeImage
+   * Gets a specific frameImage
    *
    * @param {Object} req - http request object
    * @param {Object} res - http response object to report any issues
-   * @return {ShapeImage} A specific shapeImage with id
+   * @return {FrameImage} A specific frameImage with id
    */
   public show(req: Request, res: Response) {
     if (isConnectedDB === false) {
       let query: number = parseInt(req.params.id, 10);
-      let shapeImage: any = ShapeImagesData.find(shapeImage => shapeImage._id === query);
-      if (shapeImage) {
-        return res.status(200).send(shapeImage);
+      let frameImage: any = FrameImagesData.find(frameImage => frameImage._id === query);
+      if (frameImage) {
+        return res.status(200).send(frameImage);
       } else {
         return res.sendStatus(404).end();
       }
     }
 
-    return ShapeImage.findById(req.params.id).exec()
+    return FrameImage.findById(req.params.id).exec()
       .then(handleEntityNotFound(res))
       .then(respondWithResult(res, 200))
       .catch(handleError(res, 500));
   }
 
   /**
-   * Creates a new ShapeImage in the DB
+   * Creates a new FrameImage in the DB
    *
    * @export
    * @param {Object} req - http request object
-   * @param {String} req.body.name - The name of the shapeImage.
-   * @param {String} req.body.info - Detailed info about the shapeImage.
-   * @param {boolean} req.body.active - Indicates whether the shapeImage is active.
+   * @param {String} req.body.name - The name of the frameImage.
+   * @param {String} req.body.info - Detailed info about the frameImage.
+   * @param {boolean} req.body.active - Indicates whether the frameImage is active.
    * @param {Object} res - http response object to report any issues
-   * @return {ShapeImage} The created shapeImage
+   * @return {FrameImage} The created frameImage
    */
   public create(req: Request, res: Response) {
     if (isConnectedDB === false) {
@@ -175,22 +175,22 @@ class ShapeImageController {
 
     // global.__socketController.sendMessage("", "", "asdfa")
 
-    return ShapeImage.create(req.body)
-      //.then(publishShapeImageCreated())
+    return FrameImage.create(req.body)
+      //.then(publishFrameImageCreated())
       .then(respondWithResult(res, 201))
       .catch(handleError(res, 500));
   }
 
   /**
-   * Upserts an existing ShapeImage in the DB
+   * Upserts an existing FrameImage in the DB
    *
    * @export
    * @param {Object} req - http request object
-   * @param {String} req.body.name - The name of the shapeImage.
-   * @param {String} req.body.info - Detailed info about the shapeImage.
-   * @param {boolean} req.body.active - Indicates whether the shapeImage is active.
+   * @param {String} req.body.name - The name of the frameImage.
+   * @param {String} req.body.info - Detailed info about the frameImage.
+   * @param {boolean} req.body.active - Indicates whether the frameImage is active.
    * @param {Object} res - http response object to report any issues
-   * @return {ShapeImage} The updated shapeImage
+   * @return {FrameImage} The updated frameImage
    */
   public upsert(req: Request, res: Response) {
     if (isConnectedDB === false) {
@@ -200,7 +200,7 @@ class ShapeImageController {
     if (req.body._id) {
       delete req.body._id;
     }
-    return ShapeImage.findOneAndUpdate(
+    return FrameImage.findOneAndUpdate(
       { _id: req.params.id },
       req.body, { new: true, upsert: true, setDefaultsOnInsert: true, runValidators: true }
     ).exec()
@@ -209,15 +209,15 @@ class ShapeImageController {
   }
 
   /**
-   * Updates an existing ShapeImage in the DB
+   * Updates an existing FrameImage in the DB
    *
    * @export
    * @param {Object} req - http request object
-   * @param {String} req.body.name - The name of the shapeImage.
-   * @param {String} req.body.info - Detailed info about the shapeImage.
-   * @param {boolean} req.body.active - Indicates whether the shapeImage is active.
+   * @param {String} req.body.name - The name of the frameImage.
+   * @param {String} req.body.info - Detailed info about the frameImage.
+   * @param {boolean} req.body.active - Indicates whether the frameImage is active.
    * @param {Object} res - http response object to report any issues
-   * @return {ShapeImage} The updated shapeImage
+   * @return {FrameImage} The updated frameImage
    */
   public patch(req: Request, res: Response) {
     if (isConnectedDB === false) {
@@ -227,7 +227,7 @@ class ShapeImageController {
     if (req.body._id) {
       delete req.body._id;
     }
-    return ShapeImage.findById(req.params.id).exec()
+    return FrameImage.findById(req.params.id).exec()
       .then(handleEntityNotFound(res))
       .then(patchUpdates(req.body))
       .then(respondWithResult(res, 200))
@@ -235,7 +235,7 @@ class ShapeImageController {
   }
 
   /**
-   * Deletes a ShapeImage from the DB
+   * Deletes a FrameImage from the DB
    *
    * @export
    * @param {Object} req - http request object
@@ -247,21 +247,21 @@ class ShapeImageController {
       return res.sendStatus(400).end();
     }
 
-    return ShapeImage.findById(req.params.id).exec()
+    return FrameImage.findById(req.params.id).exec()
       .then(handleEntityNotFound(res))
       .then(removeEntity(res))
       .catch(handleError(res, 500));
   }
 
   /**
-   * Updates an existing ShapeImage in the DB
+   * Updates an existing FrameImage in the DB
    *
    * @export
    * @param {Object} req - http request object
    * @param {String} req.body.attribute - The name of the attribute.
    * @param {String} req.body.value - The value of the attribute.
    * @param {Object} res - http response object to report any issues
-   * @return {ShapeImage} The updated shapeImage
+   * @return {FrameImage} The updated frameImage
    */
   public propagateEventToUI(req: Request, res: Response) {
 
@@ -281,4 +281,4 @@ class ShapeImageController {
   }
 }
 
-export default new ShapeImageController();
+export default new FrameImageController();

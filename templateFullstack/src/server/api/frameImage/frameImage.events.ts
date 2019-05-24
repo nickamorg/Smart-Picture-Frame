@@ -8,11 +8,11 @@ let eventClient = eventFederator.createClient(
   redis.getPassword()
 );
 
-export function ShapeImageCreated(newShapeImage: any): void {
+export function FrameImageCreated(newFrameImage: any): void {
   let message = {
     status: 'created',
-    data: newShapeImage
+    data: newFrameImage
   };
 
-  eventClient.PublishTo('ShapeImages', JSON.stringify(message));
+  eventClient.PublishTo('FrameImages', JSON.stringify(message));
 }

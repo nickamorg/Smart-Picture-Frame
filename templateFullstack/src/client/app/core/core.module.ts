@@ -23,6 +23,8 @@ import { WallpaperDBService } from '../wallpaperDB.service';
 import { WallSetDBService } from '../wallSetDB.service';
 import { WallDBService } from '../wallDB.service';
 import { FrameDBService } from '../frameDB.service';
+import { FrameImageDBService } from '../frameImageDB.service';
+import { WallImageDBService } from '../wallImageDB.service';
 
 @NgModule({
     declarations: [
@@ -52,6 +54,7 @@ import { FrameDBService } from '../frameDB.service';
         WorkspaceComponent
     ],
     providers: [ShapesService, DatabaseService, MaterialDBService, WallpaperDBService, 
-                WallSetDBService, WallDBService, FrameDBService]
+                WallSetDBService, WallDBService, FrameDBService, FrameImageDBService,
+                WallImageDBService]
 })
 export class CoreModule { }

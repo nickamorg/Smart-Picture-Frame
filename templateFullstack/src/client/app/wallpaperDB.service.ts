@@ -15,6 +15,10 @@ export class WallpaperDBService {
         .map((response: Response) => <Wallpaper[]> response.json());
     }
 
+    getWallpaper(id) {
+        return this.http.get('api/wallpapers/' + id).map((response: Response) => <Wallpaper> response.json());
+    }
+
     deleteWallpaper(id) {
         this.http.delete('api/wallpapers/' + id).subscribe();
     }

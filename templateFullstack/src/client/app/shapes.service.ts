@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { WallSetDBService } from './wallSetDB.service';
 import { WallDBService } from './wallDB.service';
 import { FrameDBService } from './frameDB.service';
+import { FrameImageDBService } from './frameImageDB.service';
+import { WallImageDBService } from './wallImageDB.service';
+import { WallpaperDBService } from './wallpaperDB.service';
 
 var imageID = -1;
 var wallImageID = -1;
@@ -295,7 +298,9 @@ export class ShapesService {
     }
 
     constructor(private wallDBService: WallDBService, private wallSetDBService: WallSetDBService,
-                private frameDBService: FrameDBService ) {
+                private frameDBService: FrameDBService, private frameImageDBService: FrameImageDBService, 
+                private wallImageDBService: WallImageDBService, 
+                private wallpapersDBService: WallpaperDBService) {
         this.feedInit();
 
         this.wallImages = [ new WallImage('inferno.jpg'),
@@ -655,19 +660,42 @@ export class ShapesService {
 
                 this.wallDBService.getWalls().subscribe(walls => {
                     walls.forEach(wall => {
-                        if(wall.wallSetID === wallset._id) {
+                        if (wall.wallSetID === wallset._id) {
                             var newWall = new Wall();
                             newWall.init(wall.borderMaterial, wall.borderSize, [], [], wall.title);
+                            var wallImages = [];
+                            newWall.images = wallImages;
                             newWallSet.walls.push(newWall);
+
+                            this.wallImageDBService.getWallImages().subscribe(wallpapers => {
+                                wallpapers.forEach(wallpaper => {
+                                    if (wall._id === wallpaper.wallID) {
+                                        this.wallpapersDBService.getWallpaper(wallpaper.imageID).subscribe(data=> {
+                                            wallImages.push(data.src);
+                                        })
+                                        
+                                    }
+                                });
+                            })
 
                             this.frameDBService.getFrames().subscribe(frames => {
                                 frames.forEach(frame => {
-                                    if(frame.wallID === wall._id) {
+                                    if (frame.wallID === wall._id) {
                                         var newFrame = new Frame();
                                         newFrame.init(frame.borderRadius, frame.borderSize, 
                                         frame.borderMaterial, 'rgb(34, 0, 78)', frame.padding, 
                                         frame.top, frame.left, frame.width, frame.height, ['5ce50fcce2c5662518b5f3a0', '5ce50fd0e2c5662518b5f3a1'], 30);
+                                        var frameImages = [];
+                                        newFrame.images = frameImages;
                                         newWall.frames.push(newFrame);
+
+                                        this.frameImageDBService.getFrameImages().subscribe(images => {
+                                            images.forEach(image => {
+                                                if (frame._id === image.frameID) {
+                                                    frameImages.push(image.imageID);
+                                                }
+                                            });
+                                        })
                                     }
                                     console.log("LEVEL 4   " + frame._id);
                                 });
