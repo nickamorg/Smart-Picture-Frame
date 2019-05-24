@@ -644,6 +644,65 @@ export class ShapesService {
     isWallpaperSelected(src: string) {
         return this.currWallpapers.indexOf(src) > -1 ? true : false;
     }
+
+    getWallSets() {
+        this.wallSetDBService.getWallSets().subscribe(wallsets => {
+            wallsets.forEach(wallset => {
+                var newWallSet = new WallSet();
+                newWallSet.init([], wallset.creator, wallset.type,
+                                        wallset.target, wallset.title, wallset.description);
+                this.wallSets.push(newWallSet);
+
+                this.wallDBService.getWalls().subscribe(walls => {
+                    walls.forEach(wall => {
+                        if(wall.wallSetID === wallset._id) {
+                            var newWall = new Wall();
+                            newWall.init(wall.borderMaterial, wall.borderSize, [], [], wall.title);
+                            newWallSet.walls.push(newWall);
+
+                            this.frameDBService.getFrames().subscribe(frames => {
+                                frames.forEach(frame => {
+                                    if(frame.wallID === wall._id) {
+                                        var newFrame = new Frame();
+                                        newFrame.init(frame.borderRadius, frame.borderSize, 
+                                        frame.borderMaterial, 'rgb(34, 0, 78)', frame.padding, 
+                                        frame.top, frame.left, frame.width, frame.height, ['5ce50fcce2c5662518b5f3a0', '5ce50fd0e2c5662518b5f3a1'], 30);
+                                        newWall.frames.push(newFrame);
+                                    }
+                                    console.log("LEVEL 4   " + frame._id);
+                                });
+                                console.log("LEVEL 3   " + wall._id);
+                            })
+                        }
+                    });
+                    console.log("LEVEL 2   " + wallset._id);
+                })
+            });
+            console.log("LEVEL 1", this.wallSets);
+        })
+        // var tmpFrame = new Frame();
+        // tmpFrame.init(100, 5, './assets/materials/gold.jpg', 'rgb(34, 0, 78)', 15, 20, 200, 150, 150,
+        // ['5ce50fcce2c5662518b5f3a0', '5ce50fd0e2c5662518b5f3a1'], 30);
+
+        // var tmpFrame1 = new Frame();
+        // tmpFrame1.init(0, 5, './assets/materials/brick.jpg', 'rgb(34, 0, 78)', 10, 50, 400, 100, 100,
+        // ['5ce50fc6e2c5662518b5f39f', '5ce50fb9e2c5662518b5f39e'], 15);
+
+        // var tmpFrames = [];
+        // tmpFrames.push(tmpFrame);
+        // tmpFrames.push(tmpFrame1);
+
+        // var images = [ './assets/wallpapers/inferno.jpg', './assets/wallpapers/waterfalls.jpg'];
+        // var tmpWall = new Wall();
+        // tmpWall.init('./assets/materials/lava.jpg', 10, tmpFrames, images, 'Waterfalls Display');
+
+        // this.wallSets.push(new WallSet());
+        // this.wallSets[0].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
+        // this.wallSets.push(new WallSet());
+        // this.wallSets[1].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
+
+        // this.loadedWallSet = this.wallSets[0].copy();
+    }
 }
 
 function IDgenerator() {
