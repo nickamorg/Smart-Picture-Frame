@@ -75,10 +75,10 @@ export class ShapesService {
         }
     }
 
-    selectWallpaper(src) {
-        const index = this.currWallpapers.indexOf(src, 0);
+    selectWallpaper(id) {
+        const index = this.currWallpapers.indexOf(id, 0);
         if (index === -1) {
-            this.currWallpapers.push(src);
+            this.currWallpapers.push(id);
             this.selectedWallpapers++;
         } else {
             this.currWallpapers.splice(index, 1);
@@ -388,20 +388,53 @@ export class ShapesService {
     saveWall() {
         var wallSetWalls = this.wallSets[this.loadedWallSetIndex].walls;
         var editedWall = this.loadedWallSet.walls[this.focusedWallIndex];
-        for (var i = 0; i < wallSetWalls.length; i++) {
-            if (wallSetWalls[i]._id === editedWall._id) {
-                wallSetWalls[i] = editedWall.copy();
+        wallSetWalls.forEach(wall => {
+            if (wall._id === editedWall._id) {
+                wall = editedWall.copy();
 
-                this.wallDBService.updateWall(wallSetWalls[i]._id, wallSetWalls[i].wallSetID,
-                    wallSetWalls[i].borderMaterial, wallSetWalls[i].borderSize, wallSetWalls[i].title);
+                this.wallDBService.updateWall(wall._id, wall.wallSetID,
+                    wall.borderMaterial, wall.borderSize, wall.title);
 
-                wallSetWalls[i].frames.forEach(frame => {
+                this.wallImageDBService.getWallImages().subscribe(wallpapers => {
+                    wallpapers.forEach(wallpaper => {
+                        if(wallpaper.wallID === wall._id) {
+                            this.wallImageDBService.deleteWallImage(wallpaper._id);
+                        }
+                    });
+
+                    this.wallpapersDBService.getWallpapers().subscribe(wallpapers => {
+                        wallpapers.forEach(wallpaper => {
+                            wall.images.forEach(wallImage => {
+                                if(wallpaper.src === wallImage) {
+                                    this.wallImageDBService.uploadWallImage(wall._id, wallpaper._id);
+                                }
+                            });
+                        });
+                    // console.log("WALL IMAGES  " + wall.images);
+                    // wall.images.forEach(wallpaper => {
+                    //     this.wallImageDBService.uploadWallImage(wall._id, wallpaper);
+                    });
+                })
+
+                wall.frames.forEach(frame => {
                     this.frameDBService.updateFrame(frame._id, frame.wallID, frame.borderRadius,
                         frame.borderSize, frame.borderMaterial, frame.borderColor, frame.padding,
                         frame.top, frame.left, frame.width, frame.height, frame.iterateTime);
+
+                    this.frameImageDBService.getFrameImages().subscribe(images => {
+                        images.forEach(image => {
+                            if(image.frameID === frame._id) {
+                                this.frameImageDBService.deleteFrameImage(image._id);
+                            }
+                        });
+                        frame.images.forEach(image => {
+                            this.frameImageDBService.uploadFrameImage(frame._id, image);
+                        });
+                    })
+                    
                 });
             }
-        }
+        });
     }
 
     saveWallSet() {
@@ -412,12 +445,13 @@ export class ShapesService {
         return this.currFrameImages.indexOf(id) > -1 ? true : false;
     }
 
-    isWallpaperSelected(src: string) {
-        return this.currWallpapers.indexOf(src) > -1 ? true : false;
+    isWallpaperSelected(id: string) {
+        return this.currWallpapers.indexOf(id) > -1 ? true : false;
     }
 
     getWallSets() {
         this.wallSetDBService.getWallSets().subscribe(wallsets => {
+            this.wallSets = [];
             wallsets.forEach(wallset => {
                 var newWallSet = new WallSet();
                 newWallSet.init(wallset._id, wallset.creator, wallset.type,

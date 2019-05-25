@@ -18,6 +18,10 @@ export class LoadWallComponent {
 
     constructor(private shapesService: ShapesService, private databaseService: DatabaseService) {
         this.getImages();
+        
+    }
+
+    loadWallSets() {
         this.shapesService.getWallSets();
     }
 

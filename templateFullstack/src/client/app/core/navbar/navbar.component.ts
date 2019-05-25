@@ -20,6 +20,8 @@ export class NavbarComponent implements OnInit {
     }
 
     toggleLoadWallModal() {
+        console.log("open me");
+        this.shapesService.getWallSets();
         this.showLoadWallModal = !this.showLoadWallModal;
     }
 
