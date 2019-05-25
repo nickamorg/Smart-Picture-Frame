@@ -3,6 +3,7 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Frame } from './frame';
+import { WallImageDBService } from './wallImageDB.service';
 
 @Injectable()
 export class FrameDBService {
@@ -40,10 +41,10 @@ export class FrameDBService {
         });
     }
 
-    updateFrame(id, wallID: String, borderRadius: Number, borderSize: Number,
-        borderMaterial: String, borderColor: String, padding: Number, top: Number,
-        left: Number, width: Number, height: Number, iterateTime: String) {
+    updateFrame(id, wallID, borderRadius, borderSize, borderMaterial, borderColor,
+                                    padding, top, left, width, height, iterateTime) {
         this.http.put('api/frames/' + id, {
+            wallID: wallID,
             borderRadius: borderRadius,
             borderSize: borderSize,
             borderMaterial: borderMaterial,
@@ -51,7 +52,8 @@ export class FrameDBService {
             padding: padding,
             top: top,
             left: left,
-            width: height,
+            width: width,
+            height: height,
             iterateTime: iterateTime
         })
         .subscribe();

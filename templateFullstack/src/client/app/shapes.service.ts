@@ -391,6 +391,15 @@ export class ShapesService {
         for (var i = 0; i < wallSetWalls.length; i++) {
             if (wallSetWalls[i]._id === editedWall._id) {
                 wallSetWalls[i] = editedWall.copy();
+
+                this.wallDBService.updateWall(wallSetWalls[i]._id, wallSetWalls[i].wallSetID,
+                    wallSetWalls[i].borderMaterial, wallSetWalls[i].borderSize, wallSetWalls[i].title);
+
+                wallSetWalls[i].frames.forEach(frame => {
+                    this.frameDBService.updateFrame(frame._id, frame.wallID, frame.borderRadius,
+                        frame.borderSize, frame.borderMaterial, frame.borderColor, frame.padding,
+                        frame.top, frame.left, frame.width, frame.height, frame.iterateTime);
+                });
             }
         }
     }
@@ -454,16 +463,16 @@ export class ShapesService {
                                             });
                                         })
                                     }
-                                    console.log("LEVEL 4   " + frame._id);
+                                    // console.log("LEVEL 4   " + frame._id);
                                 });
-                                console.log("LEVEL 3   " + wall._id);
+                                // console.log("LEVEL 3   " + wall._id);
                             })
                         }
                     });
-                    console.log("LEVEL 2   " + wallset._id);
+                    // console.log("LEVEL 2   " + wallset._id);
                 })
             });
-            console.log("LEVEL 1", this.wallSets);
+            // console.log("LEVEL 1", this.wallSets);
         })
         // var tmpFrame = new Frame();
         // tmpFrame.init(100, 5, './assets/materials/gold.jpg', 'rgb(34, 0, 78)', 15, 20, 200, 150, 150,
