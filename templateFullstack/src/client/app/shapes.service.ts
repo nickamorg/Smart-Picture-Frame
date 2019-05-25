@@ -5,248 +5,9 @@ import { FrameDBService } from './frameDB.service';
 import { FrameImageDBService } from './frameImageDB.service';
 import { WallImageDBService } from './wallImageDB.service';
 import { WallpaperDBService } from './wallpaperDB.service';
-
-var imageID = -1;
-var wallImageID = -1;
-
-class Frame {
-    borderRadius = 0;
-    borderSize = 0;
-    hasMaterial = false;
-    borderMaterial = '';
-    borderColor = '';
-    padding = 0;
-    top = 50;
-    left = 10;
-    width = 100;
-    height = 100;
-    images: string[] = [];
-    displayedImageIndex = 0;
-    iterateTime = 0;
-    id: string = IDgenerator();
-
-    init(borderRadius, borderSize, borderMaterial, borderColor,
-                padding, top, left, width, height, images, iterateTime) {
-
-        this.borderRadius = borderRadius;
-        this.borderSize = borderSize;
-        this.hasMaterial = borderMaterial !== '' ? true : false;
-        this.borderMaterial = borderMaterial;
-        this.borderColor = borderColor;
-        this.padding = padding;
-        this.top = top;
-        this.left = left;
-        this.width = width;
-        this.height = height;
-        this.images = images;
-        this.iterateTime = iterateTime;
-    }
-
-    getFrameBorderStyle(index: number) {
-        let style = {
-            'background-color': this.borderColor,
-            'border-radius': this.borderRadius + '%',
-            'width': this.width + 'px',
-            'height': this.height + 'px',
-            'top': this.top + 'px',
-            'left': this.left + 'px'
-        };
-
-        if (this.borderMaterial !== '' && this.borderMaterial !== undefined) {
-            style['background-image'] = 'url(' + this.borderMaterial + ')';
-        }
-
-        return style;
-    }
-
-    getFrameStyle() {
-        let style = {
-            'background-color': 'rgb(255, 255, 255)',
-            'border-radius': this.borderRadius + '%',
-            'width': (this.width - this.borderSize * 2)  + 'px',
-            'height': (this.height - this.borderSize * 2) + 'px',
-            'top': this.borderSize + 'px',
-            'left': this.borderSize + 'px',
-            'padding': this.padding + 'px'
-        };
-
-        return style;
-    }
-
-    getFirstImageStyle() {
-        let style = {
-            'border-radius': this.borderRadius + '%',
-            'width': (this.width - this.padding * 2 - this.borderSize * 2)  + 'px',
-            'height': (this.height - this.padding * 2 - this.borderSize * 2) + 'px',
-            'top': this.borderSize + 'px',
-            'left': this.borderSize + 'px'
-        };
-
-        return style;
-    }
-
-    copy() {
-        var newFrame = new Frame();
-        newFrame.borderRadius = this.borderRadius;
-        newFrame.borderSize = this.borderSize;
-        newFrame.hasMaterial = this.hasMaterial;
-        newFrame.borderMaterial = this.borderMaterial;
-        newFrame.borderColor = this.borderColor;
-        newFrame.borderColor = this.borderColor;
-        newFrame.padding = this.padding;
-        newFrame.top = this.top;
-        newFrame.left = this.left;
-        newFrame.width = this.width;
-        newFrame.id = this.id;
-        newFrame.height = this.height;
-        newFrame.displayedImageIndex = this.displayedImageIndex;
-        newFrame.iterateTime = this.iterateTime;
-
-        newFrame.images = [];
-        for (var i = 0; i < this.images.length; i++) {
-            newFrame.images.push(this.images[i]);
-        }
-
-        return newFrame;
-    }
-}
-
-class FrameImage {
-    src: string;
-    selected: boolean;
-    id: number;
-
-    constructor(src: string) {
-        this.src = src;
-        this.selected = false;
-        this.id = ++imageID;
-    }
-}
-
-class WallImage {
-    src: string;
-    selected: boolean;
-    id: number;
-
-    constructor(src: string) {
-        this.src = src;
-        this.selected = false;
-        this.id = ++wallImageID;
-    }
-}
-
-class Wall {
-    borderMaterial = '';
-    hasMaterial = false;
-    borderSize = 0;
-    frames: Frame[] = [];
-    images: string[] = [];
-    displayedImageIndex = 0;
-    title = '';
-    id: string = IDgenerator();
-
-    init(borderMaterial, borderSize, frames, images, title) {
-        this.borderMaterial = borderMaterial;
-        this.borderSize = borderSize;
-        this.frames = frames;
-        this.images = images;
-        this.title = title;
-        this.hasMaterial = borderMaterial !== '' ? true : false;
-    }
-
-    getBorderStyle() {
-        let style = {
-            'background-size': 'cover',
-            'background-color': '#ffffff',
-            'width': '800px',
-            'height': '200px'
-        };
-
-        if (this.borderMaterial !== '' && this.borderMaterial !== undefined) {
-            style['background-image'] = 'url(' + this.borderMaterial + ')';
-        }
-
-        return style;
-    }
-
-    getWallStyle() {
-        let style = {
-            'width': (800 - this.borderSize) + 'px',
-            'height': (200 - this.borderSize) + 'px',
-            'top': (this.borderSize / 2) + 'px',
-            'left': (this.borderSize / 2) + 'px',
-            'background-color': '#C4C4C4',
-            'position': 'relative',
-            'background-size': 'cover'
-        };
-
-        var wallWallpaper = this.images[this.displayedImageIndex];
-        if (wallWallpaper !== '' && wallWallpaper !== undefined) {
-            style['background-image'] = 'url(' + wallWallpaper + ')';
-        }
-
-        return style;
-    }
-
-    copy() {
-        var newWall = new Wall();
-        newWall.borderMaterial = this.borderMaterial;
-        newWall.hasMaterial = this.hasMaterial;
-        newWall.borderSize = this.borderSize;
-        newWall.displayedImageIndex = this.displayedImageIndex;
-        newWall.title = this.title;
-        newWall.id = this.id;
-
-        newWall.images = [];
-        for (var i = 0; i < this.images.length; i++) {
-            newWall.images.push(this.images[i]);
-        }
-
-        newWall.frames = [];
-        for (i = 0; i < this.frames.length; i++) {
-            newWall.frames.push(this.frames[i].copy());
-        }
-
-        return newWall;
-    }
-
-}
-
-class WallSet {
-    walls: Wall[] = [];
-    creator = '';
-    type = '';
-    target = '';
-    title = '';
-    description = '';
-    id: string = IDgenerator();
-
-    init(walls, creator, type, target, title, description) {
-        this.walls = walls;
-        this.creator = creator;
-        this.type = type;
-        this.target = target;
-        this.title = title;
-        this.description = description;
-    }
-
-    copy() {
-        var newWallSet = new WallSet();
-        newWallSet.creator = this.creator;
-        newWallSet.type = this.type;
-        newWallSet.target = this.target;
-        newWallSet.title = this.title;
-        newWallSet.description = this.description;
-        newWallSet.id = this.id;
-
-        newWallSet.walls = [];
-        for (var i = 0; i < this.walls.length; i++) {
-            newWallSet.walls.push(this.walls[i].copy());
-        }
-
-        return newWallSet;
-    }
-}
+import { WallSet } from './wallSet';
+import { Frame } from './frame';
+import { Wall } from './wall';
 
 @Injectable()
 export class ShapesService {
@@ -265,7 +26,6 @@ export class ShapesService {
     currFrameImages: string[] = [];
     isFocusedFrame = false;
     isFocusedWall = true;
-    wallImages: WallImage[];
     wallImagesCol = 12;
     displayedWallImageIndex = 0;
     editMode = false;
@@ -273,28 +33,28 @@ export class ShapesService {
     selectedWallpapers = 0;
 
     feedInit() {
-        var tmpFrame = new Frame();
-        tmpFrame.init(100, 5, './assets/materials/gold.jpg', 'rgb(34, 0, 78)', 15, 20, 200, 150, 150,
-        ['5ce50fcce2c5662518b5f3a0', '5ce50fd0e2c5662518b5f3a1'], 30);
+        // var tmpFrame = new Frame();
+        // tmpFrame.init(100, 5, './assets/materials/gold.jpg', 'rgb(34, 0, 78)', 15, 20, 200, 150, 150,
+        // ['5ce50fcce2c5662518b5f3a0', '5ce50fd0e2c5662518b5f3a1'], 30);
 
-        var tmpFrame1 = new Frame();
-        tmpFrame1.init(0, 5, './assets/materials/brick.jpg', 'rgb(34, 0, 78)', 10, 50, 400, 100, 100,
-        ['5ce50fc6e2c5662518b5f39f', '5ce50fb9e2c5662518b5f39e'], 15);
+        // var tmpFrame1 = new Frame();
+        // tmpFrame1.init(0, 5, './assets/materials/brick.jpg', 'rgb(34, 0, 78)', 10, 50, 400, 100, 100,
+        // ['5ce50fc6e2c5662518b5f39f', '5ce50fb9e2c5662518b5f39e'], 15);
 
-        var tmpFrames = [];
-        tmpFrames.push(tmpFrame);
-        tmpFrames.push(tmpFrame1);
+        // var tmpFrames = [];
+        // tmpFrames.push(tmpFrame);
+        // tmpFrames.push(tmpFrame1);
 
-        var images = [ './assets/wallpapers/inferno.jpg', './assets/wallpapers/waterfalls.jpg'];
-        var tmpWall = new Wall();
-        tmpWall.init('./assets/materials/lava.jpg', 10, tmpFrames, images, 'Waterfalls Display');
+        // var images = [ './assets/wallpapers/inferno.jpg', './assets/wallpapers/waterfalls.jpg'];
+        // var tmpWall = new Wall();
+        // tmpWall.init('./assets/materials/lava.jpg', 10, tmpFrames, images, 'Waterfalls Display');
 
-        this.wallSets.push(new WallSet());
-        this.wallSets[0].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
-        this.wallSets.push(new WallSet());
-        this.wallSets[1].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
+        // this.wallSets.push(new WallSet());
+        // this.wallSets[0].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
+        // this.wallSets.push(new WallSet());
+        // this.wallSets[1].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
 
-        this.loadedWallSet = this.wallSets[0].copy();
+        // this.loadedWallSet = this.wallSets[0].copy();
     }
 
     constructor(private wallDBService: WallDBService, private wallSetDBService: WallSetDBService,
@@ -302,9 +62,6 @@ export class ShapesService {
                 private wallImageDBService: WallImageDBService, 
                 private wallpapersDBService: WallpaperDBService) {
         this.feedInit();
-
-        this.wallImages = [ new WallImage('inferno.jpg'),
-                            new WallImage('waterfalls.jpg')];
     }
 
     selectImage(id) {
@@ -632,7 +389,7 @@ export class ShapesService {
         var wallSetWalls = this.wallSets[this.loadedWallSetIndex].walls;
         var editedWall = this.loadedWallSet.walls[this.focusedWallIndex];
         for (var i = 0; i < wallSetWalls.length; i++) {
-            if (wallSetWalls[i].id === editedWall.id) {
+            if (wallSetWalls[i]._id === editedWall._id) {
                 wallSetWalls[i] = editedWall.copy();
             }
         }
@@ -654,7 +411,7 @@ export class ShapesService {
         this.wallSetDBService.getWallSets().subscribe(wallsets => {
             wallsets.forEach(wallset => {
                 var newWallSet = new WallSet();
-                newWallSet.init([], wallset.creator, wallset.type,
+                newWallSet.init(wallset._id, wallset.creator, wallset.type,
                                         wallset.target, wallset.title, wallset.description);
                 this.wallSets.push(newWallSet);
 
@@ -662,7 +419,7 @@ export class ShapesService {
                     walls.forEach(wall => {
                         if (wall.wallSetID === wallset._id) {
                             var newWall = new Wall();
-                            newWall.init(wall.borderMaterial, wall.borderSize, [], [], wall.title);
+                            newWall.init(wall._id, wall.borderMaterial, wall.borderSize, wall.title);
                             var wallImages = [];
                             newWall.images = wallImages;
                             newWallSet.walls.push(newWall);
@@ -682,9 +439,9 @@ export class ShapesService {
                                 frames.forEach(frame => {
                                     if (frame.wallID === wall._id) {
                                         var newFrame = new Frame();
-                                        newFrame.init(frame.borderRadius, frame.borderSize, 
+                                        newFrame.init(frame._id, frame.borderRadius, frame.borderSize, 
                                         frame.borderMaterial, 'rgb(34, 0, 78)', frame.padding, 
-                                        frame.top, frame.left, frame.width, frame.height, ['5ce50fcce2c5662518b5f3a0', '5ce50fd0e2c5662518b5f3a1'], 30);
+                                        frame.top, frame.left, frame.width, frame.height, 30);
                                         var frameImages = [];
                                         newFrame.images = frameImages;
                                         newWall.frames.push(newFrame);

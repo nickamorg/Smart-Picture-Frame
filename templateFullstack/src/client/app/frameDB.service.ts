@@ -32,7 +32,8 @@ export class FrameDBService {
             padding: padding,
             top: top,
             left: left,
-            width: height,
+            width: width,
+            height: height,
             iterateTime: iterateTime
         }).subscribe(data => {
             this.currFramesID.push(data.json()._id);

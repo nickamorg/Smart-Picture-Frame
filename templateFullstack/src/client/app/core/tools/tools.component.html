@@ -33,7 +33,7 @@
                 <div style="padding:10px 10px; border-bottom: 1px solid #E3E2E2">
                     <p style="color:#5C5555">BORDER</p>
                     <div class="dropdown" style="padding-top:10px">
-                        <button (click)="shapesService.toggleHasMaterial()" style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                        <button style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" class="btn dropdown-toggle" type="button" data-toggle="dropdown">
                             <div *ngIf="shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].hasMaterial; else elseBlock">
                                 <div [ngStyle]="shapesService.returnBorderMaterial()"></div>
                             </div>
@@ -93,7 +93,7 @@
                     <p style="color:#5C5555">BORDER</p>
                     <div class="dropdown">
                         
-                        <button (click)="shapesService.toggleHasMaterial()" style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" class="btn dropdown-toggle" type="button" data-toggle="dropdown">
+                        <button style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" class="btn dropdown-toggle" type="button" data-toggle="dropdown">
                             <div *ngIf="shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].hasMaterial; else elseBlock">
                                 <div [ngStyle]="shapesService.returnWallMaterial()"></div>
                             </div>
