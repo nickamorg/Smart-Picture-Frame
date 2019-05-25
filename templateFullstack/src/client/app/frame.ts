@@ -1,19 +1,19 @@
 export class Frame {
     _id: string;
     wallID: string;
-    borderRadius: number;
-    borderSize: number;
-    borderMaterial: string;
+    borderRadius = 0;
+    borderSize = 0;
     hasMaterial = false;
-    borderColor: string;
-    padding: number;
-    top: number;
-    left: number;
-    width: number;
-    height: number;
+    borderMaterial = '';
+    borderColor = '';
+    padding = 0;
+    top = 50;
+    left = 10;
+    width = 100;
+    height = 100;
     images: string[] = [];
     displayedImageIndex = 0;
-    iterateTime: number;
+    iterateTime = 0;
 
     init(_id, borderRadius, borderSize, borderMaterial, borderColor,
                 padding, top, left, width, height, iterateTime) {

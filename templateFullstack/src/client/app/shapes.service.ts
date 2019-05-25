@@ -190,7 +190,7 @@ export class ShapesService {
         this.selectedFrame = this.loadedWallSet.walls[this.focusedWallIndex].frames.length - 1;
         this.initCurrFrameImages(this.selectedFrame);
         this.frameDBService.uploadFrame(
-            this.wallDBService.currWallsID[this.focusedWallIndex],
+            this.loadedWallSet.walls[this.focusedWallIndex]._id,
             newFrame.borderRadius,
             newFrame.borderSize,
             newFrame.borderMaterial,
@@ -201,7 +201,11 @@ export class ShapesService {
             newFrame.width,
             newFrame.height,
             newFrame.iterateTime
-        );
+        ).subscribe(data => {
+            newFrame.wallID = this.loadedWallSet.walls[this.focusedWallIndex]._id;
+            newFrame._id = data.json()._id;
+            console.log(newFrame);
+        });;
     }
 
     changeDisplayedImage(index: number) {
@@ -321,7 +325,6 @@ export class ShapesService {
         
         this.wallSetDBService.uploadWallSet(creator, type, target, title, description);
         this.wallDBService.currWallsID = [];
-        this.frameDBService.currFramesID = [];
     }
 
     setWallTitleStyle(index) {

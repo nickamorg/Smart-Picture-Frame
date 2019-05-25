@@ -6,7 +6,6 @@ import { Frame } from './frame';
 
 @Injectable()
 export class FrameDBService {
-    currFramesID: string[] = [];
 
     constructor(private http: Http) { }
 
@@ -23,7 +22,7 @@ export class FrameDBService {
     uploadFrame(wallID: String, borderRadius: Number, borderSize: Number,
                 borderMaterial: String, borderColor: String, padding: Number, top: Number,
                 left: Number, width: Number, height: Number, iterateTime: Number) {
-        this.http.post('api/frames/', {
+        return this.http.post('api/frames/', {
             wallID: wallID,
             borderRadius: borderRadius,
             borderSize: borderSize,
@@ -35,8 +34,6 @@ export class FrameDBService {
             width: width,
             height: height,
             iterateTime: iterateTime
-        }).subscribe(data => {
-            this.currFramesID.push(data.json()._id);
         });
     }
 
