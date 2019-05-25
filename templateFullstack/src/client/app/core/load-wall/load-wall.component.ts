@@ -18,7 +18,6 @@ export class LoadWallComponent {
 
     constructor(private shapesService: ShapesService, private databaseService: DatabaseService) {
         this.getImages();
-        
     }
 
     loadWallSets() {
@@ -27,7 +26,7 @@ export class LoadWallComponent {
 
     getImages() {
         this.databaseService.getImages().subscribe(
-            images => {
+            images => { 
                 this.images = images;
             }
         );
@@ -61,6 +60,5 @@ export class LoadWallComponent {
         this.shapesService.selectedFrame = -1;
         this.shapesService.loadedWallSetIndex = wallSetIndex;
         this.shapesService.focusedWallIndex = wallIndex;
-        // this.shapesService.loadWall(....);
     }
 }

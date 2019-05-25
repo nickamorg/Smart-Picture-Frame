@@ -32,36 +32,10 @@ export class ShapesService {
     currWallpapers:  string[] = [];
     selectedWallpapers = 0;
 
-    feedInit() {
-        // var tmpFrame = new Frame();
-        // tmpFrame.init(100, 5, './assets/materials/gold.jpg', 'rgb(34, 0, 78)', 15, 20, 200, 150, 150,
-        // ['5ce50fcce2c5662518b5f3a0', '5ce50fd0e2c5662518b5f3a1'], 30);
-
-        // var tmpFrame1 = new Frame();
-        // tmpFrame1.init(0, 5, './assets/materials/brick.jpg', 'rgb(34, 0, 78)', 10, 50, 400, 100, 100,
-        // ['5ce50fc6e2c5662518b5f39f', '5ce50fb9e2c5662518b5f39e'], 15);
-
-        // var tmpFrames = [];
-        // tmpFrames.push(tmpFrame);
-        // tmpFrames.push(tmpFrame1);
-
-        // var images = [ './assets/wallpapers/inferno.jpg', './assets/wallpapers/waterfalls.jpg'];
-        // var tmpWall = new Wall();
-        // tmpWall.init('./assets/materials/lava.jpg', 10, tmpFrames, images, 'Waterfalls Display');
-
-        // this.wallSets.push(new WallSet());
-        // this.wallSets[0].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
-        // this.wallSets.push(new WallSet());
-        // this.wallSets[1].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
-
-        // this.loadedWallSet = this.wallSets[0].copy();
-    }
-
     constructor(private wallDBService: WallDBService, private wallSetDBService: WallSetDBService,
                 private frameDBService: FrameDBService, private frameImageDBService: FrameImageDBService, 
                 private wallImageDBService: WallImageDBService, 
                 private wallpapersDBService: WallpaperDBService) {
-        this.feedInit();
     }
 
     selectImage(id) {
@@ -410,9 +384,6 @@ export class ShapesService {
                                 }
                             });
                         });
-                    // console.log("WALL IMAGES  " + wall.images);
-                    // wall.images.forEach(wallpaper => {
-                    //     this.wallImageDBService.uploadWallImage(wall._id, wallpaper);
                     });
                 })
 
@@ -473,7 +444,6 @@ export class ShapesService {
                                         this.wallpapersDBService.getWallpaper(wallpaper.imageID).subscribe(data=> {
                                             wallImages.push(data.src);
                                         })
-                                        
                                     }
                                 });
                             })
@@ -497,45 +467,12 @@ export class ShapesService {
                                             });
                                         })
                                     }
-                                    // console.log("LEVEL 4   " + frame._id);
                                 });
-                                // console.log("LEVEL 3   " + wall._id);
                             })
                         }
                     });
-                    // console.log("LEVEL 2   " + wallset._id);
                 })
             });
-            // console.log("LEVEL 1", this.wallSets);
         })
-        // var tmpFrame = new Frame();
-        // tmpFrame.init(100, 5, './assets/materials/gold.jpg', 'rgb(34, 0, 78)', 15, 20, 200, 150, 150,
-        // ['5ce50fcce2c5662518b5f3a0', '5ce50fd0e2c5662518b5f3a1'], 30);
-
-        // var tmpFrame1 = new Frame();
-        // tmpFrame1.init(0, 5, './assets/materials/brick.jpg', 'rgb(34, 0, 78)', 10, 50, 400, 100, 100,
-        // ['5ce50fc6e2c5662518b5f39f', '5ce50fb9e2c5662518b5f39e'], 15);
-
-        // var tmpFrames = [];
-        // tmpFrames.push(tmpFrame);
-        // tmpFrames.push(tmpFrame1);
-
-        // var images = [ './assets/wallpapers/inferno.jpg', './assets/wallpapers/waterfalls.jpg'];
-        // var tmpWall = new Wall();
-        // tmpWall.init('./assets/materials/lava.jpg', 10, tmpFrames, images, 'Waterfalls Display');
-
-        // this.wallSets.push(new WallSet());
-        // this.wallSets[0].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
-        // this.wallSets.push(new WallSet());
-        // this.wallSets[1].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
-
-        // this.loadedWallSet = this.wallSets[0].copy();
     }
-}
-
-function IDgenerator() {
-    var S4 = function() {
-       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
-    };
-    return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4());
 }

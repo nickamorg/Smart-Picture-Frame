@@ -3,7 +3,6 @@ import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { Frame } from './frame';
-import { WallImageDBService } from './wallImageDB.service';
 
 @Injectable()
 export class FrameDBService {
