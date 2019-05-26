@@ -49,10 +49,10 @@ export class ShapesService {
         }
     }
 
-    selectWallpaper(id) {
-        const index = this.currWallpapers.indexOf(id, 0);
+    selectWallpaper(src) {
+        const index = this.currWallpapers.indexOf(src, 0);
         if (index === -1) {
-            this.currWallpapers.push(id);
+            this.currWallpapers.push(src);
             this.selectedWallpapers++;
         } else {
             this.currWallpapers.splice(index, 1);
@@ -323,8 +323,12 @@ export class ShapesService {
         this.loadedWallSetIndex = this.wallSets.length - 1;
         this.focusedWallIndex = 0;
         
-        this.wallSetDBService.uploadWallSet(creator, type, target, title, description);
-        this.wallDBService.currWallsID = [];
+        this.wallSetDBService.uploadWallSet(creator, type, target, title, description).subscribe(data => {
+            newWallSet._id = data.json()._id;
+            this.wallDBService.uploadWall(data.json()._id, ' ', ' ', ' ').subscribe(data => {
+                newWallSet.walls[0]._id = data.json()._id;
+            });
+        });
     }
 
     setWallTitleStyle(index) {
@@ -356,17 +360,16 @@ export class ShapesService {
 
     setCurrWallSetFocusedWallNewTitle(index, title) {
         this.loadedWallSet.walls[index].title = title;
-        console.log(this.wallSetDBService.currWallSetID);
-        this.wallDBService.updateWall(  this.wallSetDBService.currWallSetID, this.wallDBService.currWallsID[index],
+        this.wallDBService.updateWall(  this.loadedWallSet.walls[index]._id, this.loadedWallSet._id,
                                         this.loadedWallSet.walls[index].borderMaterial,
                                         this.loadedWallSet.walls[index].borderSize, title);
     }
 
-    saveWall() {
+    saveWall(flag) {
         var wallSetWalls = this.wallSets[this.loadedWallSetIndex].walls;
         var editedWall = this.loadedWallSet.walls[this.focusedWallIndex];
         wallSetWalls.forEach(wall => {
-            if (wall._id === editedWall._id) {
+            if (wall._id === editedWall._id || flag) {
                 wall = editedWall.copy();
 
                 this.wallDBService.updateWall(wall._id, wall.wallSetID,
@@ -413,14 +416,15 @@ export class ShapesService {
 
     saveWallSet() {
         this.wallSets[this.loadedWallSetIndex] = this.loadedWallSet.copy();
+        this.saveWall(true);
     }
 
     isImageSelected(id: string) {
         return this.currFrameImages.indexOf(id) > -1 ? true : false;
     }
 
-    isWallpaperSelected(id: string) {
-        return this.currWallpapers.indexOf(id) > -1 ? true : false;
+    isWallpaperSelected(src: string) {
+        return this.currWallpapers.indexOf(src) > -1 ? true : false;
     }
 
     getWallSets() {

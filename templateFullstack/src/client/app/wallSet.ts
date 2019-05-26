@@ -3,11 +3,11 @@ import { Wall } from "./wall";
 export class WallSet {
     _id: string;
     walls: Wall[] = [];
-    creator: string
-    type: string
-    target: string
-    title: string
-    description: string
+    creator = '';
+    type = '';
+    target = '';
+    title = '';
+    description = '';
 
     init(_id, creator, type, target, title, description) {
         this._id = _id;

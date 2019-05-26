@@ -35,8 +35,10 @@ export class WallImagesComponent implements OnInit {
     }
 
     applySelectedWallpapers() {
-        this.shapesService.addSelectedWallpapers();
-        this.sendMessage();
+        if (this.shapesService.selectedWallpapers) {
+            this.shapesService.addSelectedWallpapers();
+            this.sendMessage();
+        }
     }
 
 }

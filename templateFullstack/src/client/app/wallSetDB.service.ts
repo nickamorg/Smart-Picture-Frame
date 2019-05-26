@@ -7,7 +7,6 @@ import { WallDBService } from './wallDB.service';
 
 @Injectable()
 export class WallSetDBService {
-    currWallSetID: string;
 
     constructor(private http: Http, private wallDBService: WallDBService) { }
 
@@ -22,15 +21,12 @@ export class WallSetDBService {
     }
 
     uploadWallSet(creator, type, target, title, description) {
-        this.http.post('api/wallSets/', {
+        return this.http.post('api/wallSets/', {
             creator:creator,
             type:type,
             target:target,
             title:title,
             description:description
-        }).subscribe(data => {
-            this.currWallSetID = data.json()._id;
-            this.wallDBService.uploadWall(data.json()._id, ' ', ' ', ' '); 
         });
     }
 

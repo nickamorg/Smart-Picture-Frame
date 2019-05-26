@@ -6,7 +6,6 @@ import { Wall } from './wall';
 
 @Injectable()
 export class WallDBService {
-    currWallsID: string[] = [];
 
     constructor(private http: Http) { }
 
@@ -21,13 +20,11 @@ export class WallDBService {
     }
 
     uploadWall(wallSetID, borderMaterial, borderSize, title) {
-        this.http.post('api/walls/', {
+        return this.http.post('api/walls/', {
             wallSetID: wallSetID,
             borderMaterial: borderMaterial,
             borderSize: borderSize,
             title: title
-        }).subscribe(data => {
-            this.currWallsID.push(data.json()._id);
         });
     }
 

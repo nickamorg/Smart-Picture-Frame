@@ -34,8 +34,10 @@ export class FrameImagesComponent implements OnInit {
     }
 
     applySelectedImages() {
-        this.shapesService.addSelectedImages();
-        this.sendMessage();
+        if (this.shapesService.selectedWallpapers) {
+            this.shapesService.addSelectedImages();
+            this.sendMessage();
+        }
     }
 
 }

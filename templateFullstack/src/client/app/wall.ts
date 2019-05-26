@@ -3,10 +3,10 @@ import { Frame } from "./frame";
 export class Wall {
     _id: string;
     wallSetID: string;
-    borderMaterial: string;
+    borderMaterial = '';
     hasMaterial = false;
-    borderSize: number;
-    title: string;
+    borderSize = 0;
+    title = '';
     frames: Frame[] = [];
     images: string[] = [];
     displayedImageIndex = 0;
