@@ -4,7 +4,7 @@
           <div style="padding:0 10px 10px 15px">
               <img [class.wall-images_inactive_option]="shapesService.wallImagesCol!==12" (click)="shapesService.changeWallImagesCol(12)" style="padding-right:3px; cursor:pointer" src="/assets/images/2x1.png" alt="">
               <img [class.wall-images_inactive_option]="shapesService.wallImagesCol!==6"  (click)="shapesService.changeWallImagesCol(6)"  style="padding-right:3px; cursor:pointer" src="/assets/images/2x2.png" alt="">
-              <span style="font-weight: 600">{{shapesService.selectedWallImages}} Images</span>
+              <span style="font-weight: 600">{{shapesService.selectedWallpapers}} Images</span>
 
               <img (click)="applySelectedWallpapers()" [class.wall-images_inactive_option]="!shapesService.selectedWallpapers" style="padding-right:5px; float:right" src="/assets/images/apply.png" width="25" heigh="25">
               <img (click)="sendMessage()" style="padding-right:5px; float:right" src="/assets/images/cancel.png" width="25" heigh="25">

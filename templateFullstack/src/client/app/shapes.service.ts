@@ -29,7 +29,8 @@ export class ShapesService {
     wallImagesCol = 12;
     displayedWallImageIndex = 0;
     editMode = false;
-    currWallpapers:  string[] = [];
+    currWallpapers: string[] = [];
+    wallpapers: string[] = [];
     selectedWallpapers = 0;
 
     constructor(private wallDBService: WallDBService, private wallSetDBService: WallSetDBService,
@@ -71,6 +72,11 @@ export class ShapesService {
 
     addSelectedImages() {
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].images = this.currFrameImages;
+            this.frameImages = [];
+            this.selectedImages = this.currFrameImages.length;
+            this.currFrameImages.forEach(image => {
+                this.frameImages.push(image);
+            });;
     }
 
     setPosX(posX) {
@@ -189,23 +195,6 @@ export class ShapesService {
         this.loadedWallSet.walls[this.focusedWallIndex].frames.push(newFrame);
         this.selectedFrame = this.loadedWallSet.walls[this.focusedWallIndex].frames.length - 1;
         this.initCurrFrameImages(this.selectedFrame);
-        this.frameDBService.uploadFrame(
-            this.loadedWallSet.walls[this.focusedWallIndex]._id,
-            newFrame.borderRadius,
-            newFrame.borderSize,
-            newFrame.borderMaterial,
-            newFrame.borderColor,
-            newFrame.padding,
-            newFrame.top,
-            newFrame.left,
-            newFrame.width,
-            newFrame.height,
-            newFrame.iterateTime
-        ).subscribe(data => {
-            newFrame.wallID = this.loadedWallSet.walls[this.focusedWallIndex]._id;
-            newFrame._id = data.json()._id;
-            console.log(newFrame);
-        });;
     }
 
     changeDisplayedImage(index: number) {
@@ -301,7 +290,11 @@ export class ShapesService {
 
     addSelectedWallpapers() {
             this.loadedWallSet.walls[this.focusedWallIndex].images = this.currWallpapers;
-            console.log(this.loadedWallSet.walls[this.focusedWallIndex].images);
+            this.wallpapers = [];
+            this.selectedWallpapers = this.currWallpapers.length;
+            this.currWallpapers.forEach(wallpaper => {
+                this.wallpapers.push(wallpaper);
+            });;
     }
 
     changeDisplayedWallImage(index: number) {
@@ -325,7 +318,7 @@ export class ShapesService {
         
         this.wallSetDBService.uploadWallSet(creator, type, target, title, description).subscribe(data => {
             newWallSet._id = data.json()._id;
-            this.wallDBService.uploadWall(data.json()._id, ' ', ' ', ' ').subscribe(data => {
+            this.wallDBService.uploadWall(data.json()._id).subscribe(data => {
                 newWallSet.walls[0]._id = data.json()._id;
             });
         });
@@ -356,6 +349,10 @@ export class ShapesService {
             this.loadedWallSet.walls.push(new Wall());
         }
         this.selectCurrWallSetFocusedWall(this.loadedWallSet.walls.length - 1);
+
+        this.wallDBService.uploadWall(this.loadedWallSet._id).subscribe(data => {
+            this.loadedWallSet.walls[this.loadedWallSet.walls.length - 1]._id = data.json()._id;
+        })
     }
 
     setCurrWallSetFocusedWallNewTitle(index, title) {
@@ -366,11 +363,13 @@ export class ShapesService {
     }
 
     saveWall(flag) {
-        var wallSetWalls = this.wallSets[this.loadedWallSetIndex].walls;
+        var wallSetWalls = this.loadedWallSet.walls;
         var editedWall = this.loadedWallSet.walls[this.focusedWallIndex];
         wallSetWalls.forEach(wall => {
             if (wall._id === editedWall._id || flag) {
-                wall = editedWall.copy();
+                if(wall._id === editedWall._id) {
+                    wall = editedWall.copy();
+                }
 
                 this.wallDBService.updateWall(wall._id, wall.wallSetID,
                     wall.borderMaterial, wall.borderSize, wall.title);
@@ -394,9 +393,20 @@ export class ShapesService {
                 })
 
                 wall.frames.forEach(frame => {
-                    this.frameDBService.updateFrame(frame._id, frame.wallID, frame.borderRadius,
-                        frame.borderSize, frame.borderMaterial, frame.borderColor, frame.padding,
-                        frame.top, frame.left, frame.width, frame.height, frame.iterateTime);
+                    if (frame._id === undefined) {
+                        this.frameDBService.uploadFrame(
+                            this.loadedWallSet.walls[this.focusedWallIndex]._id,
+                            frame.borderRadius, frame.borderSize, frame.borderMaterial,
+                            frame.borderColor, frame.padding, frame.top, frame.left,
+                            frame.width, frame.height, frame.iterateTime
+                        ).subscribe(data => {
+                            frame._id = data.json()._id;
+                        });;
+                    } else {
+                        this.frameDBService.updateFrame(frame._id, frame.wallID, frame.borderRadius,
+                            frame.borderSize, frame.borderMaterial, frame.borderColor, frame.padding,
+                            frame.top, frame.left, frame.width, frame.height, frame.iterateTime);
+                    }
 
                     this.frameImageDBService.getFrameImages().subscribe(images => {
                         images.forEach(image => {
@@ -481,5 +491,15 @@ export class ShapesService {
                 })
             });
         })
+    }
+
+    deleteFocusedFrame() {
+        this.frameDBService.deleteFrame(
+            this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame]._id);
+            this.loadedWallSet.walls[this.focusedWallIndex].frames.splice(
+                this.loadedWallSet.walls[this.focusedWallIndex].frames.indexOf(this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame]), 1);
+        this.selectedFrame = -1;
+        this.isFocusedFrame = false;
+        this.isFocusedWall = true;
     }
 }

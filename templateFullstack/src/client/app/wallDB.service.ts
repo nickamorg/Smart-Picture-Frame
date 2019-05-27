@@ -19,12 +19,12 @@ export class WallDBService {
         this.http.delete('api/walls/' + id).subscribe();
     }
 
-    uploadWall(wallSetID, borderMaterial, borderSize, title) {
+    uploadWall(wallSetID) {
         return this.http.post('api/walls/', {
             wallSetID: wallSetID,
-            borderMaterial: borderMaterial,
-            borderSize: borderSize,
-            title: title
+            borderMaterial: '',
+            borderSize: 0,
+            title: ''
         });
     }
 

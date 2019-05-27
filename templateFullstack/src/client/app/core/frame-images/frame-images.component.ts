@@ -31,10 +31,15 @@ export class FrameImagesComponent implements OnInit {
 
     sendMessage() {
         this.messageEvent.emit('toggleChooseFrameImagesModal');
+        this.shapesService.currFrameImages = [];
+        this.shapesService.selectedImages = this.shapesService.frameImages.length;
+        this.shapesService.frameImages.forEach(image => {
+            this.shapesService.currFrameImages.push(image);
+        });;
     }
 
     applySelectedImages() {
-        if (this.shapesService.selectedWallpapers) {
+        if (this.shapesService.selectedImages) {
             this.shapesService.addSelectedImages();
             this.sendMessage();
         }

@@ -58,5 +58,13 @@ export class LoadWallComponent {
         this.shapesService.selectedFrame = -1;
         this.shapesService.loadedWallSetIndex = wallSetIndex;
         this.shapesService.focusedWallIndex = wallIndex;
+
+        this.shapesService.currWallpapers = this.shapesService.loadedWallSet.walls[wallIndex].images;
+        this.shapesService.wallpapers = [];
+        this.shapesService.selectedWallpapers = this.shapesService.currWallpapers.length;
+
+        for (var i = 0; i < this.shapesService.currWallpapers.length; i++) {
+            this.shapesService.wallpapers.push(this.shapesService.currWallpapers[i]);
+        }
     }
 }

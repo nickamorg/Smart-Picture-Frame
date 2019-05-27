@@ -51,7 +51,7 @@
                     </div>
                 </div>
 
-                <div style="padding:10px 10px">
+                <div style="padding:10px 10px; border-bottom: 1px solid #E3E2E2">
                     <p style="color:#5C5555">IMAGES</p>
                     <input type="checkbox" id="use_as_mask" value="Use as mask">
                     <label for="use_as_mask">Use as mask</label>
@@ -62,16 +62,21 @@
                     <button (click)="toggleChooseFrameImagesModal()" type="button" class="btn" style="outline: none; margin-top: 10px; padding-top: 5px; padding-bottom:5px; border:1px solid #C4C4C4; color:black; background-color:white; width:100%; border-radius: 5px">Choose Images</button>
                 </div>
 
+                <div style="padding:10px 10px">
+                    <div>
+                        <button (click)="shapesService.deleteFocusedFrame()" type="checkbox" id="activate_wall" value="Lock Wall" style="all:unset">
+                            <img src="assets/images/delete_black.svg">
+                        </button>
+                        <label for="activate_wall">Delete Frame</label>
+                    </div>
+                </div>
+
             </div>
 
             <div *ngIf="shapesService.isFocusedWall"  style="color:#9A9A9A">
                 <div style="padding:0 20px 10px 20px; border-bottom: 1px solid #E3E2E2">
-                    <div data-toggle="collapse" data-target="#wall_display_time">
-                        <span style="color:#5C5555">DISPLAY TIME</span>
-                        <img src="/assets/images/remove.svg" style="float:right">
-                    </div>
-
-                    <div id="wall_display_time" class="collapse in clearfix" style="padding-top:10px">
+                    <p style="color:#5C5555">DISPLAY TIME</p>
+                    <div id="wall_display_time" class="clearfix" style="padding-top:10px">
                         <div class="clearfix">
                             <div style="float:left">
                                     <img src="/assets/images/time.svg" style="padding-right:5px">
@@ -91,8 +96,7 @@
                 </div>
                 <div style="padding:10px 20px 10px 20px; border-bottom: 1px solid #E3E2E2">
                     <p style="color:#5C5555">BORDER</p>
-                    <div class="dropdown">
-                        
+                    <div class="dropdown"> 
                         <button style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" class="btn dropdown-toggle" type="button" data-toggle="dropdown">
                             <div *ngIf="shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].hasMaterial; else elseBlock">
                                 <div [ngStyle]="shapesService.returnWallMaterial()"></div>
