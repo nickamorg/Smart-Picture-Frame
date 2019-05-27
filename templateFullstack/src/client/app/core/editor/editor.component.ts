@@ -33,9 +33,6 @@ export class EditorComponent {
     }
 
     addFrame(type: string) {
-        if (!this.shapesService.frames) {
-          this.shapesService.frames = [];
-        }
         this.shapesService.pushFrame(type);
     }
 

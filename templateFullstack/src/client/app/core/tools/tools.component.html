@@ -9,23 +9,23 @@
                     <table style="width: 100%">
                         <tr style="border-bottom: 10px solid transparent">
                             <td><label style="padding:0 10px">X</label></td>
-                            <td><input (keyup)="shapesService.setPosX($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="posX" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].left}}"></td>
+                            <td><input (keyup)="shapesService.setFrameValue('left', $event.target.value)" type="text" style="width:50px; border-radius: 5px" id="posX" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].left}}"></td>
                             <td><label style="padding:0 10px">Y</label></td>
-                            <td><input (keyup)="shapesService.setPosY($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="posY" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].top}}"></td>
+                            <td><input (keyup)="shapesService.setFrameValue('top', $event.target.value)" type="text" style="width:50px; border-radius: 5px" id="posY" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].top}}"></td>
                         </tr>
 
                         <tr style="border-bottom: 10px solid transparent">
                             <td><label style="padding:0 10px">W</label></td>
-                            <td><input (keyup)="shapesService.setWidth($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="width" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].width}}"></td>
+                            <td><input (keyup)="shapesService.setFrameValue('width', $event.target.value)" type="text" style="width:50px; border-radius: 5px" id="width" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].width}}"></td>
                             <td><label style="padding:0 10px">H</label></td>
-                            <td><input (keyup)="shapesService.setHeight($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].height}}"></td>
+                            <td><input (keyup)="shapesService.setFrameValue('height', $event.target.value)" type="text" style="width:50px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].height}}"></td>
                         </tr>
 
                         <tr style="border-bottom: 10px solid transparent">
                             <td><label style="padding:0 10px">Z</label></td>
                             <td><input type="text" style="width:50px; border-radius: 5px" id="zindex" placeholder="0" value="0"></td>
                             <td><label style="padding:0 10px">P</label></td>
-                            <td><input (keyup)="shapesService.setPadding($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="padding" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].padding}}"></td>
+                            <td><input (keyup)="shapesService.setFrameValue('padding', $event.target.value)" type="text" style="width:50px; border-radius: 5px" id="padding" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].padding}}"></td>
                         </tr>
                     </table>
                 </div>
@@ -43,7 +43,7 @@
                         </button>
                         <div style="padding-top:10px">
                             <span style="padding-right:10px">Border Size</span>
-                            <input (keyup)="shapesService.setBorderSize($event.target.value)" type="text" style="width:150px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].borderSize}}">
+                            <input (keyup)="shapesService.setFrameValue('borderSize', $event.target.value)" type="text" style="width:150px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].borderSize}}">
                         </div>
                         <ul class="dropdown-menu" style="width:100%; text-align: center; top:55px">
                             <li *ngFor="let type of materials; let i = index" (click)='shapesService.addFrameMaterial(type.src)' [ngStyle]="setDropDownDisplayedMaterial(type.src)"></li>
@@ -57,7 +57,7 @@
                     <label for="use_as_mask">Use as mask</label>
                     <div style="float:right">
                         <img src="/assets/images/duration.png" style="padding-right:5px">
-                        <input (keyup)="shapesService.setIterateTime($event.target.value)" type="text" style="width:50px; border-radius: 5px" id="iterateTime" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].iterateTime}}">
+                        <input (keyup)="shapesService.setFrameValue('iterateTime', $event.target.value)" type="text" style="width:50px; border-radius: 5px" id="iterateTime" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].iterateTime}}">
                     </div>
                     <button (click)="toggleChooseFrameImagesModal()" type="button" class="btn" style="outline: none; margin-top: 10px; padding-top: 5px; padding-bottom:5px; border:1px solid #C4C4C4; color:black; background-color:white; width:100%; border-radius: 5px">Choose Images</button>
                 </div>

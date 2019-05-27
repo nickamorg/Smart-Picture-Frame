@@ -13,22 +13,17 @@ import { Wall } from './wall';
 export class ShapesService {
     wallSets: WallSet[] = [];
     loadedWallSet: WallSet;
-    focusedWallIndex = 0;
     loadedWallSetIndex = 0;
-    wallMaterial = '';
-    hasWallMaterial = false;
-    wallBorderSize = 0;
-    frames: Frame[] = [];
+    focusedWallIndex = 0;
     selectedFrame = -1;
-    frameImages: string[];
-    selectedImages = 0;
-    imagesCol = 6;
-    currFrameImages: string[] = [];
+    editMode = false;
     isFocusedFrame = false;
     isFocusedWall = true;
     wallImagesCol = 12;
-    displayedWallImageIndex = 0;
-    editMode = false;
+    imagesCol = 6;
+    currFrameImages: string[] = [];
+    frameImages: string[];
+    selectedImages = 0;
     currWallpapers: string[] = [];
     wallpapers: string[] = [];
     selectedWallpapers = 0;
@@ -79,32 +74,8 @@ export class ShapesService {
             });;
     }
 
-    setPosX(posX) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].left = posX;
-    }
-
-    setPosY(posY) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].top = posY;
-    }
-
-    setWidth(width) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].width = width;
-    }
-
-    setHeight(height) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].height = height;
-    }
-
-    setPadding(padding) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].padding = padding;
-    }
-
-    setIterateTime(iterateTime) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].iterateTime = iterateTime;
-    }
-
-    setBorderSize(borderSize) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize = borderSize;
+    setFrameValue(type, value) {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame][type] = value;
     }
 
     returnBorderMaterial() {
@@ -205,7 +176,6 @@ export class ShapesService {
 
     addWallMaterial(src: string) {
         this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = src;
-        this.hasWallMaterial = true;
     }
 
     
@@ -247,7 +217,7 @@ export class ShapesService {
             });;
     }
 
-    changeDisplayedWallImage(index: number) {
+    changeDisplayedWallpaper(index: number) {
         this.loadedWallSet.walls[this.focusedWallIndex].displayedImageIndex = index;
     }
 
@@ -445,9 +415,11 @@ export class ShapesService {
 
     deleteFocusedFrame() {
         this.frameDBService.deleteFrame(
-            this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame]._id);
-            this.loadedWallSet.walls[this.focusedWallIndex].frames.splice(
-                this.loadedWallSet.walls[this.focusedWallIndex].frames.indexOf(this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame]), 1);
+            this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame]._id
+        );
+        this.loadedWallSet.walls[this.focusedWallIndex].frames.splice(
+            this.loadedWallSet.walls[this.focusedWallIndex].frames.indexOf(this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame]), 1
+        );
         this.selectedFrame = -1;
         this.isFocusedFrame = false;
         this.isFocusedWall = true;
