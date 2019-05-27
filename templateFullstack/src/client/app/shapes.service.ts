@@ -140,36 +140,6 @@ export class ShapesService {
         return style;
     }
 
-    setFrameStyle(id: number) {
-        let style = {
-            'background-color': 'rgb(255, 255, 255)',
-            'border-radius': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderRadius + '%',
-            'width': (this.loadedWallSet.walls[this.focusedWallIndex].frames[id].width -
-                this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize * 2)  + 'px',
-            'height': (this.loadedWallSet.walls[this.focusedWallIndex].frames[id].height -
-                this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize * 2) + 'px',
-            'top': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize + 'px',
-            'left': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize + 'px',
-            'padding': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].padding + 'px'
-        };
-
-        return style;
-    }
-
-    setImageStyle(id: number) {
-        let style = {
-            'border-radius': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderRadius + '%',
-            'width': (this.loadedWallSet.walls[this.focusedWallIndex].frames[id].width -
-                this.loadedWallSet.walls[this.focusedWallIndex].frames[id].padding * 2 -
-                this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize * 2)  + 'px',
-            'height': (this.loadedWallSet.walls[this.focusedWallIndex].frames[id].height -
-                this.loadedWallSet.walls[this.focusedWallIndex].frames[id].padding * 2 -
-                this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize * 2) + 'px',
-        };
-
-        return style;
-    }
-
     focusFrame(index) {
         this.isFocusedFrame = true;
         this.isFocusedWall = false;
@@ -209,26 +179,6 @@ export class ShapesService {
         this.isFocusedFrame = false;
         this.isFocusedWall = true;
         this.selectedFrame = null;
-    }
-
-    setWallStyle() {
-        let style = {
-            'width':  (800 - this.loadedWallSet.walls[this.focusedWallIndex].borderSize) + 'px',
-            'height': (200 - this.loadedWallSet.walls[this.focusedWallIndex].borderSize) + 'px',
-            'top': (this.loadedWallSet.walls[this.focusedWallIndex].borderSize / 2) + 'px',
-            'left': (this.loadedWallSet.walls[this.focusedWallIndex].borderSize / 2) + 'px',
-            'background-color': '#C4C4C4',
-            'position': 'absolute',
-            'background-size': 'cover'
-        };
-
-        var wallWallpaper = this.loadedWallSet.walls[this.focusedWallIndex].images[this.loadedWallSet.
-                                                    walls[this.focusedWallIndex].displayedImageIndex];
-        if (wallWallpaper !== '' && wallWallpaper !== undefined) {
-            style['background-image'] = 'url(' + wallWallpaper + ')';
-        }
-
-        return style;
     }
 
     setWallBorderStyle() {

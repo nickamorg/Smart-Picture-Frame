@@ -63,7 +63,7 @@ export class Frame {
         return style;
     }
 
-    getFirstImageStyle() {
+    getImageStyle() {
         let style = {
             'border-radius': this.borderRadius + '%',
             'width': (this.width - this.padding * 2 - this.borderSize * 2)  + 'px',

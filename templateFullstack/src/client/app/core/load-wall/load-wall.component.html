@@ -21,7 +21,7 @@
                                     <div *ngFor="let frame of wall.frames; let i = index" [ngStyle]="frame.getFrameBorderStyle()" style="position:absolute">
                                         <div [ngStyle]="frame.getFrameStyle()" style="position:absolute">
                                             <ng-template [ngIf]="frame.images.length >= 1">
-                                                <img [ngStyle]="frame.getFirstImageStyle()" src="{{getImageSRC(frame.images[0])}}">
+                                                <img [ngStyle]="frame.getImageStyle()" src="{{getImageSRC(frame.images[0])}}">
                                             </ng-template>
                                         </div>
                                     </div>
