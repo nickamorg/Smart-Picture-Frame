@@ -312,7 +312,8 @@ export class ShapesService {
                     });
                 })
 
-                wall.frames.forEach(frame => {
+                for(var i = 0; i < wall.frames.length; i++) {
+                    var frame = wall.frames[i];
                     if (frame._id === undefined) {
                         this.frameDBService.uploadFrame(
                             this.loadedWallSet.walls[this.focusedWallIndex]._id,
@@ -339,7 +340,7 @@ export class ShapesService {
                         });
                     })
                     
-                });
+                }
             }
         });
     }
@@ -414,6 +415,9 @@ export class ShapesService {
     }
 
     deleteFocusedFrame() {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].images.forEach(image => {
+            this.frameImageDBService.deleteFrameImage(image);
+        });
         this.frameDBService.deleteFrame(
             this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame]._id
         );
@@ -423,5 +427,19 @@ export class ShapesService {
         this.selectedFrame = -1;
         this.isFocusedFrame = false;
         this.isFocusedWall = true;
+    }
+
+    deleteWall(index) {
+        this.loadedWallSet.walls[index].frames.forEach(frame => {
+            frame.images.forEach(image => {
+                this.frameImageDBService.deleteFrameImage(image);
+            });
+            this.frameDBService.deleteFrame(frame._id);
+        });
+
+        this.wallDBService.deleteWall(this.loadedWallSet.walls[index]._id);
+        this.loadedWallSet.walls.splice(
+            this.loadedWallSet.walls.indexOf(this.loadedWallSet.walls[index]), 1
+        );
     }
 }

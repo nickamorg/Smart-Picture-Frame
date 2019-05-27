@@ -41,7 +41,14 @@
         </div>
         <div style="padding-top:10px; height:200px; overflow-y: auto; overflow-x: hidden">
             <div *ngIf="shapesService.editMode">
-                <input *ngFor="let wall of shapesService.loadedWallSet.walls; let i = index" [ngStyle]="shapesService.setWallTitleStyle(i)" class="wall_title" readonly="true" ondblclick="this.readOnly='';" (click)="shapesService.selectCurrWallSetFocusedWall(i)" (focusout)="shapesService.setCurrWallSetFocusedWallNewTitle(i, $event.target.value)" value="{{wall.title}}" placeholder="Set a title" />
+                <div class="id_div_1" *ngFor="let wall of shapesService.loadedWallSet.walls; let i = index">
+                    <input [ngStyle]="shapesService.setWallTitleStyle(i)" class="wall_title" readonly="true" ondblclick="this.readOnly='';" (click)="shapesService.selectCurrWallSetFocusedWall(i)" (focusout)="shapesService.setCurrWallSetFocusedWallNewTitle(i, $event.target.value)" value="{{wall.title}}" placeholder="Set a title" />
+                    <div class="remove_link">
+                        <a (click)="shapesService.deleteWall(i)">
+                            <img src="./assets/images/delete_black.svg"/>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

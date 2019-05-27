@@ -47,3 +47,29 @@
   .wall_title_tooltip:hover .wall_title_tooltiptext {
     visibility: visible;
   }
+
+.id_div_1 {
+    direction: ltr; 
+    white-space: wrap;
+    background: #fff;
+    position:relative;
+}
+
+.remove_link {
+    visibility: hidden;
+    position:absolute;
+    top: 4px;
+    right:5px;
+}
+.id_div_1:hover .remove_link {
+    visibility:visible;
+}
+.fa-times-circle {
+    color: grey;
+}
+.fa-times-circle:hover {
+    color: #cc0033;
+}
+.icon_size16 {
+    font-size: 16px;
+}
