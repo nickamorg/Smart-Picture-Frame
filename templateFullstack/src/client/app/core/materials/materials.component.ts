@@ -33,6 +33,7 @@ export class MaterialsComponent {
     processFile(imageInput) {
         this.uploadedMaterials = [];
         this.showUploadedMaterialsModal = true;
+        document.body.classList.add('modal-open');
 
         for (var i = 0; i < imageInput.files.length; i++) {
             var file: File = imageInput.files[i];
@@ -46,16 +47,18 @@ export class MaterialsComponent {
 
     uploadMaterials() {
         this.showUploadedMaterialsModal = false;
+        document.body.classList.remove('modal-open');
 
         this.uploadedMaterials.forEach(element => {
             this.materialDBService.uploadMaterial(element.src, element.title);
         });
-        
+
         this.getMaterials();
     }
 
     cancelUploadMaterials() {
         this.showUploadedMaterialsModal = false;
+        document.body.classList.remove('modal-open');
     }
 
     saveMaterialTitle(index, event) {

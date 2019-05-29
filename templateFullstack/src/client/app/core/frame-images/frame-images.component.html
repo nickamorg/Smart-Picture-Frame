@@ -95,7 +95,7 @@
                 <img (click)="shapesService.uncheckAllImages()" [class.frame-images_inactive_option]="!shapesService.selectedImages" style="padding-right:5px; float:right" src="/assets/images/uncheck.png" width="25" heigh="25">
             </div>
         
-            <div class="scrollbar frame-images-2" style="height:400px; padding-top:10px">
+            <div class="scrollbar frame-images-2" style="height:400px">
                 <div *ngFor="let image of images" class="col-xs-{{shapesService.imagesCol}}" style="padding-bottom:30px; text-align: center">
                     <img [class.frame-images_checked]="shapesService.isImageSelected(image._id)" (click)="shapesService.selectImage(image._id)" class="img-responsive" src="{{image.src}}" alt="">
                 </div>

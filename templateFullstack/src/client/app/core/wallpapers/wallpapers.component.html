@@ -25,7 +25,7 @@
 
 <div *ngIf="showUploadedWallpapersModal" class="modal_overlay">
     <div id="modal_overlay_content" class="clearfix">
-        <div class="col-xs-12" style="padding-top:40px">
+        <div class="col-xs-12" style="padding-top:20px">
             <div style="padding:0 10px 10px 15px">
                 <span style="color:#707070">UPLOAD WALLPAPERS</span>
                 <img (click)="uploadWallpapers()" style="padding-right:5px; float:right" src="/assets/images/apply.png" width="25" heigh="25">
@@ -36,10 +36,10 @@
             </div>
         
             <div class="scrollbar" style="height:400px; padding-top:10px">
-                <div *ngFor="let wallpaper of uploadedWallpapers; let i = index" class="col-xs-3" style="padding-bottom:30px; text-align: center">
+                <div *ngFor="let wallpaper of uploadedWallpapers; let i = index" class="col-xs-6" style="padding-bottom:30px; text-align: center">
                     <img style="border-radius:10px" class="img-responsive" src="{{wallpaper.src}}" alt="">
                     <div class="form-group" style="padding-top:10px">
-                        <input type="text" class="form-control" placeholder="Title" (change)="saveWallpaperTitle(i, $event)">
+                        <input type="text" class="form-control" placeholder="Title" (change)="saveWallpaperTitle(i, $event)" style="width:100% !important">
                     </div>
                 </div>
             </div>

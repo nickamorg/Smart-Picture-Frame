@@ -32,6 +32,7 @@ export class WallpapersComponent {
     processFile(imageInput) {
         this.uploadedWallpapers = [];
         this.showUploadedWallpapersModal = true;
+        document.body.classList.add('modal-open');
 
         for (var i = 0; i < imageInput.files.length; i++) {
             var file: File = imageInput.files[i];
@@ -45,16 +46,18 @@ export class WallpapersComponent {
 
     uploadWallpapers() {
         this.showUploadedWallpapersModal = false;
+        document.body.classList.remove('modal-open');
 
         this.uploadedWallpapers.forEach(element => {
             this.wallpaperDBService.uploadWallpaper(element.src, element.title);
         });
-        
+
         this.getWallpapers();
     }
 
     cancelUploadWallpapers() {
         this.showUploadedWallpapersModal = false;
+        document.body.classList.remove('modal-open');
     }
 
     saveWallpaperTitle(index, event) {

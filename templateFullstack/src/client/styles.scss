@@ -110,17 +110,23 @@
 /// From Gallery
 
 .filters {
-    height: 100%;
     padding-top: 0 !important;
     width: 15%;
-    position: fixed;
+    position: absolute;
     z-index: 1;
     top: 51px;
     left: 0;
     background-color: #111;
-    overflow-x: hidden;
+    // overflow-x: hidden;
     padding-top: 20px; background-color: #F5F5F5;
 }
+
+.filters_body {
+    padding-top:5px;
+    height:522px;
+    overflow-x: hidden;
+}
+
 
 /* The container */
 .checkbox_container {
@@ -369,4 +375,12 @@
 
 .modal_overlay a:hover {
     text-decoration: none;
+}
+
+::-webkit-input-placeholder {
+    font-style: italic;
+}
+
+body.modal-open {
+    overflow: hidden;
 }

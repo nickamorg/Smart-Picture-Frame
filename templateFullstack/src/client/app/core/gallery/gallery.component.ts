@@ -28,7 +28,7 @@ export class GalleryComponent {
     editImage = false;
     displayedImage: GalleryImage = null;
     galleryImages: GalleryImage[] = [];
-    
+
     constructor(private databaseService: DatabaseService) {
         this.getImages();
     }
@@ -129,12 +129,12 @@ export class GalleryComponent {
         } else {
             this.editImage = true;
         }
-        
+
         this.displayedImage = new GalleryImage( selectedImage._id, selectedImage.title, 
                                                 selectedImage.description, selectedImage.src, 
                                                 selectedImage.type, selectedImage.country, 
                                                 selectedImage.city);
-        
+
     }
 
     hideDisplayedImage() {
@@ -152,6 +152,7 @@ export class GalleryComponent {
     processFile(imageInput) {
         this.uploadedImages = [];
         this.showUploadedImagesModal = true;
+        document.body.classList.add('modal-open');
 
         for (var i = 0; i < imageInput.files.length; i++) {
             var file: File = imageInput.files[i];
@@ -166,17 +167,19 @@ export class GalleryComponent {
     uploadImages() {
         //Mongodb code missed
         this.showUploadedImagesModal = false;
+        document.body.classList.remove('modal-open');
 
         this.uploadedImages.forEach(element => {
             this.databaseService.uploadImage(element.src, element.title, element.description,
                 element.type, element.country, element.city)
         });
-        
+
         this.getImages();
     }
 
     cancelUploadImages() {
         this.showUploadedImagesModal = false;
+        document.body.classList.remove('modal-open');
     }
 
     deleteUploadedMaterial(src: string) {
