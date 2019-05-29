@@ -19,11 +19,11 @@
 
 <div id="editor_main_frame" class="clearfix" (click)="shapesService.focusWall()">
     <div id="editor_full" [ngStyle]="shapesService.setWallBorderStyle()">
-        <div *ngIf="shapesService.editMode" [ngStyle]="shapesService.setWallStyle()">
+        <div *ngIf="shapesService.editMode" [ngStyle]="shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].getWallStyle()">
             <div (click)="shapesService.focusFrame(i); $event.stopPropagation()" *ngFor="let frame of shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames; let i = index" [ngStyle]="shapesService.setFrameBorderStyle(i)" style="position:absolute">
-                <div [ngStyle]="shapesService.setFrameStyle(i)" style="position:absolute">
+                <div [ngStyle]="frame.getFrameStyle()" style="position:absolute">
                     <ng-template [ngIf]="frame.images.length >= 1">
-                        <img [ngStyle]="shapesService.setImageStyle(i)" src="/assets/images/{{frame.images[frame.displayedImageIndex]}}">
+                        <img [ngStyle]="frame.getImageStyle()" src="{{getImageSRC(frame.images[frame.displayedImageIndex])}}">
                     </ng-template>
                 </div>
             </div>

@@ -20,7 +20,7 @@ export class WallImagesComponent implements OnInit {
     }
 
     applySelectedWallImages() {
-        this.shapesService.addSelectedWallImages();
+        this.shapesService.addSelectedWallpapers();
         this.sendMessage();
     }
 

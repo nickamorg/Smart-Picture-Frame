@@ -1,406 +1,90 @@
 import { Injectable } from '@angular/core';
-
-var imageID:number = -1;
-var wallImageID:number = -1;
-
-class Frame {
-    borderRadius: number = 0;
-    borderSize: number = 0;
-    hasMaterial: boolean = false;
-    borderMaterial: string = "";
-    borderColor: string = "";
-    padding: number = 0;
-    top: number = 50;
-    left: number = 10;
-    width: number = 100;
-    height: number = 100;
-    images: string[] = [];
-    displayedImageIndex: number = 0;
-    iterateTime: number = 0;
-    id: string = IDgenerator();
-
-    init(borderRadius, borderSize, borderMaterial, borderColor, 
-                padding, top, left, width, height, images, iterateTime) {
-
-        this.borderRadius = borderRadius;
-        this.borderSize = borderSize;
-        this.hasMaterial = borderMaterial !== ''?true:false;
-        this.borderMaterial = borderMaterial;
-        this.borderColor = borderColor;
-        this.padding = padding;
-        this.top = top;
-        this.left = left;
-        this.width = width;
-        this.height = height;
-        this.images = images;
-        this.iterateTime = iterateTime;
-    }
-
-    getFrameBorderStyle(index: number) {
-        let style = {
-            'background-color': this.borderColor,
-            'border-radius': this.borderRadius + '%',
-            'width': this.width + 'px',
-            'height': this.height + 'px',
-            'top': this.top + 'px',
-            'left': this.left + 'px'
-        };
-
-        if(this.borderMaterial !== "" && this.borderMaterial !== undefined) {
-            style['background-image'] = 'url("./assets/materials/' + this.borderMaterial + '")';
-        }
-
-        return style;
-    }
-
-    getFrameStyle() {
-        let style = {
-            'background-color': 'rgb(255, 255, 255)',
-            'border-radius': this.borderRadius + '%',
-            'width': (this.width - this.borderSize * 2)  + 'px',
-            'height': (this.height - this.borderSize * 2) + 'px',
-            'top': this.borderSize + 'px',
-            'left': this.borderSize + 'px',
-            'padding': this.padding + 'px'
-        }
-
-        return style;
-    }
-
-    getFirstImageStyle() {
-        let style = {
-            'border-radius': this.borderRadius + '%',
-            'width': (this.width - this.padding * 2 - this.borderSize * 2)  + 'px',
-            'height': (this.height - this.padding * 2 - this.borderSize * 2) + 'px',
-            'top': this.borderSize + 'px',
-            'left': this.borderSize + 'px'
-        }
-        
-        return style;
-    }
-
-    copy() {
-        var newFrame = new Frame();
-        newFrame.borderRadius = this.borderRadius;
-        newFrame.borderSize = this.borderSize;
-        newFrame.hasMaterial = this.hasMaterial;
-        newFrame.borderMaterial = this.borderMaterial;
-        newFrame.borderColor = this.borderColor;
-        newFrame.borderColor = this.borderColor;
-        newFrame.padding = this.padding;
-        newFrame.top = this.top;
-        newFrame.left = this.left;
-        newFrame.width = this.width;
-        newFrame.id = this.id;
-        newFrame.height = this.height;
-        newFrame.displayedImageIndex = this.displayedImageIndex;
-        newFrame.iterateTime = this.iterateTime;
-        
-        newFrame.images = [];
-        for(var i = 0; i < this.images.length; i++) {
-            newFrame.images.push(this.images[i]);
-        }
-
-        return newFrame;
-    }
-}
-
-class FrameImage {
-    src:string;
-    selected:boolean;
-    id: number;
-
-    constructor(src:string) {
-        this.src = src;
-        this.selected = false;
-        this.id = ++imageID;
-    }
-}
-
-class WallImage {
-    src:string;
-    selected:boolean;
-    id: number;
-
-    constructor(src:string) {
-        this.src = src;
-        this.selected = false;
-        this.id = ++wallImageID;
-    }
-}
-
-class Wall {
-    borderMaterial: string = "";
-    hasMaterial: boolean = false;
-    borderSize: number = 0;
-    frames: Frame[] = [];
-    images: string[] = [];
-    displayedImageIndex: number = 0;
-    title: string = "";
-    id: string = IDgenerator();
-    
-    init(borderMaterial, borderSize, frames, images, title) {
-        this.borderMaterial = borderMaterial;
-        this.borderSize = borderSize;
-        this.frames = frames;
-        this.images = images;
-        this.title = title;
-        this.hasMaterial = borderMaterial != ""? true : false;
-    }
-
-    getBorderStyle() {
-        let style = {
-            'background-size': 'cover',
-            'background-color': '#ffffff',
-            'width': '800px',
-            'height': '200px'
-        }
-
-        if(this.borderMaterial !== "" && this.borderMaterial !== undefined) {
-            style['background-image'] = 'url("./assets/materials/' + this.borderMaterial + '")';
-        }
-
-        return style;
-    }
-
-    getWallStyle() {
-        let style = {
-            'width':  (800 - (this.hasMaterial? this.borderSize : 0)) + 'px',
-            'height': (200 - (this.hasMaterial? this.borderSize : 0)) + 'px',
-            'top':  ((this.hasMaterial? this.borderSize : 0) / 2) + 'px', 
-            'left': ((this.hasMaterial? this.borderSize : 0) / 2) + 'px',
-            'background-color': '#C4C4C4',
-            'position': 'relative',
-            'background-size': 'cover'
-        };
-
-        var wallWallpaper = this.images[this.displayedImageIndex];
-        if(wallWallpaper !== "" && wallWallpaper !== undefined) {
-            style['background-image'] = 'url("./assets/wallpapers/' + wallWallpaper + '")'
-        }
-        
-        return style;
-    }
-
-    copy() {
-        var newWall = new Wall();
-        newWall.borderMaterial = this.borderMaterial;
-        newWall.hasMaterial = this.hasMaterial;
-        newWall.borderSize = this.borderSize;
-        newWall.displayedImageIndex = this.displayedImageIndex;
-        newWall.title = this.title;
-        newWall.id = this.id;
-
-        newWall.images = [];
-        for(var i = 0; i < this.images.length; i++) {
-            newWall.images.push(this.images[i]);
-        }
-        
-        newWall.frames = [];
-        for(var i = 0; i < this.frames.length; i++) {
-            newWall.frames.push(this.frames[i].copy());
-        }
-
-        return newWall;
-    }
-
-}
-
-class WallSet {
-    walls: Wall[] = [];
-    creator: string = "";
-    type: string = "";
-    target: string = "";
-    title: string = "";
-    description: string = "";
-    id: string = IDgenerator();
-
-    init(walls, creator, type, target, title, description) {
-        this.walls = walls;
-        this.creator = creator;
-        this.type = type;
-        this.target = target;
-        this.title = title;
-        this.description = description;
-    }
-
-    copy() {
-        var newWallSet = new WallSet();
-        newWallSet.creator = this.creator;
-        newWallSet.type = this.type;
-        newWallSet.target = this.target;
-        newWallSet.title = this.title;
-        newWallSet.description = this.description;
-        newWallSet.id = this.id;
-
-        newWallSet.walls = [];
-        for(var i = 0; i < this.walls.length; i++) {
-            newWallSet.walls.push(this.walls[i].copy());
-        }
-
-        return newWallSet;
-       
-    }
-}
+import { WallSetDBService } from './wallSetDB.service';
+import { WallDBService } from './wallDB.service';
+import { FrameDBService } from './frameDB.service';
+import { FrameImageDBService } from './frameImageDB.service';
+import { WallImageDBService } from './wallImageDB.service';
+import { WallpaperDBService } from './wallpaperDB.service';
+import { WallSet } from './wallSet';
+import { Frame } from './frame';
+import { Wall } from './wall';
 
 @Injectable()
 export class ShapesService {
     wallSets: WallSet[] = [];
     loadedWallSet: WallSet;
-    focusedWallIndex: number = 0;
-    loadedWallSetIndex: number = 0;
-
-    wallMaterial: string = "";
-    hasWallMaterial: boolean = false;
-    wallBorderSize: number = 0;
-    frames: Frame[] = [];
-    selectedFrame: number = -1;
-    frameImages: FrameImage[];
-    selectedImages: number = 0;
-    imagesCol: number = 6;
+    loadedWallSetIndex = 0;
+    focusedWallIndex = 0;
+    selectedFrame = -1;
+    editMode = false;
+    isFocusedFrame = false;
+    isFocusedWall = true;
+    wallImagesCol = 12;
+    imagesCol = 6;
     currFrameImages: string[] = [];
-    isFocusedFrame: boolean = false;
-    isFocusedWall: boolean = true;
-    materials: string[];
-    wallImages: WallImage[];
-    wallImagesCol: number = 12;
-    selectedWallImages: number = 0;
-    currWallImages: string[] = [];
-    displayedWallImageIndex: number = 0;
-    editMode: boolean = false;
+    frameImages: string[];
+    selectedImages = 0;
+    currWallpapers: string[] = [];
+    wallpapers: string[] = [];
+    selectedWallpapers = 0;
 
-    feedInit() {
-
-        var tmpFrame = new Frame();
-        tmpFrame.init(100, 5, "gold.jpg", "rgb(34, 0, 78)", 15, 20, 200, 150, 150,
-        ["waterfall4.png", "waterfall3.png"], 30);
-
-        var tmpFrame1 = new Frame();
-        tmpFrame1.init(0, 5, "brick.jpg", "rgb(34, 0, 78)", 10, 50, 400, 100, 100,
-        ["waterfall3.png", "waterfall1.png"], 15);
-
-        var tmpFrames = [];
-        tmpFrames.push(tmpFrame);
-        tmpFrames.push(tmpFrame1);
-        
-        var images = [ "inferno.jpg", "waterfalls.jpg"];
-        var tmpWall = new Wall();
-        tmpWall.init("lava.jpg", 10, tmpFrames, images, "Waterfalls Display");
-    
-        this.wallSets.push(new WallSet());
-        this.wallSets[0].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
-        this.wallSets.push(new WallSet());
-        this.wallSets[1].init([tmpWall, tmpWall], 'Home', 'General', 'Family', 'Title', 'There is no description');
-        
-        this.loadedWallSet = this.wallSets[0].copy();
-    }
-
-    constructor() {
-        this.feedInit();
-
-        this.frameImages = [new FrameImage("waterfall1.png"),
-                            new FrameImage("waterfall2.png"),
-                            new FrameImage("waterfall3.png"),
-                            new FrameImage("waterfall4.png")];
-        this.materials = ["aqua.jpg", "lava.jpg", "brick.jpg", "iron.jpg", "stone.png", "gold.jpg"];
-
-        this.wallImages = [ new WallImage("inferno.jpg"),
-                            new WallImage("waterfalls.jpg")];
+    constructor(private wallDBService: WallDBService, private wallSetDBService: WallSetDBService,
+                private frameDBService: FrameDBService, private frameImageDBService: FrameImageDBService,
+                private wallImageDBService: WallImageDBService,
+                private wallpapersDBService: WallpaperDBService) {
     }
 
     selectImage(id) {
-        this.frameImages[id].selected = !this.frameImages[id].selected;
-        
-        if(this.frameImages[id].selected) { 
-            const index = this.currFrameImages.indexOf(this.frameImages[id].src, 0);
-            if (index === -1) {
-                this.currFrameImages.push(this.frameImages[id].src);
-            }
+        const index = this.currFrameImages.indexOf(id, 0);
+        if (index === -1) {
+            this.currFrameImages.push(id);
             this.selectedImages++;
         } else {
-            const index = this.currFrameImages.indexOf(this.frameImages[id].src, 0);
-            if (index > -1) {
-                this.currFrameImages.splice(index, 1);
-            }
+            this.currFrameImages.splice(index, 1);
             this.selectedImages--;
         }
     }
 
-    changeImagesCol(col:number) {
+    selectWallpaper(src) {
+        const index = this.currWallpapers.indexOf(src, 0);
+        if (index === -1) {
+            this.currWallpapers.push(src);
+            this.selectedWallpapers++;
+        } else {
+            this.currWallpapers.splice(index, 1);
+            this.selectedWallpapers--;
+        }
+    }
+
+    changeImagesCol(col: number) {
         this.imagesCol = col;
     }
 
     uncheckAllImages() {
-        this.selectedImages = 0
+        this.selectedImages = 0;
         this.currFrameImages = [];
-        this.frameImages.forEach(function (value) {
-            value.selected = false;
-        });
     }
 
     addSelectedImages() {
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].images = this.currFrameImages;
+            this.frameImages = [];
+            this.selectedImages = this.currFrameImages.length;
+            this.currFrameImages.forEach(image => {
+                this.frameImages.push(image);
+            });
     }
 
-    setPosX(posX) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].left = posX;
-    }
-    
-    setPosY(posY) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].top = posY;
-    }
-
-    setWidth(width) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].width = width;
-    }
-
-    setHeight(height) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].height = height;
-    }
-
-    setPadding(padding) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].padding = padding;
-    }
-
-    setIterateTime(iterateTime) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].iterateTime = iterateTime;
-    }
-
-    setBorderSize(borderSize) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize = borderSize;
-    }
-
-    addMaterial(index:number) {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial = this.materials[index];
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].hasMaterial = true;
-    }
-
-    removeMaterial() {
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial = "";
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize = 0;
-        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].hasMaterial = false;
+    setFrameValue(type, value) {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame][type] = value;
     }
 
     returnBorderMaterial() {
         let style = {
-            'background-image': 'url("./assets/materials/' + this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial + '")',
+            'background-image': 'url(' + this.loadedWallSet.walls[this.focusedWallIndex].
+                                            frames[this.selectedFrame].borderMaterial + ')',
             'width': '100%',
-            'height': '30px'
-        }
-
-        return style;
-    } 
-
-    setDropDownDisplayedMaterial(index: number) {
-        let style = {
-            'width': '90%',
-            'height': '30px',
-            'margin': '10px 0 10px 0',
-            'margin-left': '5%',
-            'cursor': 'pointer',
-            'padding-bottom': '5px'
-        }
-        style['background-image'] = 'url("./assets/materials/' + (index> -1? this.materials[index] : 'no_material.png') + '")';
+            'height': '27px'
+        };
 
         return style;
     }
@@ -416,36 +100,12 @@ export class ShapesService {
         };
 
         var frameBorderMaterial = this.loadedWallSet.walls[this.focusedWallIndex].frames[index].borderMaterial;
-        if(frameBorderMaterial !== "" && frameBorderMaterial !== undefined) {
-            style['background-image'] = 'url("./assets/materials/' + frameBorderMaterial + '")';
+        if (frameBorderMaterial !== '' && frameBorderMaterial !== undefined) {
+            style['background-image'] = 'url(' + frameBorderMaterial + ')';
         }
-        
-        if(this.selectedFrame === index) {
+
+        if (this.selectedFrame === index) {
             style['box-shadow'] = '0px 0px 0px 5px #30C2FF';
-        }
-
-        return style;
-    }
-
-    setFrameStyle(id:number) {
-        let style = {
-            'background-color': 'rgb(255, 255, 255)',
-            'border-radius': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderRadius + '%',
-            'width': (this.loadedWallSet.walls[this.focusedWallIndex].frames[id].width - this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize * 2)  + 'px',
-            'height': (this.loadedWallSet.walls[this.focusedWallIndex].frames[id].height - this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize * 2) + 'px',
-            'top': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize + 'px',
-            'left': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize + 'px',
-            'padding': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].padding + 'px'
-        }
-
-        return style;
-    }
-
-    setImageStyle(id:number) {
-        let style = {
-            'border-radius': this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderRadius + '%',
-            'width': (this.loadedWallSet.walls[this.focusedWallIndex].frames[id].width - this.loadedWallSet.walls[this.focusedWallIndex].frames[id].padding * 2 - this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize * 2)  + 'px',
-            'height': (this.loadedWallSet.walls[this.focusedWallIndex].frames[id].height - this.loadedWallSet.walls[this.focusedWallIndex].frames[id].padding * 2 - this.loadedWallSet.walls[this.focusedWallIndex].frames[id].borderSize * 2) + 'px',
         }
 
         return style;
@@ -460,23 +120,19 @@ export class ShapesService {
 
     initCurrFrameImages(index: number) {
         this.currFrameImages = this.loadedWallSet.walls[this.focusedWallIndex].frames[index].images;
+        this.frameImages = [];
         this.selectedImages = this.currFrameImages.length;
 
-        for (var i = 0; i < this.frameImages.length; i++) {
-            this.frameImages[i].selected = false;
-            for (var j = 0; j < this.currFrameImages.length; j++) {
-                if(this.frameImages[i].src === this.currFrameImages[j]) {
-                    this.frameImages[i].selected = true;
-                }
-            }
+        for (var i = 0; i < this.currFrameImages.length; i++) {
+            this.frameImages.push(this.currFrameImages[i]);
         }
     }
 
-    pushFrame(type:string) {
+    pushFrame(type: string) {
         this.isFocusedFrame = true;
         this.isFocusedWall = false;
         var newFrame = new Frame();
-        newFrame.borderRadius = type === "square_frame"? 0:100;
+        newFrame.borderRadius = type === 'square_frame' ? 0 : 100;
         this.loadedWallSet.walls[this.focusedWallIndex].frames.push(newFrame);
         this.selectedFrame = this.loadedWallSet.walls[this.focusedWallIndex].frames.length - 1;
         this.initCurrFrameImages(this.selectedFrame);
@@ -487,107 +143,100 @@ export class ShapesService {
     }
 
     focusWall() {
-        if(!this.editMode) return;
+        if (!this.editMode) {
+            return;
+        }
 
         this.isFocusedFrame = false;
         this.isFocusedWall = true;
         this.selectedFrame = null;
     }
 
-    setWallStyle() {
-        let style = {
-            'width':  (800 - (this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial? this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0)) + 'px',
-            'height': (200 - (this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial? this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0)) + 'px',
-            'top':  ((this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial? this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0) / 2) + 'px', 
-            'left': ((this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial? this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0) / 2) + 'px',
-            'background-color': '#C4C4C4',
-            'position': 'absolute',
-            'background-size': 'cover'
-        };
-
-        var wallWallpaper = this.loadedWallSet.walls[this.focusedWallIndex].images[this.loadedWallSet.walls[this.focusedWallIndex].displayedImageIndex];
-        if(wallWallpaper !== "" && wallWallpaper !== undefined) {
-            style['background-image'] = 'url("./assets/wallpapers/' + wallWallpaper + '")'
-        }
-        
-        return style;
-    }
-
     setWallBorderStyle() {
-        if(!this.editMode) return undefined;
+        if (!this.editMode) {
+            return undefined;
+        }
 
         let style = {
             'background-size': 'cover',
             'background-color': '#ffffff'
-        }
+        };
 
         var wallBorderMaterial = this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial;
-        if(wallBorderMaterial !== "" && wallBorderMaterial !== undefined) {
-            style['background-image'] = 'url("./assets/materials/' + wallBorderMaterial + '")';
+        if (wallBorderMaterial !== '' && wallBorderMaterial !== undefined) {
+            style['background-image'] = 'url(' + wallBorderMaterial + ')';
         }
 
-        if(this.isFocusedWall) {
-            style['box-shadow'] = '0px 0px 0px 5px #30C2FF'
+        if (this.isFocusedWall) {
+            style['box-shadow'] = '0px 0px 0px 5px #30C2FF';
         }
 
         return style;
     }
 
-    addWallMaterial(index:number) {
-        this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = this.materials[index];
+    addWallMaterial(src: string) {
+        this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = src;
         this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial = true;
+
+        if (this.loadedWallSet.walls[this.focusedWallIndex].borderSize === 0) {
+            this.loadedWallSet.walls[this.focusedWallIndex].borderSize = 10;
+        }
     }
 
     removeWallMaterial() {
-        this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = "";
-        this.loadedWallSet.walls[this.focusedWallIndex].borderSize = 0;
+        this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = '';
         this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial = false;
+        this.loadedWallSet.walls[this.focusedWallIndex].borderSize = 0;
+    }
+
+    addFrameMaterial(src: string) {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial = src;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].hasMaterial = true;
+
+        if (this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize === 0) {
+            this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize = 10;
+        }
+    }
+
+    removeFrameMaterial() {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial = '';
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].hasMaterial = false;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize = 0;
     }
 
     returnWallMaterial() {
         let style = {
-            'background-image': 'url("./assets/materials/' + this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial + '")',
+            'background-image': 'url(' + this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial + ')',
             'width': '100%',
-            'height': '30px'
-        }
+            'height': '27px'
+        };
 
         return style;
-    } 
+    }
 
     setWallBorderSize(borderSize) {
         this.loadedWallSet.walls[this.focusedWallIndex].borderSize = borderSize;
     }
 
-    selectWallImage(id) {
-        this.wallImages[id].selected = !this.wallImages[id].selected;  
-        this.selectedWallImages += this.wallImages[id].selected? 1 : -1;
-    }
-
-    changeWallImagesCol(col:number) {
+    changeWallImagesCol(col: number) {
         this.wallImagesCol = col;
     }
 
-    uncheckAllWallImages() {
-        this.selectedWallImages = 0
-        this.currWallImages = [];
-
-        this.wallImages.forEach(function (value) {
-            value.selected = false;
-        });
+    uncheckAllWallpapers() {
+        this.selectedWallpapers = 0;
+        this.currWallpapers = [];
     }
 
-    addSelectedWallImages() {
-        var self = this;
-        self.loadedWallSet.walls[this.focusedWallIndex].images = [];
-
-        this.wallImages.forEach(function (value) {
-            if(value.selected) {
-                self.loadedWallSet.walls[self.focusedWallIndex].images.push(value.src);
-            }
-        });
+    addSelectedWallpapers() {
+            this.loadedWallSet.walls[this.focusedWallIndex].images = this.currWallpapers;
+            this.wallpapers = [];
+            this.selectedWallpapers = this.currWallpapers.length;
+            this.currWallpapers.forEach(wallpaper => {
+                this.wallpapers.push(wallpaper);
+            });
     }
 
-    changeDisplayedWallImage(index: number) {
+    changeDisplayedWallpaper(index: number) {
         this.loadedWallSet.walls[this.focusedWallIndex].displayedImageIndex = index;
     }
 
@@ -605,12 +254,19 @@ export class ShapesService {
         this.editMode = true;
         this.loadedWallSetIndex = this.wallSets.length - 1;
         this.focusedWallIndex = 0;
+
+        this.wallSetDBService.uploadWallSet(creator, type, target, title, description).subscribe(data => {
+            newWallSet._id = data.json()._id;
+            this.wallDBService.uploadWall(data.json()._id).subscribe(data => {
+                newWallSet.walls[0]._id = data.json()._id;
+            });
+        });
     }
 
     setWallTitleStyle(index) {
-        return this.focusedWallIndex === index? 
-        {'background-color': '#30C2FF', 'color': 'white'}:
-        {'background-color': '#F5F5F5',   'color': 'black'};
+        return this.focusedWallIndex === index ?
+        {'background-color': '#30C2FF', 'color': 'white'} :
+        {'background-color': '#F5F5F5', 'color': 'black'};
     }
 
     selectCurrWallSetFocusedWall(index) {
@@ -623,35 +279,188 @@ export class ShapesService {
     addCurrWallSetWall() {
         var flag = false;
         this.loadedWallSet.walls.forEach(element => {
-            if(element.title === "") flag = true;
+            if (element.title === '') {
+                flag = true;
+            }
         });
-        
-        if(!flag) this.loadedWallSet.walls.push(new Wall());
+
+        if (!flag) {
+            this.loadedWallSet.walls.push(new Wall());
+        }
         this.selectCurrWallSetFocusedWall(this.loadedWallSet.walls.length - 1);
+
+        this.wallDBService.uploadWall(this.loadedWallSet._id).subscribe(data => {
+            this.loadedWallSet.walls[this.loadedWallSet.walls.length - 1]._id = data.json()._id;
+        });
     }
 
     setCurrWallSetFocusedWallNewTitle(index, title) {
         this.loadedWallSet.walls[index].title = title;
+        this.wallDBService.updateWall(  this.loadedWallSet.walls[index]._id, this.loadedWallSet._id,
+                                        this.loadedWallSet.walls[index].borderMaterial,
+                                        this.loadedWallSet.walls[index].borderSize, title);
     }
 
-    saveWall() {
-        var wallSetWalls = this.wallSets[this.loadedWallSetIndex].walls;
+    saveWall(flag) {
+        var wallSetWalls = this.loadedWallSet.walls;
         var editedWall = this.loadedWallSet.walls[this.focusedWallIndex];
-        for(var i = 0; i < wallSetWalls.length; i++) {
-            if(wallSetWalls[i].id === editedWall.id) {
-                wallSetWalls[i] = editedWall.copy();
+        wallSetWalls.forEach(wall => {
+            if (wall._id === editedWall._id || flag) {
+                if (wall._id === editedWall._id) {
+                    wall = editedWall.copy();
+                }
+
+                this.wallDBService.updateWall(wall._id, wall.wallSetID,
+                    wall.borderMaterial, wall.borderSize, wall.title);
+
+                this.wallImageDBService.getWallImages().subscribe(wallpapers => {
+                    wallpapers.forEach(wallpaper => {
+                        if (wallpaper.wallID === wall._id) {
+                            this.wallImageDBService.deleteWallImage(wallpaper._id);
+                        }
+                    });
+
+                    this.wallpapersDBService.getWallpapers().subscribe(wallpapers => {
+                        wallpapers.forEach(wallpaper => {
+                            wall.images.forEach(wallImage => {
+                                if (wallpaper.src === wallImage) {
+                                    this.wallImageDBService.uploadWallImage(wall._id, wallpaper._id);
+                                }
+                            });
+                        });
+                    });
+                })
+
+                for (var i = 0; i < wall.frames.length; i++) {
+                    var frame = wall.frames[i];
+                    if (frame._id === undefined) {
+                        this.frameDBService.uploadFrame(
+                            this.loadedWallSet.walls[this.focusedWallIndex]._id,
+                            frame.borderRadius, frame.borderSize, frame.borderMaterial,
+                            frame.borderColor, frame.padding, frame.top, frame.left,
+                            frame.width, frame.height, frame.iterateTime
+                        ).subscribe(data => {
+                            frame._id = data.json()._id;
+                        });
+                    } else {
+                        this.frameDBService.updateFrame(frame._id, frame.wallID, frame.borderRadius,
+                            frame.borderSize, frame.borderMaterial, frame.borderColor, frame.padding,
+                            frame.top, frame.left, frame.width, frame.height, frame.iterateTime);
+                    }
+
+                    this.frameImageDBService.getFrameImages().subscribe(images => {
+                        images.forEach(image => {
+                            if (image.frameID === frame._id) {
+                                this.frameImageDBService.deleteFrameImage(image._id);
+                            }
+                        });
+                        frame.images.forEach(image => {
+                            this.frameImageDBService.uploadFrameImage(frame._id, image);
+                        });
+                    });
+
+                }
             }
-        }
+        });
     }
 
     saveWallSet() {
         this.wallSets[this.loadedWallSetIndex] = this.loadedWallSet.copy();
+        this.saveWall(true);
     }
-}
 
-function IDgenerator() {
-    var S4 = function() {
-       return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
-    };
-    return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
+    isImageSelected(id: string) {
+        return this.currFrameImages.indexOf(id) > -1 ? true : false;
+    }
+
+    isWallpaperSelected(src: string) {
+        return this.currWallpapers.indexOf(src) > -1 ? true : false;
+    }
+
+    getWallSets() {
+        this.wallSetDBService.getWallSets().subscribe(wallsets => {
+            this.wallSets = [];
+            wallsets.forEach(wallset => {
+                var newWallSet = new WallSet();
+                newWallSet.init(wallset._id, wallset.creator, wallset.type,
+                                        wallset.target, wallset.title, wallset.description);
+                this.wallSets.push(newWallSet);
+
+                this.wallDBService.getWalls().subscribe(walls => {
+                    walls.forEach(wall => {
+                        if (wall.wallSetID === wallset._id) {
+                            var newWall = new Wall();
+                            newWall.init(wall._id, wall.borderMaterial, wall.borderSize, wall.title);
+                            var wallImages = [];
+                            newWall.images = wallImages;
+                            newWallSet.walls.push(newWall);
+
+                            this.wallImageDBService.getWallImages().subscribe(wallpapers => {
+                                wallpapers.forEach(wallpaper => {
+                                    if (wall._id === wallpaper.wallID) {
+                                        this.wallpapersDBService.getWallpaper(wallpaper.imageID).subscribe(data=> {
+                                            wallImages.push(data.src);
+                                        })
+                                    }
+                                });
+                            })
+
+                            this.frameDBService.getFrames().subscribe(frames => {
+                                frames.forEach(frame => {
+                                    if (frame.wallID === wall._id) {
+                                        var newFrame = new Frame();
+                                        newFrame.init(frame._id, frame.borderRadius, frame.borderSize,
+                                        frame.borderMaterial, 'rgb(34, 0, 78)', frame.padding,
+                                        frame.top, frame.left, frame.width, frame.height, 30);
+                                        var frameImages = [];
+                                        newFrame.images = frameImages;
+                                        newWall.frames.push(newFrame);
+
+                                        this.frameImageDBService.getFrameImages().subscribe(images => {
+                                            images.forEach(image => {
+                                                if (frame._id === image.frameID) {
+                                                    frameImages.push(image.imageID);
+                                                }
+                                            });
+                                        });
+                                    }
+                                });
+                            });
+                        }
+                    });
+                });
+            });
+        });
+    }
+
+    deleteFocusedFrame() {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].images.forEach(image => {
+            this.frameImageDBService.deleteFrameImage(image);
+        });
+        this.frameDBService.deleteFrame(
+            this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame]._id
+        );
+        this.loadedWallSet.walls[this.focusedWallIndex].frames.splice(
+            this.loadedWallSet.walls[this.focusedWallIndex].frames.indexOf(
+                this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame]
+            ), 1
+        );
+        this.selectedFrame = -1;
+        this.isFocusedFrame = false;
+        this.isFocusedWall = true;
+    }
+
+    deleteWall(index) {
+        this.loadedWallSet.walls[index].frames.forEach(frame => {
+            frame.images.forEach(image => {
+                this.frameImageDBService.deleteFrameImage(image);
+            });
+            this.frameDBService.deleteFrame(frame._id);
+        });
+
+        this.wallDBService.deleteWall(this.loadedWallSet.walls[index]._id);
+        this.loadedWallSet.walls.splice(
+            this.loadedWallSet.walls.indexOf(this.loadedWallSet.walls[index]), 1
+        );
+    }
 }
