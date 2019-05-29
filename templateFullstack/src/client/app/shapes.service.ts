@@ -29,8 +29,8 @@ export class ShapesService {
     selectedWallpapers = 0;
 
     constructor(private wallDBService: WallDBService, private wallSetDBService: WallSetDBService,
-                private frameDBService: FrameDBService, private frameImageDBService: FrameImageDBService, 
-                private wallImageDBService: WallImageDBService, 
+                private frameDBService: FrameDBService, private frameImageDBService: FrameImageDBService,
+                private wallImageDBService: WallImageDBService,
                 private wallpapersDBService: WallpaperDBService) {
     }
 
@@ -71,7 +71,7 @@ export class ShapesService {
             this.selectedImages = this.currFrameImages.length;
             this.currFrameImages.forEach(image => {
                 this.frameImages.push(image);
-            });;
+            });
     }
 
     setFrameValue(type, value) {
@@ -82,7 +82,7 @@ export class ShapesService {
         let style = {
             'background-image': 'url(' + this.loadedWallSet.walls[this.focusedWallIndex].
                                             frames[this.selectedFrame].borderMaterial + ')',
-            'width': '207px',
+            'width': '100%',
             'height': '27px'
         };
 
@@ -176,9 +176,8 @@ export class ShapesService {
 
     addWallMaterial(src: string) {
         this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = src;
+        this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial = true;
     }
-
-    
 
     addFrameMaterial(src: string) {
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial = src;
@@ -188,7 +187,7 @@ export class ShapesService {
     returnWallMaterial() {
         let style = {
             'background-image': 'url(' + this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial + ')',
-            'width': '190px',
+            'width': '100%',
             'height': '27px'
         };
 
@@ -214,7 +213,7 @@ export class ShapesService {
             this.selectedWallpapers = this.currWallpapers.length;
             this.currWallpapers.forEach(wallpaper => {
                 this.wallpapers.push(wallpaper);
-            });;
+            });
     }
 
     changeDisplayedWallpaper(index: number) {
@@ -235,7 +234,7 @@ export class ShapesService {
         this.editMode = true;
         this.loadedWallSetIndex = this.wallSets.length - 1;
         this.focusedWallIndex = 0;
-        
+
         this.wallSetDBService.uploadWallSet(creator, type, target, title, description).subscribe(data => {
             newWallSet._id = data.json()._id;
             this.wallDBService.uploadWall(data.json()._id).subscribe(data => {
@@ -272,7 +271,7 @@ export class ShapesService {
 
         this.wallDBService.uploadWall(this.loadedWallSet._id).subscribe(data => {
             this.loadedWallSet.walls[this.loadedWallSet.walls.length - 1]._id = data.json()._id;
-        })
+        });
     }
 
     setCurrWallSetFocusedWallNewTitle(index, title) {
@@ -287,7 +286,7 @@ export class ShapesService {
         var editedWall = this.loadedWallSet.walls[this.focusedWallIndex];
         wallSetWalls.forEach(wall => {
             if (wall._id === editedWall._id || flag) {
-                if(wall._id === editedWall._id) {
+                if (wall._id === editedWall._id) {
                     wall = editedWall.copy();
                 }
 
@@ -296,7 +295,7 @@ export class ShapesService {
 
                 this.wallImageDBService.getWallImages().subscribe(wallpapers => {
                     wallpapers.forEach(wallpaper => {
-                        if(wallpaper.wallID === wall._id) {
+                        if (wallpaper.wallID === wall._id) {
                             this.wallImageDBService.deleteWallImage(wallpaper._id);
                         }
                     });
@@ -304,7 +303,7 @@ export class ShapesService {
                     this.wallpapersDBService.getWallpapers().subscribe(wallpapers => {
                         wallpapers.forEach(wallpaper => {
                             wall.images.forEach(wallImage => {
-                                if(wallpaper.src === wallImage) {
+                                if (wallpaper.src === wallImage) {
                                     this.wallImageDBService.uploadWallImage(wall._id, wallpaper._id);
                                 }
                             });
@@ -312,7 +311,7 @@ export class ShapesService {
                     });
                 })
 
-                for(var i = 0; i < wall.frames.length; i++) {
+                for (var i = 0; i < wall.frames.length; i++) {
                     var frame = wall.frames[i];
                     if (frame._id === undefined) {
                         this.frameDBService.uploadFrame(
@@ -322,7 +321,7 @@ export class ShapesService {
                             frame.width, frame.height, frame.iterateTime
                         ).subscribe(data => {
                             frame._id = data.json()._id;
-                        });;
+                        });
                     } else {
                         this.frameDBService.updateFrame(frame._id, frame.wallID, frame.borderRadius,
                             frame.borderSize, frame.borderMaterial, frame.borderColor, frame.padding,
@@ -331,15 +330,15 @@ export class ShapesService {
 
                     this.frameImageDBService.getFrameImages().subscribe(images => {
                         images.forEach(image => {
-                            if(image.frameID === frame._id) {
+                            if (image.frameID === frame._id) {
                                 this.frameImageDBService.deleteFrameImage(image._id);
                             }
                         });
                         frame.images.forEach(image => {
                             this.frameImageDBService.uploadFrameImage(frame._id, image);
                         });
-                    })
-                    
+                    });
+
                 }
             }
         });
@@ -390,8 +389,8 @@ export class ShapesService {
                                 frames.forEach(frame => {
                                     if (frame.wallID === wall._id) {
                                         var newFrame = new Frame();
-                                        newFrame.init(frame._id, frame.borderRadius, frame.borderSize, 
-                                        frame.borderMaterial, 'rgb(34, 0, 78)', frame.padding, 
+                                        newFrame.init(frame._id, frame.borderRadius, frame.borderSize,
+                                        frame.borderMaterial, 'rgb(34, 0, 78)', frame.padding,
                                         frame.top, frame.left, frame.width, frame.height, 30);
                                         var frameImages = [];
                                         newFrame.images = frameImages;
@@ -403,15 +402,15 @@ export class ShapesService {
                                                     frameImages.push(image.imageID);
                                                 }
                                             });
-                                        })
+                                        });
                                     }
                                 });
-                            })
+                            });
                         }
                     });
-                })
+                });
             });
-        })
+        });
     }
 
     deleteFocusedFrame() {
@@ -422,7 +421,9 @@ export class ShapesService {
             this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame]._id
         );
         this.loadedWallSet.walls[this.focusedWallIndex].frames.splice(
-            this.loadedWallSet.walls[this.focusedWallIndex].frames.indexOf(this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame]), 1
+            this.loadedWallSet.walls[this.focusedWallIndex].frames.indexOf(
+                this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame]
+            ), 1
         );
         this.selectedFrame = -1;
         this.isFocusedFrame = false;

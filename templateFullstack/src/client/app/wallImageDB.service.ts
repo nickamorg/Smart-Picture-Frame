@@ -11,7 +11,7 @@ class WallImage {
 
 @Injectable()
 export class WallImageDBService {
-    
+
     constructor(private http: Http) { }
 
     getWallImages(): Observable<WallImage[]> {

@@ -1,4 +1,4 @@
-import { Wall } from "./wall";
+import { Wall } from './wall';
 
 export class WallSet {
     _id: string;

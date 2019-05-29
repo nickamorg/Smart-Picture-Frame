@@ -11,7 +11,7 @@ class FrameImage {
 
 @Injectable()
 export class FrameImageDBService {
-    
+
     constructor(private http: Http) { }
 
     getFrameImages(): Observable<FrameImage[]> {

@@ -22,21 +22,21 @@ export class WallSetDBService {
 
     uploadWallSet(creator, type, target, title, description) {
         return this.http.post('api/wallSets/', {
-            creator:creator,
-            type:type,
-            target:target,
-            title:title,
-            description:description
+            creator: creator,
+            type: type,
+            target: target,
+            title: title,
+            description: description
         });
     }
 
     updateWallSet(id, creator, type, target, title, description) {
         this.http.put('api/wallSets/' + id, {
-            creator:creator,
-            type:type,
-            target:target,
-            title:title,
-            description:description
+            creator: creator,
+            type: type,
+            target: target,
+            title: title,
+            description: description
             })
         .subscribe();
     }

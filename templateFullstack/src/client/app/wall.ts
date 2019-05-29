@@ -1,4 +1,4 @@
-import { Frame } from "./frame";
+import { Frame } from './frame';
 
 export class Wall {
     _id: string;

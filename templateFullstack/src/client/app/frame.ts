@@ -17,7 +17,7 @@ export class Frame {
 
     init(_id, borderRadius, borderSize, borderMaterial, borderColor,
                 padding, top, left, width, height, iterateTime) {
-        
+
         this._id = _id;
         this.borderRadius = borderRadius;
         this.borderSize = borderSize;

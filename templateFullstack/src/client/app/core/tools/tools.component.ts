@@ -28,7 +28,7 @@ export class ToolsComponent implements OnInit {
     setDropDownDisplayedMaterial(src: String) {
         let style = {
             'background-image': 'url(' + src + ')',
-            'width': '207px',
+            'width': '100%',
             'height': '27px',
             'margin-left': '10px',
             'margin-bottom': '10px',
