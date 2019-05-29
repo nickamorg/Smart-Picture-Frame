@@ -177,12 +177,33 @@ export class ShapesService {
     addWallMaterial(src: string) {
         this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = src;
         this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial = true;
+
+        if (this.loadedWallSet.walls[this.focusedWallIndex].borderSize === 0) {
+            this.loadedWallSet.walls[this.focusedWallIndex].borderSize = 10;
+        }
+    }
+
+    removeWallMaterial() {
+        this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial = '';
+        this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial = false;
+        this.loadedWallSet.walls[this.focusedWallIndex].borderSize = 0;
     }
 
     addFrameMaterial(src: string) {
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial = src;
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].hasMaterial = true;
+
+        if (this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize === 0) {
+            this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize = 10;
+        }
     }
+
+    removeFrameMaterial() {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderMaterial = '';
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].hasMaterial = false;
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize = 0;
+    }
+
 
     returnWallMaterial() {
         let style = {
