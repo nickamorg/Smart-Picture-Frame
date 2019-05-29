@@ -1,4 +1,6 @@
-import { Component, OnInit, ɵConsole } from '@angular/core';
+import { Component } from '@angular/core';
+import { DatabaseService } from '../../database.service';
+import { GalleryImage } from './../../galleryImage';
 import { NavigationService } from '../../navigation.service';
 
 @Component({
@@ -7,125 +9,137 @@ import { NavigationService } from '../../navigation.service';
     styleUrls: ['./gallery.component.scss']
 })
 
-export class GalleryComponent implements OnInit {
-    uploadedImages: Image[];
-    uploadedImagesEditIndex: number = 0;
-    showUploadedImagesModal: boolean = false;
-    showFiltersModal: boolean = false;
+export class GalleryComponent {
+    uploadedImages: GalleryImage[];
+    showUploadedImagesModal = false;
 
-    imagesCol: number = 6;
-    galleryImages: Image[];
+    imagesCol = 6;
     types: string[] = [];
     countries: string[] = [];
     cities: string[] = [];
 
-    selectedFiltersCounter: number = 0;
+    selectedFiltersCounter = 0;
     selectedTypes: string[] = [];
     selectedCountries: string[] = [];
     selectedCities: string[] = [];
-    allGalleryImagesIndexes: number[];
-    displayedGalleryImages: number[];
+    allGalleryImagesIndexes: number[] = [];
+    displayedGalleryImages: number[] = [];
 
-    displayImage: boolean = false;
-    editImage: boolean = false;
-    displayedImage: Image = null;
+    displayImage = false;
+    editImage = false;
+    displayedImage: GalleryImage = null;
+    galleryImages: GalleryImage[] = [];
 
-    constructor(private navigationService: NavigationService) {
+    uploadedImagesEditIndex = 0;
+    showFiltersModal = false;
+
+    constructor(private databaseService: DatabaseService, private navigationService: NavigationService) {
         this.navigationService.showNavBar = false;
-        
-        this.allGalleryImagesIndexes = [0, 1, 2, 3];
-
-        this.galleryImages = [
-            new Image("Amazon Waterfall", "Description Example 1", "/assets/images/waterfall1.png", "Attraction", "Italy",  "Milan"),
-            new Image("Amazon Waterfall", "Description Example 2", "/assets/images/waterfall2.png", "Family",     "Greece", "Athens"),
-            new Image("Amazon Waterfall", "Description Example 3", "/assets/images/waterfall3.png", "Travels",    "Norway", "Oslo"),
-            new Image("Amazon Waterfall", "Description Example 4", "/assets/images/waterfall4.png", "Cars",       "Spain",  "Madrid"),
-        ]
-
-        this.initFiltering();
+        this.getImages();
     }
 
     initFiltering() {
         this.displayedGalleryImages = [];
-        for(var i = 0; i < this.galleryImages.length; i++) {
+        for (var i = 0; i < this.databaseService.images.length; i++) {
             this.displayedGalleryImages.push(i);
+            this.allGalleryImagesIndexes.push(i);
         }
 
-        this.galleryImages.forEach(element => {
-            var categories = ["types", "countries", "cities"];
-            var imageField = ["type", "country", "city"];
-            for(var index in categories) {
-                if(this[categories[index]].indexOf(element[imageField[index]]) === -1 && element[imageField[index]] !== "") {
+        this.databaseService.images.forEach(element => {
+            var categories = ['types', 'countries', 'cities'];
+            var imageField = ['type', 'country', 'city'];
+            for (var index in categories) {
+                if (this[categories[index]].indexOf(element[imageField[index]]) === -1 && element[imageField[index]] !== '') {
                     this[categories[index]].push(element[imageField[index]]);
                 }
             }
         });
     }
 
-    ngOnInit() { }
+    deleteImage(selectedImage: GalleryImage) {
+        this.databaseService.deleteImage(selectedImage._id);
+        this.getImages();
+    }
 
-    changeImagesCol(col:number) {
+    changeImagesCol(col: number) {
         this.imagesCol = col;
     }
 
-    selectFilter(arg:string, cat:string) {
-
+    selectFilter(arg: string, cat: string) {
         // Select and Store Filter 'arg' to 'cat' category
         var index = this[cat].indexOf(arg);
-        if(index === -1) {
+        if (index === -1) {
             this[cat].push(arg);
             this.selectedFiltersCounter++;
         } else {
             this[cat].splice(index, 1);
             this.selectedFiltersCounter--;
-        }  
-    }
-
-    deleteImage(src:string) {
-        this.galleryImages = this.galleryImages.filter(function(elem){
-            return elem.src != src;
-        });
-
-        this.displayedGalleryImages = [];
-        for(var i = 0; i < this.galleryImages.length; i++) {
-            this.displayedGalleryImages[i] = i;
         }
 
-        this.types = [];
-        this.countries = [];
-        this.cities = [];
-        this.galleryImages.forEach(element => {
-            var categories = ["types", "countries", "cities"];
-            var imageField = ["type", "country", "city"];
-            for(var index in categories) {
-                if(this[categories[index]].indexOf(element[imageField[index]]) === -1) {
-                    this[categories[index]].push(element[imageField[index]]);
+        // Apply filters to displayed images
+        if (!this.selectedFiltersCounter) {
+            this.displayedGalleryImages = this.allGalleryImagesIndexes;
+        } else {
+            var flag: boolean;
+            this.displayedGalleryImages = [];
+
+            for (var i = 0; i < this.galleryImages.length; i++) {
+                flag = false;
+                var categories = ['selectedTypes', 'selectedCountries', 'selectedCities'];
+                var imageField = ['type', 'country', 'city'];
+
+                for (index in categories) {
+                    if (this[categories[index]].length) {
+                        var match = this[categories[index]].indexOf(this.galleryImages[i][imageField[index]]);
+                        flag = match > -1 ? true : false;
+                        if (!flag) {
+                            break;
+                        }
+                    }
+                }
+                if (flag) {
+                    this.displayedGalleryImages.push(i);
                 }
             }
-        });
-
-        var selectedFilters = ["selectedTypes", "selectedCountries", "selectedCities"];
-        var filters = ["types", "countries", "cities"];
-        for(var indexFilter in filters) {
-            this[selectedFilters[indexFilter]] = this[selectedFilters[indexFilter]].filter(item => 
-                    this[filters[indexFilter]].indexOf(item) > -1)
         }
     }
 
-    displaySelectedImage(src:string, action: string) {
-        if(action === "display") {
+    getImages() {
+        this.databaseService.getImages().subscribe(
+            images => {
+                this.galleryImages = images;
+
+                this.displayedGalleryImages = [];
+                for (var i = 0; i < this.galleryImages.length; i++) {
+                    this.displayedGalleryImages.push(i);
+                    this.allGalleryImagesIndexes.push(i);
+                }
+
+                this.galleryImages.forEach(element => {
+                    var categories = ['types', 'countries', 'cities'];
+                    var imageField = ['type', 'country', 'city'];
+                    for (var index in categories) {
+                        if (this[categories[index]].indexOf(element[imageField[index]]) === -1 && element[imageField[index]] !== '') {
+                            this[categories[index]].push(element[imageField[index]]);
+                        }
+                    }
+                });
+            }
+        );
+    }
+
+    displaySelectedImage(selectedImage: GalleryImage, action: string) {
+        if (action === 'display') {
             this.displayImage = true;
         } else {
             this.editImage = true;
         }
 
-        this.galleryImages.forEach(element => {
-            if(element.src === src) {
-                this.displayedImage = new Image(element.title, element.description, element.src, 
-                    element.type, element.country, element.city);
-                    return;
-            }
-        });
+        this.displayedImage = new GalleryImage( selectedImage._id, selectedImage.title,
+                                                selectedImage.description, selectedImage.src,
+                                                selectedImage.type, selectedImage.country,
+                                                selectedImage.city);
+
     }
 
     hideDisplayedImage() {
@@ -135,27 +149,21 @@ export class GalleryComponent implements OnInit {
     }
 
     saveEditedImage(title: string, description: string, type: string, country: string, city: string) {
-        this.galleryImages.forEach((element, index) => {
-            if(element.src === this.displayedImage.src) {
-                this.galleryImages[index] = new Image(title, description, element.src, 
-                    type, country, city);
-                    return;
-            }
-        });
-
+        this.databaseService.updateImage(this.displayedImage._id, this.displayedImage.src, title, description, type, country, city);
+        this.getImages();
         this.hideDisplayedImage();
     }
 
     processFile(imageInput) {
         this.uploadedImages = [];
-        this.uploadedImagesEditIndex = 0;
         this.showUploadedImagesModal = true;
+        document.body.classList.add('modal-open');
 
-        for(var i = 0; i < imageInput.files.length; i++) {
+        for (var i = 0; i < imageInput.files.length; i++) {
             var file: File = imageInput.files[i];
             var reader = new FileReader();
             reader.addEventListener('load', (event: any) => {
-                this.uploadedImages.push(new Image("", "", event.target.result, "", "", ""));             
+                this.uploadedImages.push(new GalleryImage('', '', '', event.target.result, '', '', ''));
             });
             reader.readAsDataURL(file);
         }
@@ -164,22 +172,24 @@ export class GalleryComponent implements OnInit {
     uploadImages() {
         //Mongodb code missed
         this.showUploadedImagesModal = false;
-        
+        document.body.classList.remove('modal-open');
+
         this.uploadedImages.forEach(element => {
-           this.galleryImages.push(element); 
+            this.databaseService.uploadImage(element.src, element.title, element.description,
+                element.type, element.country, element.city);
         });
 
-        this.initFiltering();
-        console.log(this.galleryImages);
+        this.getImages();
     }
 
     cancelUploadImages() {
         this.showUploadedImagesModal = false;
+        document.body.classList.remove('modal-open');
     }
 
     deleteUploadedMaterial(src: string) {
-        this.uploadedImages = this.uploadedImages.filter(function(elem){
-            return elem.src != src;
+        this.uploadedImages = this.uploadedImages.filter(function(elem) {
+            return elem.src !== src;
         });
     }
 
@@ -194,7 +204,7 @@ export class GalleryComponent implements OnInit {
     setUploadedImageType(event) {
         this.uploadedImages[this.uploadedImagesEditIndex].type = event.target.value;
     }
-    
+
     setUploadedImageCountry(event) {
         this.uploadedImages[this.uploadedImagesEditIndex].country = event.target.value;
     }
@@ -214,7 +224,7 @@ export class GalleryComponent implements OnInit {
     getUploadedImageType() {
         return this.uploadedImages[this.uploadedImagesEditIndex].type;
     }
-    
+
     getUploadedImageCountry() {
         return this.uploadedImages[this.uploadedImagesEditIndex].country;
     }
@@ -224,23 +234,27 @@ export class GalleryComponent implements OnInit {
     }
 
     prevUploadedImageToEdit() {
-        if(this.uploadedImagesEditIndex > 0) {
+        if (this.uploadedImagesEditIndex > 0) {
             this.uploadedImagesEditIndex--;
         }
     }
 
     nextUploadedImageToEdit() {
-        if(this.uploadedImagesEditIndex < this.uploadedImages.length - 1) {
+        if (this.uploadedImagesEditIndex < this.uploadedImages.length - 1) {
             this.uploadedImagesEditIndex++;
         }
     }
 
     setPrevUploadedImageButtonStyle() {
-        if(this.uploadedImagesEditIndex === 0) return {'opacity': '0.5'};
+        if (this.uploadedImagesEditIndex === 0) {
+            return {'opacity': '0.5'};
+        }
     }
 
     setNextUploadedImageButtonStyle() {
-        if(this.uploadedImagesEditIndex === this.uploadedImages.length - 1) return {'opacity': '0.5'};
+        if (this.uploadedImagesEditIndex === this.uploadedImages.length - 1) {
+            return {'opacity': '0.5'};
+        }
     }
 
     openFiltersModal() {
@@ -256,47 +270,31 @@ export class GalleryComponent implements OnInit {
     applyFilters() {
         this.showFiltersModal = false;
 
-        if(!this.selectedFiltersCounter) {
+        if (!this.selectedFiltersCounter) {
             this.displayedGalleryImages = this.allGalleryImagesIndexes;
         } else {
             var flag: boolean;
             this.displayedGalleryImages = [];
 
-            for(var i = 0; i < this.galleryImages.length; i++) {
+            for (var i = 0; i < this.galleryImages.length; i++) {
                 flag = false;
-                
-                var categories = ["selectedTypes", "selectedCountries", "selectedCities"];
-                var imageField = ["type", "country", "city"];
 
-                for(var index in categories) {
-                    if(this[categories[index]].length) {
+                var categories = ['selectedTypes', 'selectedCountries', 'selectedCities'];
+                var imageField = ['type', 'country', 'city'];
+
+                for (var index in categories) {
+                    if (this[categories[index]].length) {
                         var match = this[categories[index]].indexOf(this.galleryImages[i][imageField[index]]);
-                        flag = match > -1? true : false;
-                        if(!flag) break;
+                        flag = match > -1 ? true : false;
+                        if (!flag) {
+                            break;
+                        }
                     }
                 }
-                if(flag) this.displayedGalleryImages.push(i);
+                if (flag) {
+                    this.displayedGalleryImages.push(i);
+                }
             }
         }
-    }
-
-}
-
-class Image {
-    title: string;
-    description: string;
-    src: string;
-    type: string;
-    country: string;
-    city: string;
-
-    constructor(title: string, descr: string, src: string, 
-                type: string, country: string, city: string) {
-        this.title = title;
-        this.description = descr;
-        this.src = src;
-        this.type = type;
-        this.country = country;
-        this.city = city;
     }
 }

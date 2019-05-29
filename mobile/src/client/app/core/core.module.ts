@@ -15,6 +15,15 @@ import { ShapesService } from '../shapes.service';
 import { FrameImagesComponent } from './frame-images/frame-images.component';
 import { WallImagesComponent } from './wall-images/wall-images.component';
 import { NavigationService} from '../navigation.service';
+import { DatabaseService } from '../database.service';
+import { MaterialDBService } from '../materialDB.service';
+import { WallpaperDBService } from '../wallpaperDB.service';
+import { WallSetDBService } from '../wallSetDB.service';
+import { WallDBService } from '../wallDB.service';
+import { FrameDBService } from '../frameDB.service';
+import { FrameImageDBService } from '../frameImageDB.service';
+import { WallImageDBService } from '../wallImageDB.service';
+
 
 @NgModule({
   declarations: [
@@ -38,6 +47,8 @@ import { NavigationService} from '../navigation.service';
     CoreRoutingModule,
     NavbarComponent
   ],
-  providers: [ShapesService, NavigationService]
+  providers: [ShapesService, DatabaseService, NavigationService, MaterialDBService,
+    WallpaperDBService, WallSetDBService, WallDBService, FrameDBService,
+    FrameImageDBService, WallImageDBService]
 })
 export class CoreModule { }

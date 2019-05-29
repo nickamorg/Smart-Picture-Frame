@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { MaterialDBService } from '../../materialDB.service';
+import { Material } from './../../material';
 import { NavigationService } from '../../navigation.service';
 
 @Component({
@@ -7,69 +9,58 @@ import { NavigationService } from '../../navigation.service';
     styleUrls: ['./materials.component.scss']
 })
 
-export class MaterialsComponent implements OnInit {
-    materials: Material[];
+export class MaterialsComponent {
+    materials: Material[] = [];
     uploadedMaterials: Material[];
-    showUploadedMaterialsModal: boolean = false;
+    showUploadedMaterialsModal = false;
 
-    constructor(private navigationService: NavigationService) {
+    constructor(private materialDBService: MaterialDBService, private navigationService: NavigationService) {
         this.navigationService.showNavBar = false;
-        
-        this.materials = [
-            new Material("/assets/materials/gold.jpg", "Gold"),
-            new Material("/assets/materials/brick.jpg", "Brick"),
-            new Material("/assets/materials/iron.jpg", "Iron"),
-            new Material("/assets/materials/stone.png", "Stone"),
-            new Material("/assets/materials/aqua.jpg", "Aqua"),
-            new Material("/assets/materials/lava.jpg", "Lava")
-        ];
+        this.getMaterials();
     }
 
-    ngOnInit() { }
+    getMaterials() {
+        this.materialDBService.getMaterials().subscribe(
+            materials => {
+                this.materials = materials;
+            }
+        );
+    }
 
-    deleteMaterial(src: string) {
-        this.materials = this.materials.filter(function(elem){
-            return elem.src != src;
-        });
+    deleteMaterial(selectedMaterial: Material) {
+        this.materialDBService.deleteMaterial(selectedMaterial._id);
+        this.getMaterials();
     }
 
     processFile(imageInput) {
         this.uploadedMaterials = [];
         this.showUploadedMaterialsModal = true;
-        
-        for(var i = 0; i < imageInput.files.length; i++) {
+        document.body.classList.add('modal-open');
+
+        for (var i = 0; i < imageInput.files.length; i++) {
             var file: File = imageInput.files[i];
             var reader = new FileReader();
             reader.addEventListener('load', (event: any) => {
-                this.uploadedMaterials.push(new Material(event.target.result, ""));
-                /*
-                this.selectedFile = new ImageSnippet(event.target.result, file);
-            
-                this.imageService.uploadImage(this.selectedFile.file).subscribe(
-                    (res) => {
-                    
-                    },
-                    (err) => {
-                    
-                })
-
-                */
+                this.uploadedMaterials.push(new Material('', '', event.target.result));
             });
             reader.readAsDataURL(file);
         }
     }
 
     uploadMaterials() {
-        //Mongodb code missed
         this.showUploadedMaterialsModal = false;
-        
+        document.body.classList.remove('modal-open');
+
         this.uploadedMaterials.forEach(element => {
-           this.materials.push(element); 
+            this.materialDBService.uploadMaterial(element.src, element.title);
         });
+
+        this.getMaterials();
     }
 
     cancelUploadMaterials() {
         this.showUploadedMaterialsModal = false;
+        document.body.classList.remove('modal-open');
     }
 
     saveMaterialTitle(index, event) {
@@ -77,18 +68,8 @@ export class MaterialsComponent implements OnInit {
     }
 
     deleteUploadedMaterial(src: string) {
-        this.uploadedMaterials = this.uploadedMaterials.filter(function(elem){
-            return elem.src != src;
+        this.uploadedMaterials = this.uploadedMaterials.filter(function(elem) {
+            return elem.src !== src;
         });
-    }
-}
-
-class Material {
-    src: string;
-    title: string;
-
-    constructor(src: string, title: string) {
-        this.src = src;
-        this.title = title;
     }
 }

@@ -24,7 +24,7 @@
                 <div class="content-details fadeIn-top">
                     <div>
                         <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index].src, 'display')" src="/assets/images/preview_image.svg"/>
-                        <img style="cursor:pointer" (click)="deleteImage(galleryImages[index].src)" src="/assets/images/delete.svg"/>
+                        <img style="cursor:pointer" (click)="deleteImage(galleryImages[index])" src="/assets/images/delete.svg"/>
                         <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index].src, 'edit')"  src="/assets/images/edit.svg"/>
                     </div>
                     <h3 *ngIf="imagesCol===12">{{galleryImages[index].title}}</h3>

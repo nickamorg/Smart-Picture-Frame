@@ -17,7 +17,7 @@
             <img class="content-image img-responsive" src="{{wallpaper.src}}" alt="">
             <div class="content-details fadeIn-top">
                 <div>
-                    <img style="cursor:pointer" (click)="deleteWallpaper(wallpaper.src)" src="/assets/images/delete.svg"/>
+                    <img style="cursor:pointer" (click)="deleteWallpaper(wallpaper)" src="/assets/images/delete.svg"/>
                 </div>
                 <h3>{{wallpaper.title}}</h3>
             </div>    
@@ -37,7 +37,7 @@
                 </div>
                 <div class="scrollbar" style="height:400px; padding-top:10px">
                     <div *ngFor="let wallpaper of uploadedWallpapers; let i = index" class="col-xs-12" style="padding-bottom:30px; text-align: center">
-                        <img style="border-radius:10px" class="img-responsive" src="{{wallpaper.src}}" alt="">
+                        <img style="border-radius:10px; width:100%" class="img-responsive" src="{{wallpaper.src}}" alt="">
                         <div class="form-group" style="padding-top:10px">
                             <input type="text" class="form-control" placeholder="Title" (change)="saveWallpaperTitle(i, $event)">
                         </div>
