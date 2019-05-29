@@ -1,55 +1,33 @@
 <div *ngIf="showChooseFrameImagesModalPartially" id="frame_images_page" class="modal_overlay">
     <div id="modal_overlay_content" class="clearfix">
-        <div class="col-xs-3" style="color: #878787; padding-top:40px">
-            <h5 style="padding-bottom: 15px">FILTERS</h5>
-            <div style="max-height: 400px; overflow-x:scroll; overflow-x:hidden;">
+        <div class="col-xs-3" style="color: #878787; padding-top:20px">
+            <h5 style="margin-top:0">FILTERS</h5>
+            <div style="max-height: 400px; overflow-x:scroll; overflow-x:hidden">
                 <div>
                     <div style="border-bottom: 3px solid #878787; padding-bottom: 4px">
                         <span style="border-bottom: 7px solid #878787; font-weight: 600; color:#878787">Type</span>
                     </div>
                     <div style="padding-top:10px">
                         <div>
-                            <label class="checkbox_container">Family
+                            <label *ngFor="let type of galleryComponent.types" class="checkbox_container">
+                                <p style="all:unset" style="width:100%" (click)="galleryComponent.selectFilter(type, 'selectedTypes')">{{type}}</p>
                                 <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox_container">Cars
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox_container">Attractions
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox_container">Travels
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
+                                <span (click)="galleryComponent.selectFilter(type, 'selectedTypes')" class="checkmark"></span>
                             </label>
                         </div>
                     </div>
                 </div>
-
+        
                 <div>
                     <div style="border-bottom: 3px solid #878787; padding-bottom: 4px">
                         <span style="border-bottom: 7px solid #878787; font-weight: 600; color:#878787">Country</span>
                     </div>
                     <div style="padding-top:10px">
                         <div>
-                            <label class="checkbox_container">Greece
+                            <label *ngFor="let country of galleryComponent.countries" class="checkbox_container">
+                                <p style="all:unset" style="width:100%" (click)="galleryComponent.selectFilter(country, 'selectedCountries')">{{country}}</p>
                                 <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox_container">Italy
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox_container">Norway
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox_container">Spain
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
+                                <span (click)="galleryComponent.selectFilter(country, 'selectedCountries')" class="checkmark"></span>
                             </label>
                         </div>
                     </div>
@@ -61,28 +39,17 @@
                     </div>
                     <div style="padding-top:10px">
                         <div>
-                            <label class="checkbox_container">Athens
+                            <label *ngFor="let city of galleryComponent.cities" class="checkbox_container">
+                                <p style="all:unset" style="width:100%" (click)="galleryComponent.selectFilter(city, 'selectedCities')">{{city}}</p>
                                 <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox_container">Madrid
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox_container">Milan
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
-                            </label>
-                            <label class="checkbox_container">Oslo
-                                <input type="checkbox">
-                                <span class="checkmark"></span>
+                                <span (click)="galleryComponent.selectFilter(city, 'selectedCities')" class="checkmark"></span>
                             </label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xs-9" style="padding-top:40px">
+        <div class="col-xs-9" style="padding:20px 10px">
             <div style="padding:0 10px 10px 15px">
                 <img [class.frame-images_inactive_option]="shapesService.imagesCol!==12" (click)="shapesService.changeImagesCol(12)" style="padding-right:3px; cursor:pointer" src="/assets/images/2x1.png" alt="">
                 <img [class.frame-images_inactive_option]="shapesService.imagesCol!==6"  (click)="shapesService.changeImagesCol(6)"  style="padding-right:3px; cursor:pointer" src="/assets/images/2x2.png" alt="">
@@ -95,9 +62,9 @@
                 <img (click)="shapesService.uncheckAllImages()" [class.frame-images_inactive_option]="!shapesService.selectedImages" style="padding-right:5px; float:right" src="/assets/images/uncheck.png" width="25" heigh="25">
             </div>
         
-            <div class="scrollbar frame-images-2" style="height:400px">
-                <div *ngFor="let image of images" class="col-xs-{{shapesService.imagesCol}}" style="padding-bottom:30px; text-align: center">
-                    <img [class.frame-images_checked]="shapesService.isImageSelected(image._id)" (click)="shapesService.selectImage(image._id)" class="img-responsive" src="{{image.src}}" alt="">
+            <div class="scrollbar frame-images-2" style="height:400px; padding-top:5px">
+                <div *ngFor="let index of galleryComponent.displayedGalleryImages" class="col-xs-{{galleryComponent.imagesCol}}" style="padding-bottom:30px; text-align: center">
+                    <img [class.frame-images_checked]="shapesService.isImageSelected(galleryComponent.galleryImages[index]._id)" (click)="shapesService.selectImage(galleryComponent.galleryImages[index]._id)" class="img-responsive" src="{{galleryComponent.galleryImages[index].src}}" alt="">
                 </div>
             </div>
         </div>

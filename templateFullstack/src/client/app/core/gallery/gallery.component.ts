@@ -130,9 +130,9 @@ export class GalleryComponent {
             this.editImage = true;
         }
 
-        this.displayedImage = new GalleryImage( selectedImage._id, selectedImage.title, 
-                                                selectedImage.description, selectedImage.src, 
-                                                selectedImage.type, selectedImage.country, 
+        this.displayedImage = new GalleryImage( selectedImage._id, selectedImage.title,
+                                                selectedImage.description, selectedImage.src,
+                                                selectedImage.type, selectedImage.country,
                                                 selectedImage.city);
 
     }
@@ -171,7 +171,7 @@ export class GalleryComponent {
 
         this.uploadedImages.forEach(element => {
             this.databaseService.uploadImage(element.src, element.title, element.description,
-                element.type, element.country, element.city)
+                element.type, element.country, element.city);
         });
 
         this.getImages();

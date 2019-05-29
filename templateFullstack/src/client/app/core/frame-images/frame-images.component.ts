@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ShapesService } from '../../shapes.service';
 import { DatabaseService } from '../../database.service';
 import { GalleryImage } from '../../galleryImage';
+import { GalleryComponent } from '../gallery/gallery.component';
 
 @Component({
     selector: 'app-frame-images',
@@ -14,9 +15,10 @@ export class FrameImagesComponent implements OnInit {
 
     showChooseFrameImages = false;
     images: GalleryImage[] = [];
-
+    private galleryComponent: GalleryComponent;
     constructor(private shapesService: ShapesService, private databaseService: DatabaseService) {
         this.getImages();
+        this.galleryComponent = new GalleryComponent(databaseService);
     }
 
     getImages() {
@@ -35,7 +37,7 @@ export class FrameImagesComponent implements OnInit {
         this.shapesService.selectedImages = this.shapesService.frameImages.length;
         this.shapesService.frameImages.forEach(image => {
             this.shapesService.currFrameImages.push(image);
-        });;
+        });
     }
 
     applySelectedImages() {
