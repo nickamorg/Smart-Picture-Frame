@@ -1,5 +1,5 @@
 /**
- * Thing model events
+ * GalleryImage model events
  */
 
 // Model events
@@ -12,14 +12,14 @@ var events = {
 function emitEvent(event) {
   return function (doc) {
     global.__socketController.broadcastMessage(`${event}:${doc._id}`, doc);
-    global.__socketController.broadcastMessage(`thing:${event}`, doc)
+    global.__socketController.broadcastMessage(`galleryImage:${event}`, doc)
   };
 }
 
 // Register the event emitter to the model events
-export function registerEvents(Thing) {
+export function registerEvents(GalleryImage) {
   for (var e in events) {
     let event = events[e];
-    Thing.post(e, emitEvent(event));
+    GalleryImage.post(e, emitEvent(event));
   }
 }

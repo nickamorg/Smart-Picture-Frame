@@ -1,5 +1,20 @@
-<!-- <app-workspace></app-workspace>
-<app-editor></app-editor>
-<app-tools></app-tools> -->
+<nav id="menu" class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header" style="text-align:center; padding:20px 0 20px 0">
+            <a routerLink="/">
+                <img src="/assets/images/logo.png" height="30" alt="">
+            </a>
+        </div>
 
-<p>xaxa</p>
+        <div>
+            <ul class="nav" style="float:initial">
+                <li routerLinkActive="active" (click)="toggleNewWallModal()"><a>New Wall</a></li>
+                <li routerLinkActive="active" routerLink="/load-wall"><a>Load Wall</a></li>
+                <li routerLinkActive="active"><a routerLink="/materials">Materials</a></li>
+                <li routerLinkActive="active"><a routerLink="/wallpapers">Wallpapers</a></li>
+                <li routerLinkActive="active"><a routerLink="/gallery">Gallery</a></li>
+            </ul>
+        </div>
+
+    </div>
+</nav>

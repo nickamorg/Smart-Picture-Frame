@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { DatabaseService } from '../../database.service';
 import { GalleryImage } from './../../galleryImage';
-import { NavigationService } from '../../navigation.service';
 
 @Component({
     selector: 'app-gallery',
@@ -33,8 +32,7 @@ export class GalleryComponent {
     uploadedImagesEditIndex = 0;
     showFiltersModal = false;
 
-    constructor(private databaseService: DatabaseService, private navigationService: NavigationService) {
-        this.navigationService.showNavBar = false;
+    constructor(private databaseService: DatabaseService) {
         this.getImages();
     }
 

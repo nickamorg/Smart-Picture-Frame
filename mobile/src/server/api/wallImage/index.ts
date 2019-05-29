@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import controller from './thing.controller';
+import controller from './wallImage.controller';
 
 let router = Router();
 

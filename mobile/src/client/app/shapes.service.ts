@@ -21,7 +21,7 @@ class Frame {
 
     init(borderRadius, borderSize, borderMaterial, borderColor, 
                 padding, top, left, width, height, images, iterateTime) {
-        
+
         this.borderRadius = borderRadius;
         this.borderSize = borderSize;
         this.hasMaterial = borderMaterial !== ''?true:false;

@@ -23,9 +23,9 @@
                 <img class="content-image img-responsive" src="{{galleryImages[index].src}}" alt="">
                 <div class="content-details fadeIn-top">
                     <div>
-                        <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index].src, 'display')" src="/assets/images/preview_image.svg"/>
+                        <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index], 'display')" src="/assets/images/preview_image.svg"/>
                         <img style="cursor:pointer" (click)="deleteImage(galleryImages[index])" src="/assets/images/delete.svg"/>
-                        <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index].src, 'edit')"  src="/assets/images/edit.svg"/>
+                        <img style="cursor:pointer" (click)="displaySelectedImage(galleryImages[index], 'edit')"  src="/assets/images/edit.svg"/>
                     </div>
                     <h3 *ngIf="imagesCol===12">{{galleryImages[index].title}}</h3>
                     <p *ngIf="imagesCol===12">{{galleryImages[index].description}}</p>

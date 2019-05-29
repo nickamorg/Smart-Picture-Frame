@@ -1,0 +1,39 @@
+$color-charcoal: #494949;
+$color-white:    #ffffff;
+$color-black:    #000000;
+
+.navbar {
+    background-color: $color-charcoal !important;
+}
+
+.nav a {
+    color: $color-white !important;
+    cursor: pointer;
+}
+
+.nav .active a {
+    color: $color-black !important;
+}
+
+ul {
+    padding-top:40px;
+    padding-left:15%;
+}
+
+ul li {
+    font-size:30px;
+}
+
+.nav>li>a:hover {
+    background-color: initial !important;
+}
+
+#menu {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    background-color: #707070;
+}

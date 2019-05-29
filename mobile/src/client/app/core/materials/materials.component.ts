@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { MaterialDBService } from '../../materialDB.service';
 import { Material } from './../../material';
-import { NavigationService } from '../../navigation.service';
 
 @Component({
     selector: 'app-materials',
@@ -14,8 +13,7 @@ export class MaterialsComponent {
     uploadedMaterials: Material[];
     showUploadedMaterialsModal = false;
 
-    constructor(private materialDBService: MaterialDBService, private navigationService: NavigationService) {
-        this.navigationService.showNavBar = false;
+    constructor(private materialDBService: MaterialDBService) {
         this.getMaterials();
     }
 

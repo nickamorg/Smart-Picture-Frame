@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { WallpaperDBService } from '../../wallpaperDB.service';
 import { Wallpaper } from './../../wallpaper';
-import { NavigationService } from '../../navigation.service';
 
 @Component({
   selector: 'app-wallpapers',
@@ -13,8 +12,7 @@ export class WallpapersComponent {
     uploadedWallpapers: Wallpaper[];
     showUploadedWallpapersModal = false;
 
-    constructor(private wallpaperDBService: WallpaperDBService, private navigationService: NavigationService) {
-        this.navigationService.showNavBar = false;
+    constructor(private wallpaperDBService: WallpaperDBService) {
         this.getWallpapers();
     }
 

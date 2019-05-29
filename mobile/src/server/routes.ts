@@ -3,11 +3,25 @@
  */
 import * as path from 'path';
 import * as errors from './components/errors';
-import thingRouter from './api/thing';
+import galleryImageRouter from './api/galleryImage';
+import materialRouter from './api/material';
+import wallpaperRouter from './api/wallpaper';
+import frameRouter from './api/frame';
+import frameImageRouter from './api/frameImage';
+import wallRouter from './api/wall';
+import wallSetRouter from './api/wallSet';
+import wallImageRouter from './api/wallImage';
 
 export default app => {
   // Insert routes below
-  app.use('/api/things', thingRouter);
+  app.use('/api/galleryImages', galleryImageRouter);
+    app.use('/api/materials', materialRouter);
+    app.use('/api/wallpapers', wallpaperRouter);
+    app.use('/api/frames', frameRouter);
+    app.use('/api/frameImages', frameImageRouter);
+    app.use('/api/walls', wallRouter);
+    app.use('/api/wallSets', wallSetRouter);
+    app.use('/api/wallImages', wallImageRouter);
 
   // All undefined asset or api routes should return a 404
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
