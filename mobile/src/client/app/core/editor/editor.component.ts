@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ShapesService } from '../../shapes.service';
-import { NavigationService } from '../../navigation.service';
 
 @Component({
     selector: 'app-editor',
@@ -9,19 +8,17 @@ import { NavigationService } from '../../navigation.service';
 })
 
 export class EditorComponent implements OnInit {
-    showExpandedShapes: boolean = false;
+    showExpandedShapes = false;
 
-    constructor(private shapesService: ShapesService, private navigationService: NavigationService) {
-        this.navigationService.showNavBar = false;
+    constructor(private shapesService: ShapesService) {
 
         //For test code
-        this.shapesService.initNewWall("", "", "", "", "");
+        this.shapesService.initNewWall('', '', '', '', '');
         this.shapesService.loadedWallSet = this.shapesService.wallSets[0].copy();
-        this.navigationService.showNavBar = false;
         this.shapesService.isFocusedWall = true;
         this.shapesService.isFocusedFrame = false;
     }
-    
+
     ngOnInit() { }
 
     addFrame(type: string) {
@@ -39,5 +36,5 @@ export class EditorComponent implements OnInit {
     stopExpandShapes() {
         this.showExpandedShapes = false;
     }
-    
+
 }

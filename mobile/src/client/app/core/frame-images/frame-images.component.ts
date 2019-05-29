@@ -9,15 +9,15 @@ import { ShapesService } from '../../shapes.service';
 export class FrameImagesComponent implements OnInit {
     @Input() showChooseFrameImagesModalPartially: boolean;
     @Output() messageEvent = new EventEmitter<string>();
-    
-    showChooseFrameImages: boolean = false;
+
+    showChooseFrameImages = false;
     constructor(private shapesService: ShapesService) {}
-    showFiltersModal: boolean = false;
+    showFiltersModal = false;
 
     ngOnInit() { }
 
     sendMessage() {
-        this.messageEvent.emit("toggleChooseFrameImagesModal")
+        this.messageEvent.emit('toggleChooseFrameImagesModal');
     }
 
     applySelectedImages() {

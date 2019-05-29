@@ -14,7 +14,6 @@ import { EditorComponent } from './editor/editor.component';
 import { ShapesService } from '../shapes.service';
 import { FrameImagesComponent } from './frame-images/frame-images.component';
 import { WallImagesComponent } from './wall-images/wall-images.component';
-import { NavigationService} from '../navigation.service';
 import { DatabaseService } from '../database.service';
 import { MaterialDBService } from '../materialDB.service';
 import { WallpaperDBService } from '../wallpaperDB.service';
@@ -23,7 +22,6 @@ import { WallDBService } from '../wallDB.service';
 import { FrameDBService } from '../frameDB.service';
 import { FrameImageDBService } from '../frameImageDB.service';
 import { WallImageDBService } from '../wallImageDB.service';
-
 
 @NgModule({
   declarations: [
@@ -47,7 +45,7 @@ import { WallImageDBService } from '../wallImageDB.service';
     CoreRoutingModule,
     NavbarComponent
   ],
-  providers: [ShapesService, DatabaseService, NavigationService, MaterialDBService,
+  providers: [ShapesService, DatabaseService, MaterialDBService,
     WallpaperDBService, WallSetDBService, WallDBService, FrameDBService,
     FrameImageDBService, WallImageDBService]
 })
