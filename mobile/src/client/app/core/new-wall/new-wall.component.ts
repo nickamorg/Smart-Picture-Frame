@@ -34,10 +34,8 @@ export class NewWallComponent implements OnInit {
 
     createNewWall() {
         this.sendMessage();
-        this.shapesService.initNewWall( this.selectedCreator, this.selectedType,
+        this.shapesService.initNewWall(this.selectedCreator, this.selectedType,
                                         this.selectedTarget, this.title, this.description);
-        this.shapesService.isFocusedWall = true;
-        this.shapesService.isFocusedFrame = false;
     }
 
     selectWallCreator(creator) {

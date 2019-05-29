@@ -51,10 +51,10 @@
         </div>
         <div class="col-xs-9" style="padding:20px 10px">
             <div style="padding:0 10px 10px 15px">
-                <img [class.frame-images_inactive_option]="shapesService.imagesCol!==12" (click)="shapesService.changeImagesCol(12)" style="padding-right:3px; cursor:pointer" src="/assets/images/2x1.png" alt="">
-                <img [class.frame-images_inactive_option]="shapesService.imagesCol!==6"  (click)="shapesService.changeImagesCol(6)"  style="padding-right:3px; cursor:pointer" src="/assets/images/2x2.png" alt="">
-                <img [class.frame-images_inactive_option]="shapesService.imagesCol!==4"  (click)="shapesService.changeImagesCol(4)"  style="padding-right:3px; cursor:pointer" src="/assets/images/3x3.png" alt="">
-                <img [class.frame-images_inactive_option]="shapesService.imagesCol!==3"  (click)="shapesService.changeImagesCol(3)"  style="padding-right:3px; cursor:pointer" src="/assets/images/4x4.png" alt="">
+                <img [class.frame-images_inactive_option]="galleryComponent.imagesCol!==12" (click)="galleryComponent.changeImagesCol(12)" style="padding-right:3px; cursor:pointer" src="/assets/images/2x1.png" alt="">
+                <img [class.frame-images_inactive_option]="galleryComponent.imagesCol!==6"  (click)="galleryComponent.changeImagesCol(6)"  style="padding-right:3px; cursor:pointer" src="/assets/images/2x2.png" alt="">
+                <img [class.frame-images_inactive_option]="galleryComponent.imagesCol!==4"  (click)="galleryComponent.changeImagesCol(4)"  style="padding-right:3px; cursor:pointer" src="/assets/images/3x3.png" alt="">
+                <img [class.frame-images_inactive_option]="galleryComponent.imagesCol!==3"  (click)="galleryComponent.changeImagesCol(3)"  style="padding-right:3px; cursor:pointer" src="/assets/images/4x4.png" alt="">
                 <span style="font-weight: 600">{{shapesService.selectedImages}} Images</span>
 
                 <img (click)="applySelectedImages()" [class.frame-images_inactive_option]="!shapesService.selectedImages" style="padding-right:5px; float:right" src="/assets/images/apply.png" width="25" heigh="25">

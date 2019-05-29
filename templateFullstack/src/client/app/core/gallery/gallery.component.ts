@@ -22,7 +22,7 @@ export class GalleryComponent {
     selectedCountries: string[] = [];
     selectedCities: string[] = [];
     allGalleryImagesIndexes: number[] = [];
-    displayedGalleryImages: number[];
+    displayedGalleryImages: number[] = [];
 
     displayImage = false;
     editImage = false;

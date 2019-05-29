@@ -53,10 +53,10 @@ export class Frame {
         let style = {
             'background-color': 'rgb(255, 255, 255)',
             'border-radius': this.borderRadius + '%',
-            'width': (this.width - this.borderSize * 2)  + 'px',
-            'height': (this.height - this.borderSize * 2) + 'px',
-            'top': this.borderSize + 'px',
-            'left': this.borderSize + 'px',
+            'width': (this.width - (this.hasMaterial ? this.borderSize : 0) * 2)  + 'px',
+            'height': (this.height - (this.hasMaterial ? this.borderSize : 0) * 2) + 'px',
+            'top': (this.hasMaterial ? this.borderSize : 0) + 'px',
+            'left': (this.hasMaterial ? this.borderSize : 0) + 'px',
             'padding': this.padding + 'px'
         };
 
@@ -66,10 +66,10 @@ export class Frame {
     getImageStyle() {
         let style = {
             'border-radius': this.borderRadius + '%',
-            'width': (this.width - this.padding * 2 - this.borderSize * 2)  + 'px',
-            'height': (this.height - this.padding * 2 - this.borderSize * 2) + 'px',
-            'top': this.borderSize + 'px',
-            'left': this.borderSize + 'px'
+            'width': (this.width - this.padding * 2 - (this.hasMaterial ? this.borderSize : 0) * 2)  + 'px',
+            'height': (this.height - this.padding * 2 - (this.hasMaterial ? this.borderSize : 0) * 2) + 'px',
+            'top': (this.hasMaterial ? this.borderSize : 0) + 'px',
+            'left': (this.hasMaterial ? this.borderSize : 0) + 'px'
         };
 
         return style;

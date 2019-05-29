@@ -36,10 +36,10 @@ export class Wall {
 
     getWallStyle() {
         let style = {
-            'width': (800 - this.borderSize) + 'px',
-            'height': (200 - this.borderSize) + 'px',
-            'top': (this.borderSize / 2) + 'px',
-            'left': (this.borderSize / 2) + 'px',
+            'width':  (800 - (this.hasMaterial ? this.borderSize : 0)) + 'px',
+            'height': (200 - (this.hasMaterial ? this.borderSize : 0)) + 'px',
+            'top':  ((this.hasMaterial ? this.borderSize : 0) / 2) + 'px',
+            'left': ((this.hasMaterial ? this.borderSize : 0) / 2) + 'px',
             'background-color': '#C4C4C4',
             'position': 'relative',
             'background-size': 'cover'

@@ -53,7 +53,7 @@ import { WallImageDBService } from '../wallImageDB.service';
         FooterComponent,
         WorkspaceComponent
     ],
-    providers: [ShapesService, DatabaseService, MaterialDBService, WallpaperDBService, 
+    providers: [ShapesService, DatabaseService, MaterialDBService, WallpaperDBService,
                 WallSetDBService, WallDBService, FrameDBService, FrameImageDBService,
                 WallImageDBService]
 })

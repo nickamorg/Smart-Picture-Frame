@@ -24,7 +24,7 @@ export class WallDBService {
             wallSetID: wallSetID,
             borderMaterial: '',
             borderSize: 0,
-            title: ''
+            title: 'New Wall'
         });
     }
 

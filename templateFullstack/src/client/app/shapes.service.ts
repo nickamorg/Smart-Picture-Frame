@@ -204,7 +204,6 @@ export class ShapesService {
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].borderSize = 0;
     }
 
-
     returnWallMaterial() {
         let style = {
             'background-image': 'url(' + this.loadedWallSet.walls[this.focusedWallIndex].borderMaterial + ')',

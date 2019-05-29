@@ -1,7 +1,7 @@
 <div class="filters">
     <div>
         <div style="width:100%; background-color: #EBEBEB">
-            <h5 (click)="test()" style="padding:10px 20px 10px 20px; margin:0">FILTERS</h5>
+            <h5 style="padding:10px 20px 10px 20px; margin:0">FILTERS</h5>
         </div>
     </div>
     <div class="filters_body" style="padding-left:10px">
@@ -58,7 +58,7 @@
         <img [class.gallery_inactive_option]="imagesCol!==6"  (click)="changeImagesCol(6)"  style="padding-right:3px; cursor:pointer" src="/assets/images/2x2.png" alt="">
         <img [class.gallery_inactive_option]="imagesCol!==4"  (click)="changeImagesCol(4)"  style="padding-right:3px; cursor:pointer" src="/assets/images/3x3.png" alt="">
         <img [class.gallery_inactive_option]="imagesCol!==3"  (click)="changeImagesCol(3)"  style="padding-right:3px; cursor:pointer" src="/assets/images/4x4.png" alt="">
-        <span style="font-weight: 600">{{galleryImages.length}} Images</span>
+        <span style="font-weight: 600">{{displayedGalleryImages.length}} Images</span>
 
         <label class="image-upload-container btn btn-bwm" style="float:right; padding-right:0">
             <span><img src="./assets/images/upload.svg"/></span>
@@ -84,7 +84,7 @@
                     </div>
                     <h3 *ngIf="imagesCol !== 3">{{galleryImages[index].title}}</h3>
                     <p  *ngIf="imagesCol !== 3">{{galleryImages[index].description}}</p>
-                </div>    
+                </div>
             </div>
         </div>
     </div>

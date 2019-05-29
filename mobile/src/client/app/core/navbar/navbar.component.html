@@ -5,7 +5,6 @@
     <div *ngIf="showExpandedMenu" style="border-top:1px solid #000000">
         <ul class="nav" style="float:initial; padding:0 0 0 10px">
             <li (click)="toggleNewWallModal()"><a>New Wall</a></li>
-            <!-- <li (click)="toggleLoadWallModal()"><a>Load Wall</a></li> -->
             <li (click)="closeExpandedMenu()"><a routerLink="/load-wall">Load Wall</a></li>
             <li (click)="closeExpandedMenu()"><a routerLink="/materials">Materials</a></li>
             <li (click)="closeExpandedMenu()"><a routerLink="/wallpapers">Wallpapers</a></li>
@@ -17,5 +16,4 @@
     </a>
 </div>
 
-<!-- <app-new-wall (messageEvent)="receiveMessage($event)" [showNewWallModalPartially]="showNewWallModal"></app-new-wall> -->
-<!-- <app-load-wall (messageEvent)="receiveMessage($event)" [showLoadWallModalPartially]="showLoadWallModal"></app-load-wall> -->
+<app-new-wall (messageEvent)="receiveMessage($event)" [showNewWallModalPartially]="showNewWallModal"></app-new-wall>

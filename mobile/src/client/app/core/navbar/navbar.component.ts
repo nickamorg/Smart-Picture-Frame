@@ -1,28 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ShapesService } from '../../shapes.service';
-import { Router } from '@angular/router';
 
 @Component({
     selector: 'navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
     showNewWallModal = false;
-    showLoadWallModal = false;
     showExpandedMenu = false;
 
-    constructor(private shapesService: ShapesService, private router: Router) { }
-
-    ngOnInit() { }
+    constructor(private shapesService: ShapesService) { }
 
     toggleNewWallModal() {
         this.showNewWallModal = !this.showNewWallModal;
-        this.showExpandedMenu = false;
-    }
-
-    toggleLoadWallModal() {
-        this.showLoadWallModal = !this.showLoadWallModal;
         this.showExpandedMenu = false;
     }
 
@@ -35,10 +26,6 @@ export class NavbarComponent implements OnInit {
     }
 
     receiveMessage($event) {
-        if($event === 'toggleShowNewWallModalPartially') {
-            this.toggleNewWallModal();
-        } else {
-            this.toggleLoadWallModal();
-        }
+        this.toggleNewWallModal();
     }
 }

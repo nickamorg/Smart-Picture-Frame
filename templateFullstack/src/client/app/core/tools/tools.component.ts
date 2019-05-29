@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ShapesService } from '../../shapes.service';
 import { MaterialDBService } from '../../materialDB.service';
 import { Material } from '../../material';
@@ -8,7 +8,7 @@ import { Material } from '../../material';
     templateUrl: './tools.component.html',
     styleUrls: ['./tools.component.scss']
 })
-export class ToolsComponent implements OnInit {
+export class ToolsComponent {
     showChooseFrameImagesModal = false;
     showChooseWallImagesModal = false;
     materials: Material[] = [];
@@ -39,8 +39,6 @@ export class ToolsComponent implements OnInit {
         return style;
     }
 
-    ngOnInit() { }
-
     toggleChooseFrameImagesModal() {
         this.showChooseFrameImagesModal = !this.showChooseFrameImagesModal;
     }
@@ -56,5 +54,4 @@ export class ToolsComponent implements OnInit {
             this.toggleChooseWallImagesModal();
         }
     }
-
 }
