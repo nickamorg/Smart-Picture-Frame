@@ -25,6 +25,7 @@ export class NewWallComponent implements OnInit {
     ngOnInit() { }
 
     sendMessage() {
+        document.body.classList.remove('modal-open');
         this.messageEvent.emit('toggleShowNewWallModalPartially');
     }
 

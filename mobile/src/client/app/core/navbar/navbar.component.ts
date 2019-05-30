@@ -15,6 +15,7 @@ export class NavbarComponent {
     toggleNewWallModal() {
         this.showNewWallModal = !this.showNewWallModal;
         this.showExpandedMenu = false;
+        document.body.classList.add('modal-open');
     }
 
     toggleExpandableMenu() {
@@ -26,6 +27,7 @@ export class NavbarComponent {
     }
 
     receiveMessage($event) {
-        this.toggleNewWallModal();
+        this.showNewWallModal = !this.showNewWallModal;
+        this.showExpandedMenu = false;
     }
 }

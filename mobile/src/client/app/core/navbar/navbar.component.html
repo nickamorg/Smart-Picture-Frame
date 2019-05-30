@@ -1,19 +1,21 @@
 <!-- Top Navigation Menu -->
-<div class="topnav">
-    <a *ngIf="shapesService.editMode" routerLink="/editor" style="text-align:center; padding-left:20px"><img src="/assets/images/logo.png" height="20" alt=""></a>
-    <a *ngIf="!shapesService.editMode" routerLink="/home" style="text-align:center; padding-left:20px"><img src="/assets/images/logo.png" height="20" alt=""></a>
-    <div *ngIf="showExpandedMenu" style="border-top:1px solid #000000">
-        <ul class="nav" style="float:initial; padding:0 0 0 10px">
-            <li (click)="toggleNewWallModal()"><a>New Wall</a></li>
-            <li (click)="closeExpandedMenu()"><a routerLink="/load-wall">Load Wall</a></li>
-            <li (click)="closeExpandedMenu()"><a routerLink="/materials">Materials</a></li>
-            <li (click)="closeExpandedMenu()"><a routerLink="/wallpapers">Wallpapers</a></li>
-            <li (click)="closeExpandedMenu()"><a routerLink="/gallery">Gallery</a></li>
-        </ul>
+<div style="padding-bottom: 50px">
+    <div class="topnav" style="overflow:hidden; background-color:#333; position:fixed; top:0; width:100%; z-index:3">
+        <a *ngIf="shapesService.editMode"  (click)="closeExpandedMenu()" routerLink="/editor" style="text-align:center; padding-left:20px"><img src="/assets/images/logo.png" height="20" alt=""></a>
+        <a *ngIf="!shapesService.editMode" (click)="closeExpandedMenu()" routerLink="/home"   style="text-align:center; padding-left:20px"><img src="/assets/images/logo.png" height="20" alt=""></a>
+        <div *ngIf="showExpandedMenu" style="border-top:1px solid #000000">
+            <ul class="nav" style="float:initial; padding:0 0 0 10px">
+                <li (click)="toggleNewWallModal()"><a>New Wall</a></li>
+                <li (click)="closeExpandedMenu()"><a routerLink="/load-wall">Load Wall</a></li>
+                <li (click)="closeExpandedMenu()"><a routerLink="/materials">Materials</a></li>
+                <li (click)="closeExpandedMenu()"><a routerLink="/wallpapers">Wallpapers</a></li>
+                <li (click)="closeExpandedMenu()"><a routerLink="/gallery">Gallery</a></li>
+            </ul>
+        </div>
+        <a class="icon" (click)="toggleExpandableMenu()">
+            <img src="/assets/images/bar.png" height="20" alt="">
+        </a>
     </div>
-    <a class="icon" (click)="toggleExpandableMenu()">
-        <img src="/assets/images/bar.png" height="20" alt="">
-    </a>
+    
+    <app-new-wall (messageEvent)="receiveMessage($event)" [showNewWallModalPartially]="showNewWallModal"></app-new-wall>
 </div>
-
-<app-new-wall (messageEvent)="receiveMessage($event)" [showNewWallModalPartially]="showNewWallModal"></app-new-wall>
