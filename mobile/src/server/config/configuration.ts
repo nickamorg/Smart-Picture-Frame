@@ -15,28 +15,30 @@ try {
     var globalConfig = fs.readFileSync(CONFIGFILE, 'utf8');
     globalConfig = JSON.parse(globalConfig);
 } catch (e) {
-    throw new ConfigException("Error while trying to read config file. Please make sure that there is a correct json config file at " + CONFIGFILE);
+    throw new ConfigException('Error while trying to read config file.' +
+    'Please make sure that there is a correct json config file at ' + CONFIGFILE);
 }
 
 /* --------------------------------------------------------------- */
 
 var saveConfiguration = () => {
-    //validate 
+    //validate
     fs.writeFileSync(CONFIGFILE, JSON.stringify(globalConfig, null, 2), 'utf8');
 };
 
 /* --------------------------------------------------------------- */
 
-const GENERAL = "general";
+const GENERAL = 'general';
 class GeneralConfiguration {
 
     /* ------------------------------------ */
 
     constructor(type) {
-        if (type == GENERAL)
+        if (type === GENERAL) {
             this.config = globalConfig.general;
-        else
+        } else {
             this.config = globalConfig[type].general; //e.g. development.general
+        }
         this.saveConfig = saveConfiguration;
     }
 
@@ -250,12 +252,12 @@ module.exports.getGeneralConfig = function () {
 
 module.exports.getEnvironment = function () {
     return globalConfig.environment;
-}
+};
 
 module.exports.setEnvironment = function (environment) {
     globalConfig.environment = environment;
     saveConfiguration();
-}
+};
 
 module.exports.ConfigException = ConfigException;
 

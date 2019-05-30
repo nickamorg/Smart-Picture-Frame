@@ -28,7 +28,7 @@ declare class ClientsSocketController {
    * @param {*} message
    * @memberof ClientsSocketController
    */
-  public broadcastMessage(message_type: string, message: any)
+  public broadcastMessage(message_type: string, message: any);
   /**
    * Send message to specific client
    *
@@ -36,13 +36,13 @@ declare class ClientsSocketController {
    * @param {*} message
    * @memberof ClientsSocketController
    */
-  public sendMessage(client_id: string, message_type: string, message: any)
+  public sendMessage(client_id: string, message_type: string, message: any);
 }
 
 declare namespace NodeJS {
   export interface Global {
-    logger: any,
-    __socketController: ClientsSocketController
+    logger: any;
+    __socketController: ClientsSocketController;
   }
 }
 

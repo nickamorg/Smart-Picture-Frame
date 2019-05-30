@@ -25,7 +25,7 @@ export class NewWallComponent implements OnInit {
     ngOnInit() { }
 
     sendMessage() {
-        this.messageEvent.emit('toggleShowNewWallModalPartially')
+        this.messageEvent.emit('toggleShowNewWallModalPartially');
     }
 
     toggleDisplayedStatues() {

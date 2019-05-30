@@ -87,6 +87,15 @@
             </div>
             <button (click)="toggleChooseFrameImagesModal()" type="button" class="btn" style="outline: none; margin-top: 10px; padding-top: 5px; padding-bottom:5px; border:1px solid #C4C4C4; color:black; background-color:white; width:100%; border-radius: 5px">Choose Images</button>
         </div>
+
+        <div style="padding:10px 20px">
+            <div>
+                <button (click)="shapesService.deleteFocusedFrame()" type="checkbox" id="activate_wall" value="Lock Wall" style="all:unset">
+                    <img src="assets/images/delete_black.svg">
+                </button>
+                <label for="activate_wall">Delete Frame</label>
+            </div>
+        </div>
     </div>
 
     <div *ngIf="shapesService.isFocusedWall"  style="color:#9A9A9A">

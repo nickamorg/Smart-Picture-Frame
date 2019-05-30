@@ -1,49 +1,64 @@
-<div class="dropdown" style="z-index:2">
-    <button class="btn dropdown-toggle" data-toggle="dropdown" style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" type="button">
-        {{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].title}} 
-        <img src="/assets/images/arrow_down.svg" style="float:right">
-    </button>
-    <ul class="dropdown-menu" style="width:100%; top:35px; padding:0; border-top:1px solid #707070">
-        <li style="padding:5px 0 5px 12px" *ngFor="let wall of shapesService.loadedWallSet.walls; let i = index" (click)="shapesService.selectCurrWallSetFocusedWall(i)">{{wall.title}}</li>
-    </ul>
-</div>
-
-<div *ngIf="shapesService.isFocusedWall">
-    <div (click)="expandShapes()" style="background-color:gray; border-radius:100%; padding:5px 5px 10px 5px; top:315px; right:20px; position:absolute"><img style="padding-top:5px" src="/assets/images/shapes.png"></div>
-    <div *ngIf="showExpandedShapes" class="modal_overlay">
-        <div (click)="stopExpandShapes()" style="top: 315px; right: 20px; position: absolute"><img src="/assets/images/cancel_shape.png"></div>
-        <div (click)="addFrame('circle_frame')" style="top: 360px; right: 65px; position: absolute"><img src="/assets/images/circle.png"></div>
-        <div (click)="addFrame('square_frame')" style="top: 270px; right: 65px; position: absolute"><img src="/assets/images/square.png"></div>
+<div *ngIf="shapesService.editMode">
+    <div class="dropdown" style="z-index:2">
+        <button class="btn dropdown-toggle" data-toggle="dropdown" style="width:100%; text-align:left; color:black; background-color: white; border: 1px solid #C4C4C4" type="button">
+            {{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].title}} 
+            <img src="/assets/images/arrow_down.svg" style="float:right">
+        </button>
+        <ul class="dropdown-menu" style="width:100%; border:0; top:35px; padding:0; border-top:1px solid #707070">
+            <li style="padding:5px 0 5px 12px" *ngFor="let wall of shapesService.loadedWallSet.walls; let i = index" (click)="shapesService.selectCurrWallSetFocusedWall(i)">{{wall.title}}</li>
+        </ul>
     </div>
-</div>
 
-<div id="editor_main_frame" class="clearfix" (click)="shapesService.focusWall()">
-    <div id="editor_full" [ngStyle]="shapesService.setWallBorderStyle()">
-        <div *ngIf="shapesService.editMode" [ngStyle]="shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].getWallStyle()">
-            <div (click)="shapesService.focusFrame(i); $event.stopPropagation()" *ngFor="let frame of shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames; let i = index" [ngStyle]="shapesService.setFrameBorderStyle(i)" style="position:absolute">
-                <div [ngStyle]="frame.getFrameStyle()" style="position:absolute">
-                    <ng-template [ngIf]="frame.images.length >= 1">
-                        <img [ngStyle]="frame.getImageStyle()" src="{{getImageSRC(frame.images[frame.displayedImageIndex])}}">
-                    </ng-template>
+    <div *ngIf="shapesService.isFocusedWall">
+        <div (click)="expandShapes()" style="background-color:gray; border-radius:100%; padding:5px 5px 10px 5px; top:315px; right:20px; position:absolute"><img style="padding-top:5px" src="/assets/images/shapes.png"></div>
+        <div *ngIf="showExpandedShapes" class="modal_overlay">
+            <div (click)="stopExpandShapes()" style="top: 315px; right: 20px; position: absolute"><img src="/assets/images/cancel_shape.png"></div>
+            <div (click)="addFrame('circle_frame')" style="top: 360px; right: 65px; position: absolute"><img src="/assets/images/circle.png"></div>
+            <div (click)="addFrame('square_frame')" style="top: 270px; right: 65px; position: absolute"><img src="/assets/images/square.png"></div>
+        </div>
+    </div>
+
+    <div id="editor_main_frame" class="clearfix" (click)="shapesService.focusWall()">
+        <div id="editor_full" [ngStyle]="shapesService.setWallBorderStyle()">
+            <div *ngIf="shapesService.editMode" [ngStyle]="shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].getWallStyle()">
+                <div (click)="shapesService.focusFrame(i); $event.stopPropagation()" *ngFor="let frame of shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames; let i = index" [ngStyle]="shapesService.setFrameBorderStyle(i)" style="position:absolute">
+                    <div [ngStyle]="frame.getFrameStyle()" style="position:absolute">
+                        <ng-template [ngIf]="frame.images.length >= 1">
+                            <img [ngStyle]="frame.getImageStyle()" src="{{getImageSRC(frame.images[frame.displayedImageIndex])}}">
+                        </ng-template>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <app-tools></app-tools>
+
+    <div class="mobile_navbar">
+        <div class="col-xs-4" style="padding:5px 0 0 0" (click)="shapesService.saveWallSet()">
+            <a style="padding:0; width:100%; text-align:center"><img src="./assets/images/save_all.png"/> <p>Save WallSet</p></a>
+        </div>
+        <div class="col-xs-4" style="padding:5px 0 0 0" (click)="shapesService.saveWall()">
+            <a style="padding:0; width:100%; text-align:center"><img src="./assets/images/save.png"/> <p>Save Wall</p></a>
+        </div>
+        <div class="col-xs-4" style="padding:5px 0 0 0">
+            <a style="padding:0; width:100%; text-align:center"><img src="./assets/images/preview.png"/> <p>Preview Wall</p></a>
+        </div>
+      </div>
+
+    <!-- <div id="editor_current_frame_images"> 
+        <div *ngIf="shapesService.editMode">
+            <div *ngIf="shapesService.isFocusedFrame"  style="color:#9A9A9A">
+                <div style="padding-bottom:15px" class="col-xs-3" *ngFor="let frameImage of shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].images; let i = index">
+                    <img (click)="shapesService.changeDisplayedImage(i)" title="{{frameImage}}" class="img-responsive" src="/assets/images/{{frameImage}}">
+                </div>
+            </div>
+
+            <div *ngIf="shapesService.isFocusedWall"  style="color:#9A9A9A">
+                <div style="padding-bottom:15px" class="col-xs-6" *ngFor="let wallpaper of shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].images; let i = index">
+                    <img (click)="shapesService.changeDisplayedWallImage(i)" title="{{wallpaper}}" class="img-responsive" src="/assets/wallpapers/{{wallpaper}}">
+                </div>
+            </div>
+        </div>
+    </div> -->
 </div>
-
-<app-tools></app-tools>
-<!-- <div id="editor_current_frame_images"> 
-    <div *ngIf="shapesService.editMode">
-        <div *ngIf="shapesService.isFocusedFrame"  style="color:#9A9A9A">
-            <div style="padding-bottom:15px" class="col-xs-3" *ngFor="let frameImage of shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].images; let i = index">
-                <img (click)="shapesService.changeDisplayedImage(i)" title="{{frameImage}}" class="img-responsive" src="/assets/images/{{frameImage}}">
-            </div>
-        </div>
-
-        <div *ngIf="shapesService.isFocusedWall"  style="color:#9A9A9A">
-            <div style="padding-bottom:15px" class="col-xs-6" *ngFor="let wallpaper of shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].images; let i = index">
-                <img (click)="shapesService.changeDisplayedWallImage(i)" title="{{wallpaper}}" class="img-responsive" src="/assets/wallpapers/{{wallpaper}}">
-            </div>
-        </div>
-    </div>
-</div> -->

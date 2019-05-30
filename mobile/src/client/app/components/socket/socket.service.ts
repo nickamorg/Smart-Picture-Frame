@@ -15,7 +15,7 @@ export class SocketService {
 
   init(): Promise<void> {
     return new Promise((resolve, reject) => {
-      this.app_name = this.activatedRoute.snapshot.queryParams["app"];
+      this.app_name = this.activatedRoute.snapshot.queryParams['app'];
       this.socket = io('', {
         path: '/socket.io-client',
         query: {
@@ -58,7 +58,7 @@ export class SocketService {
     this.socket.on('message', function (event_message, item) {
 
         cb(event_message, item);
-        
+
     });
   }
 

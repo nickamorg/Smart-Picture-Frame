@@ -2,7 +2,7 @@ import * as io from 'socket.io';
 import * as amiconfig from '@amisolertis/utils-config';
 
 function isValidToken(token: string) {
-  const _key: string = amiconfig.general.getValue("sockets_token");
+  const _key: string = amiconfig.general.getValue('sockets_token');
   return token && token === _key;
 }
 

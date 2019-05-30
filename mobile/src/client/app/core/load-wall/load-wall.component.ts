@@ -35,7 +35,7 @@ export class LoadWallComponent {
             if (this.images[i]._id === id) {
                 return this.images[i].src;
             }
-        };
+        }
     }
 
     toggleDisplayedStatues() {

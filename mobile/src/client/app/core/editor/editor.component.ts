@@ -30,7 +30,7 @@ export class EditorComponent {
             if (this.images[i]._id === id) {
                 return this.images[i].src;
             }
-        };
+        }
     }
 
     addFrame(type: string) {
