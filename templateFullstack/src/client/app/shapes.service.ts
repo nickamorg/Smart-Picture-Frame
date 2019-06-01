@@ -78,6 +78,45 @@ export class ShapesService {
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame][type] = value;
     }
 
+    setFrameWidth(value) {
+        var wallBorder = this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial ?
+                            this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0;
+        var frame = this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame];
+        value < 50 ? frame.width = 50 :
+        value > 1980 - frame.left - wallBorder ? frame.width = 1980 - frame.left - wallBorder : frame.width = value;
+    }
+
+    setFrameHeight(value) {
+        var wallBorder = this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial ?
+                            this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0;
+        var frame = this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame];
+        value < 50 ? frame.height = 50 :
+        value > 520 - frame.top - wallBorder ? frame.height = 520 - frame.top - wallBorder : frame.height = value;
+    }
+
+    setFrameTop(value) {
+        var wallBorder = this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial ?
+                            this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0;
+        var frame = this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame];
+        value < 0 ? frame.top = 0 :
+        value > 520 - frame.height - wallBorder ? frame.top = 520 - frame.height - wallBorder : frame.top = value;
+    }
+
+    setFrameLeft(value) {
+        var wallBorder = this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial ?
+                            this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0;
+        var frame = this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame];
+        value < 0 ? frame.left = 0 :
+        value > 1980 - frame.width - wallBorder ? frame.left = 1980 - frame.width - wallBorder : frame.left = value;
+    }
+
+    setFramePadding(value) {
+        var frame = this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame];
+        var frameBorder = frame.hasMaterial ? frame.borderSize : 0;
+        var minValue = (frame.width < frame.height ? frame.width : frame.height) / 2 - frameBorder;
+        frame.padding = value > minValue ? minValue : value;
+    }
+
     returnBorderMaterial() {
         let style = {
             'background-image': 'url(' + this.loadedWallSet.walls[this.focusedWallIndex].
