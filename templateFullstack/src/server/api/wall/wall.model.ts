@@ -7,7 +7,9 @@ var WallSchema = new mongoose.Schema({
     wallSetID: String,
     borderMaterial: String,
     borderSize: Number,
-    title: String
+    title: String,
+    isLocked: Boolean,
+    toBeDisplayed: Boolean
 });
 
 registerEvents(WallSchema);

@@ -10,13 +10,17 @@ export class Wall {
     frames: Frame[] = [];
     images: string[] = [];
     displayedImageIndex = 0;
+    isLocked = false;
+    toBeDisplayed = true;
 
-    init(_id, borderMaterial, borderSize, title) {
+    init(_id, borderMaterial, borderSize, title, isLocked, toBeDisplayed) {
         this._id = _id;
         this.borderMaterial = borderMaterial;
         this.borderSize = borderSize;
         this.title = title;
         this.hasMaterial = borderMaterial !== '' ? true : false;
+        this.isLocked = isLocked;
+        this.toBeDisplayed = toBeDisplayed;
     }
 
     getBorderStyle() {

@@ -24,16 +24,20 @@ export class WallDBService {
             wallSetID: wallSetID,
             borderMaterial: '',
             borderSize: 0,
-            title: ''
+            title: '',
+            isLocked: false,
+            toBeDisplayed: true
         });
     }
 
-    updateWall(id, wallSetID, borderMaterial, borderSize, title) {
+    updateWall(id, wallSetID, borderMaterial, borderSize, title, isLocked, toBeDisplayed) {
         this.http.put('api/walls/' + id, {
             wallSetID: wallSetID,
             borderMaterial: borderMaterial,
             borderSize: borderSize,
-            title: title
+            title: title,
+            isLocked: isLocked,
+            toBeDisplayed: toBeDisplayed
         })
         .subscribe();
     }

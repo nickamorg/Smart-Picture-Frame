@@ -42,6 +42,7 @@ export class Frame {
             'height': this.height + 'px',
             'top': this.top + 'px',
             'left': this.left + 'px',
+            'z-index': this.zIndex + ''
         };
 
         if (this.borderMaterial !== '' && this.borderMaterial !== undefined) {

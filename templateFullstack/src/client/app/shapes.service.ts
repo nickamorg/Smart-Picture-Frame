@@ -348,7 +348,9 @@ export class ShapesService {
         this.loadedWallSet.walls[index].title = title;
         this.wallDBService.updateWall(  this.loadedWallSet.walls[index]._id, this.loadedWallSet._id,
                                         this.loadedWallSet.walls[index].borderMaterial,
-                                        this.loadedWallSet.walls[index].borderSize, title);
+                                        this.loadedWallSet.walls[index].borderSize, title,
+                                        this.loadedWallSet.walls[index].isLocked,
+                                        this.loadedWallSet.walls[index].toBeDisplayed);
     }
 
     saveWall(flag) {
@@ -361,7 +363,8 @@ export class ShapesService {
                 }
 
                 this.wallDBService.updateWall(wall._id, wall.wallSetID,
-                    wall.borderMaterial, wall.borderSize, wall.title);
+                    wall.borderMaterial, wall.borderSize, wall.title,
+                    wall.isLocked, wall.toBeDisplayed);
 
                 this.wallImageDBService.getWallImages().subscribe(wallpapers => {
                     wallpapers.forEach(wallpaper => {
@@ -440,7 +443,8 @@ export class ShapesService {
                     walls.forEach(wall => {
                         if (wall.wallSetID === wallset._id) {
                             var newWall = new Wall();
-                            newWall.init(wall._id, wall.borderMaterial, wall.borderSize, wall.title);
+                            newWall.init(wall._id, wall.borderMaterial, wall.borderSize, wall.title,
+                                                                    wall.isLocked, wall.toBeDisplayed);
                             var wallImages = [];
                             newWall.images = wallImages;
                             newWallSet.walls.push(newWall);
@@ -519,5 +523,20 @@ export class ShapesService {
         this.loadedWallSet.walls.splice(
             this.loadedWallSet.walls.indexOf(this.loadedWallSet.walls[index]), 1
         );
+    }
+
+    toggleWallLocked() {
+        this.loadedWallSet.walls[this.focusedWallIndex].isLocked = !this.loadedWallSet.walls[this.focusedWallIndex].isLocked;
+    }
+    isWallLocked() {
+        return this.loadedWallSet.walls[this.focusedWallIndex].isLocked;
+    }
+
+    toggleWallToBeDisplayed() {
+        this.loadedWallSet.walls[this.focusedWallIndex].toBeDisplayed = !this.loadedWallSet.walls[this.focusedWallIndex].toBeDisplayed;
+    }
+
+    wallToBeDisplayed() {
+        return this.loadedWallSet.walls[this.focusedWallIndex].toBeDisplayed;
     }
 }
