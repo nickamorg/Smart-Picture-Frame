@@ -1,6 +1,6 @@
 #editor {
-    height: 200px;
-    width: 800px;
+    height: 520PX;
+    width: 1980px;
     z-index: 1;
     top: 14px;
     padding-top: 0 !important;
@@ -9,6 +9,7 @@
     overflow-x: hidden;
     padding-top: 20px; background-color: #C4C4C4;
     position:relative;
+    zoom: 40%;
 }
 
 #editor_current_frame_images {

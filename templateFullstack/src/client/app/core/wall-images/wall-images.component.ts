@@ -36,7 +36,7 @@ export class WallImagesComponent implements OnInit {
         this.shapesService.selectedWallpapers = this.shapesService.wallpapers.length;
         this.shapesService.wallpapers.forEach(wallpaper => {
             this.shapesService.currWallpapers.push(wallpaper);
-        });;
+        });
     }
 
     applySelectedWallpapers() {

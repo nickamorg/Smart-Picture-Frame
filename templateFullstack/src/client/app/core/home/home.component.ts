@@ -7,6 +7,6 @@ import { DatabaseService } from '../../database.service';
 })
 export class HomeComponent {
   constructor() {
-    
+
   }
  }

@@ -23,8 +23,8 @@ export class Wall {
         let style = {
             'background-size': 'cover',
             'background-color': '#ffffff',
-            'width': '800px',
-            'height': '200px'
+            'width': '1980px',
+            'height': '520px'
         };
 
         if (this.borderMaterial !== '' && this.borderMaterial !== undefined) {
@@ -36,8 +36,8 @@ export class Wall {
 
     getWallStyle() {
         let style = {
-            'width':  (800 - (this.hasMaterial ? this.borderSize : 0)) + 'px',
-            'height': (200 - (this.hasMaterial ? this.borderSize : 0)) + 'px',
+            'width':  (1980 - (this.hasMaterial ? this.borderSize : 0)) + 'px',
+            'height': (520 - (this.hasMaterial ? this.borderSize : 0)) + 'px',
             'top':  ((this.hasMaterial ? this.borderSize : 0) / 2) + 'px',
             'left': ((this.hasMaterial ? this.borderSize : 0) / 2) + 'px',
             'background-color': '#C4C4C4',

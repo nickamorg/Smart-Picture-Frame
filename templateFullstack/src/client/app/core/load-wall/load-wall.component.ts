@@ -26,7 +26,7 @@ export class LoadWallComponent {
 
     getImages() {
         this.databaseService.getImages().subscribe(
-            images => { 
+            images => {
                 this.images = images;
             }
         );
@@ -37,7 +37,7 @@ export class LoadWallComponent {
             if (this.images[i]._id === id) {
                 return this.images[i].src;
             }
-        };
+        }
     }
 
     sendMessage() {

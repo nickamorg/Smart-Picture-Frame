@@ -329,7 +329,7 @@ export class ShapesService {
                             });
                         });
                     });
-                })
+                });
 
                 for (var i = 0; i < wall.frames.length; i++) {
                     var frame = wall.frames[i];
@@ -400,10 +400,10 @@ export class ShapesService {
                                     if (wall._id === wallpaper.wallID) {
                                         this.wallpapersDBService.getWallpaper(wallpaper.imageID).subscribe(data=> {
                                             wallImages.push(data.src);
-                                        })
+                                        });
                                     }
                                 });
-                            })
+                            });
 
                             this.frameDBService.getFrames().subscribe(frames => {
                                 frames.forEach(frame => {
