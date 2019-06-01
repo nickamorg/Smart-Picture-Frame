@@ -14,9 +14,10 @@ export class Frame {
     images: string[] = [];
     displayedImageIndex = 0;
     iterateTime = 0;
+    zIndex = 1;
 
     init(_id, borderRadius, borderSize, borderMaterial, borderColor,
-                padding, top, left, width, height, iterateTime) {
+            padding, top, left, width, height, iterateTime, zIndex) {
 
         this._id = _id;
         this.borderRadius = borderRadius;
@@ -30,6 +31,7 @@ export class Frame {
         this.width = width;
         this.height = height;
         this.iterateTime = iterateTime;
+        this.zIndex = zIndex;
     }
 
     getFrameBorderStyle(index: number) {
@@ -39,7 +41,7 @@ export class Frame {
             'width': this.width + 'px',
             'height': this.height + 'px',
             'top': this.top + 'px',
-            'left': this.left + 'px'
+            'left': this.left + 'px',
         };
 
         if (this.borderMaterial !== '' && this.borderMaterial !== undefined) {

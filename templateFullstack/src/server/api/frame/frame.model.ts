@@ -19,7 +19,8 @@ var FrameSchema = new mongoose.Schema({
     left: Number,
     width: Number,
     height: Number,
-    iterateTime: Number
+    iterateTime: Number,
+    zIndex: Number
 });
 
 registerEvents(FrameSchema);

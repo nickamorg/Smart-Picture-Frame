@@ -38,7 +38,7 @@ export class FrameDBService {
     }
 
     updateFrame(id, wallID, borderRadius, borderSize, borderMaterial, borderColor,
-                                    padding, top, left, width, height, iterateTime) {
+                                padding, top, left, width, height, iterateTime, zIndex) {
         this.http.put('api/frames/' + id, {
             wallID: wallID,
             borderRadius: borderRadius,
@@ -50,7 +50,8 @@ export class FrameDBService {
             left: left,
             width: width,
             height: height,
-            iterateTime: iterateTime
+            iterateTime: iterateTime,
+            zIndex: zIndex
         })
         .subscribe();
     }

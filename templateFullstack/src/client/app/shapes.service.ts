@@ -117,6 +117,16 @@ export class ShapesService {
         frame.padding = value > minValue ? minValue : value;
     }
 
+    setFrameZIndex(value) {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].zIndex = value;
+    }
+
+    setFrameBorderSize(value) {
+        var frame = this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame];
+        var minValue = (frame.width < frame.height ? frame.width : frame.height) / 2;
+        frame.borderSize = value > minValue ? minValue : value;
+    }
+
     returnBorderMaterial() {
         let style = {
             'background-image': 'url(' + this.loadedWallSet.walls[this.focusedWallIndex].
@@ -135,7 +145,8 @@ export class ShapesService {
             'width': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].width + 'px',
             'height': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].height + 'px',
             'top': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].top + 'px',
-            'left': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].left + 'px'
+            'left': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].left + 'px',
+            'z-index': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].zIndex
         };
 
         var frameBorderMaterial = this.loadedWallSet.walls[this.focusedWallIndex].frames[index].borderMaterial;
@@ -384,7 +395,7 @@ export class ShapesService {
                     } else {
                         this.frameDBService.updateFrame(frame._id, frame.wallID, frame.borderRadius,
                             frame.borderSize, frame.borderMaterial, frame.borderColor, frame.padding,
-                            frame.top, frame.left, frame.width, frame.height, frame.iterateTime);
+                            frame.top, frame.left, frame.width, frame.height, frame.iterateTime, frame.zIndex);
                     }
 
                     this.frameImageDBService.getFrameImages().subscribe(images => {
@@ -450,7 +461,7 @@ export class ShapesService {
                                         var newFrame = new Frame();
                                         newFrame.init(frame._id, frame.borderRadius, frame.borderSize,
                                         frame.borderMaterial, 'rgb(34, 0, 78)', frame.padding,
-                                        frame.top, frame.left, frame.width, frame.height, 30);
+                                        frame.top, frame.left, frame.width, frame.height, frame.iterateTime, frame.zIndex);
                                         var frameImages = [];
                                         newFrame.images = frameImages;
                                         newWall.frames.push(newFrame);
@@ -487,6 +498,13 @@ export class ShapesService {
         this.selectedFrame = -1;
         this.isFocusedFrame = false;
         this.isFocusedWall = true;
+    }
+
+    duplicateFocusedFrame() {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames.push(
+            this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].copy()
+        );
+        this.selectedFrame = this.loadedWallSet.walls[this.focusedWallIndex].frames.length - 1;
     }
 
     deleteWall(index) {
