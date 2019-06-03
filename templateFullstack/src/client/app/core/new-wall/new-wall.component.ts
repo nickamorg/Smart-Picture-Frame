@@ -11,12 +11,12 @@ export class NewWallComponent implements OnInit {
     @Output() messageEvent = new EventEmitter<string>();
 
     showNewWall = false;
-    creators: string[] = ['Home', 'Dad', 'Mom', 'Nick'];
+    creators: string[] = ['Home', 'Father', 'Mother', 'Nick'];
     types: string[] = ['General', 'Personal', 'Special'];
-    targets: string[] = ['Family'];
+    targets: string[] = ['Father', 'Mother', 'Nick', 'Mother-in-law', 'Grandparents'];
     selectedCreator = 'Home';
     selectedType = 'General';
-    selectedTarget = 'Family';
+    selectedTarget = 'Grandparents';
     title: string;
     description: string;
 
@@ -33,6 +33,10 @@ export class NewWallComponent implements OnInit {
     }
 
     createNewWall() {
+        if (this.selectedType !== 'personal') {
+            this.selectedTarget = '';
+        }
+
         this.sendMessage();
         this.shapesService.initNewWall(this.selectedCreator, this.selectedType,
                                         this.selectedTarget, this.title, this.description);

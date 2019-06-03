@@ -349,6 +349,7 @@ export class ShapesService {
         this.wallDBService.updateWall(  this.loadedWallSet.walls[index]._id, this.loadedWallSet._id,
                                         this.loadedWallSet.walls[index].borderMaterial,
                                         this.loadedWallSet.walls[index].borderSize, title,
+                                        this.loadedWallSet.walls[index].iterateTime,
                                         this.loadedWallSet.walls[index].isLocked,
                                         this.loadedWallSet.walls[index].toBeDisplayed);
     }
@@ -364,7 +365,7 @@ export class ShapesService {
 
                 this.wallDBService.updateWall(wall._id, wall.wallSetID,
                     wall.borderMaterial, wall.borderSize, wall.title,
-                    wall.isLocked, wall.toBeDisplayed);
+                    wall.iterateTime, wall.isLocked, wall.toBeDisplayed);
 
                 this.wallImageDBService.getWallImages().subscribe(wallpapers => {
                     wallpapers.forEach(wallpaper => {
@@ -391,14 +392,15 @@ export class ShapesService {
                             this.loadedWallSet.walls[this.focusedWallIndex]._id,
                             frame.borderRadius, frame.borderSize, frame.borderMaterial,
                             frame.borderColor, frame.padding, frame.top, frame.left,
-                            frame.width, frame.height, frame.iterateTime
+                            frame.width, frame.height, frame.iterateTime, frame.interactionType
                         ).subscribe(data => {
                             frame._id = data.json()._id;
                         });
                     } else {
                         this.frameDBService.updateFrame(frame._id, frame.wallID, frame.borderRadius,
                             frame.borderSize, frame.borderMaterial, frame.borderColor, frame.padding,
-                            frame.top, frame.left, frame.width, frame.height, frame.iterateTime, frame.zIndex);
+                            frame.top, frame.left, frame.width, frame.height, frame.iterateTime,
+                            frame.zIndex, frame.interactionType);
                     }
 
                     this.frameImageDBService.getFrameImages().subscribe(images => {
@@ -444,7 +446,7 @@ export class ShapesService {
                         if (wall.wallSetID === wallset._id) {
                             var newWall = new Wall();
                             newWall.init(wall._id, wall.borderMaterial, wall.borderSize, wall.title,
-                                                                    wall.isLocked, wall.toBeDisplayed);
+                                                wall.iterateTime, wall.isLocked, wall.toBeDisplayed);
                             var wallImages = [];
                             newWall.images = wallImages;
                             newWallSet.walls.push(newWall);
@@ -464,8 +466,8 @@ export class ShapesService {
                                     if (frame.wallID === wall._id) {
                                         var newFrame = new Frame();
                                         newFrame.init(frame._id, frame.borderRadius, frame.borderSize,
-                                        frame.borderMaterial, 'rgb(34, 0, 78)', frame.padding,
-                                        frame.top, frame.left, frame.width, frame.height, frame.iterateTime, frame.zIndex);
+                                        frame.borderMaterial, 'rgb(34, 0, 78)', frame.padding, frame.top, frame.left,
+                                        frame.width, frame.height, frame.iterateTime, frame.zIndex, frame.interactionType);
                                         var frameImages = [];
                                         newFrame.images = frameImages;
                                         newWall.frames.push(newFrame);
@@ -538,5 +540,9 @@ export class ShapesService {
 
     wallToBeDisplayed() {
         return this.loadedWallSet.walls[this.focusedWallIndex].toBeDisplayed;
+    }
+
+    selectFrameInteraction(value) {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].interactionType = value;
     }
 }

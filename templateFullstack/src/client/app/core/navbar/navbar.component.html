@@ -10,19 +10,22 @@
             <ul class="nav navbar-nav" style="float:initial">
                 <li routerLinkActive="active" (click)="toggleNewWallModal()"><a>New Wall</a></li>
                 <li routerLinkActive="active" (click)="toggleLoadWallModal()"><a>Load Wall</a></li>
-                <li routerLinkActive="active"><a routerLink="/upload-images">Upload Images</a></li>
                 <li routerLinkActive="active"><a routerLink="/materials">Materials</a></li>
                 <li routerLinkActive="active"><a routerLink="/wallpapers">Wallpapers</a></li>
                 <li routerLinkActive="active"><a routerLink="/gallery">Gallery</a></li>
 
                 <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active">
-                    <a><img src="./assets/images/preview.png"/> Preview Wall</a>
+                    <a routerLink="/preview-wall"><img src="./assets/images/preview.png"/> Preview Wall</a>
                 </li>
                 <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active" (click)="shapesService.saveWall()">
                     <a><img src="./assets/images/save.png"/> Save Wall</a>
                 </li>
                 <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active" (click)="shapesService.saveWallSet()">
                     <a><img src="./assets/images/save_all.png"/> Save WallSet</a>
+                </li>
+
+                <li *ngIf="shapesService.editMode && this.router.url === '/preview-wall'" style="float:right" routerLinkActive="active">
+                    <a routerLink="/home">Editor</a>
                 </li>
             </ul>
         </div>

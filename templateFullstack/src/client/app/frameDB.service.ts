@@ -21,7 +21,7 @@ export class FrameDBService {
 
     uploadFrame(wallID: String, borderRadius: Number, borderSize: Number,
                 borderMaterial: String, borderColor: String, padding: Number, top: Number,
-                left: Number, width: Number, height: Number, iterateTime: Number) {
+                left: Number, width: Number, height: Number, iterateTime: Number, interactionType: String) {
         return this.http.post('api/frames/', {
             wallID: wallID,
             borderRadius: borderRadius,
@@ -33,12 +33,13 @@ export class FrameDBService {
             left: left,
             width: width,
             height: height,
-            iterateTime: iterateTime
+            iterateTime: iterateTime,
+            interactionType: interactionType
         });
     }
 
     updateFrame(id, wallID, borderRadius, borderSize, borderMaterial, borderColor,
-                                padding, top, left, width, height, iterateTime, zIndex) {
+            padding, top, left, width, height, iterateTime, zIndex, interactionType) {
         this.http.put('api/frames/' + id, {
             wallID: wallID,
             borderRadius: borderRadius,
@@ -51,7 +52,8 @@ export class FrameDBService {
             width: width,
             height: height,
             iterateTime: iterateTime,
-            zIndex: zIndex
+            zIndex: zIndex,
+            interactionType: interactionType
         })
         .subscribe();
     }

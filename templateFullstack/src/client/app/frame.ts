@@ -15,9 +15,10 @@ export class Frame {
     displayedImageIndex = 0;
     iterateTime = 0;
     zIndex = 1;
+    interactionType = '';
 
     init(_id, borderRadius, borderSize, borderMaterial, borderColor,
-            padding, top, left, width, height, iterateTime, zIndex) {
+        padding, top, left, width, height, iterateTime, zIndex, interactionType) {
 
         this._id = _id;
         this.borderRadius = borderRadius;
@@ -32,6 +33,7 @@ export class Frame {
         this.height = height;
         this.iterateTime = iterateTime;
         this.zIndex = zIndex;
+        this.interactionType = interactionType;
     }
 
     getFrameBorderStyle(index: number) {
@@ -94,6 +96,8 @@ export class Frame {
         newFrame.height = this.height;
         newFrame.displayedImageIndex = this.displayedImageIndex;
         newFrame.iterateTime = this.iterateTime;
+        newFrame.zIndex = this.zIndex;
+        newFrame.interactionType = this.interactionType;
 
         newFrame.images = [];
         for (var i = 0; i < this.images.length; i++) {

@@ -20,7 +20,7 @@
                                 <td style="padding:0 10px 5px 10px; color:#CAC2C2">Type:</td>
                                 <td style="padding-bottom: 5px">{{shapesService.loadedWallSet.type}}</td>
                             </tr>
-                            <tr>
+                            <tr *ngIf="shapesService.loadedWallSet.type != 'Personal'">
                                 <td style="padding:0 10px 5px 10px; color:#CAC2C2">Target:</td>
                                 <td style="padding-bottom: 5px">{{shapesService.loadedWallSet.target}}</td>
                             </tr>

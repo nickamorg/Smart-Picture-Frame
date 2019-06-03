@@ -10,15 +10,17 @@ export class Wall {
     frames: Frame[] = [];
     images: string[] = [];
     displayedImageIndex = 0;
+    iterateTime = 0;
     isLocked = false;
     toBeDisplayed = true;
 
-    init(_id, borderMaterial, borderSize, title, isLocked, toBeDisplayed) {
+    init(_id, borderMaterial, borderSize, title, iterateTime, isLocked, toBeDisplayed) {
         this._id = _id;
         this.borderMaterial = borderMaterial;
+        this.hasMaterial = borderMaterial !== '' ? true : false;
         this.borderSize = borderSize;
         this.title = title;
-        this.hasMaterial = borderMaterial !== '' ? true : false;
+        this.iterateTime = iterateTime;
         this.isLocked = isLocked;
         this.toBeDisplayed = toBeDisplayed;
     }
@@ -65,6 +67,9 @@ export class Wall {
         newWall.displayedImageIndex = this.displayedImageIndex;
         newWall.title = this.title;
         newWall._id = this._id;
+        newWall.iterateTime = this.iterateTime;
+        newWall.isLocked = this.isLocked;
+        newWall.toBeDisplayed = this.toBeDisplayed;
 
         newWall.images = [];
         for (var i = 0; i < this.images.length; i++) {

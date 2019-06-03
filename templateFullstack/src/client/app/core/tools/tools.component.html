@@ -1,8 +1,8 @@
 <div class="tools">
-    <div style="width:100%; height:200px">
-        <div style="width:100%; background-color: #EBEBEB; margin-bottom: 10px">
-            <h5 style="padding:10px 20px 10px 20px; margin:0">TOOLS</h5>
-        </div>
+    <div style="width:100%; background-color: #EBEBEB; margin-bottom: 10px">
+        <h5 style="padding:10px 20px 10px 20px; margin:0">TOOLS</h5>
+    </div>
+    <div style="height:85%; overflow-y:auto">
         <div *ngIf="shapesService.editMode">
             <div *ngIf="shapesService.isFocusedFrame" style="color:#9A9A9A">
                 <div style="padding: 10px 20px; border-bottom: 1px solid #E3E2E2">
@@ -65,7 +65,7 @@
                         </button>
                         <div style="padding-top:10px">
                             <span style="padding-right:10px">Border Size</span>
-                            <input (keyup)="shapesService.setFrameBorderSize($event.target.value)" type="text" style="width:150px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].borderSize}}">
+                            <input (keyup)="shapesService.setFrameBorderSize($event.target.value)" type="text" style="width:113px; border-radius: 5px" id="height" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].borderSize}}">
                         </div>
                         <div class="dropdown-menu" style="width:100%; text-align: center; top:55px">
                             <div (click)='shapesService.removeFrameMaterial()' style="padding-right:20px">
@@ -84,9 +84,19 @@
                     <label for="use_as_mask">Use as mask</label>
                     <div style="float:right">
                         <img src="/assets/images/duration.png" style="padding-right:5px">
-                        <input (keyup)="shapesService.setFrameValue('iterateTime', $event.target.value)" type="text" style="width:50px; border-radius: 5px" id="iterateTime" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].iterateTime}}">
+                        <input (keyup)="shapesService.setFrameValue('iterateTime', $event.target.value)" type="number" style="width:50px; border-radius: 5px" id="iterateTime" min="0" placeholder="0" value="{{shapesService.loadedWallSet.walls[shapesService.focusedWallIndex].frames[shapesService.selectedFrame].iterateTime}}">
                     </div>
                     <button (click)="toggleChooseFrameImagesModal()" type="button" class="btn" style="outline: none; margin-top: 10px; padding-top: 5px; padding-bottom:5px; border:1px solid #C4C4C4; color:black; background-color:white; width:100%; border-radius: 5px">Choose Images</button>
+                </div>
+
+                <div style="padding:10px 20px; border-bottom: 1px solid #E3E2E2">
+                    <p style="color:#5C5555">INTERACTION</p>
+                    <select (change)="shapesService.selectFrameInteraction($event.target.value)" class="form-control" style="width:100% !important">
+                        <option value="clock">No Interaction</option>
+                        <option value="clock">Clock</option>
+                        <option value="weather">Weather</option>
+                        <option value="calendar">Calendar</option>
+                    </select>
                 </div>
 
                 <div style="padding:10px 20px">
@@ -181,7 +191,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    <div>
 
     <app-frame-images (messageEvent)="receiveMessage($event)" [showChooseFrameImagesModalPartially]="showChooseFrameImagesModal"></app-frame-images>
     <app-wall-images (messageEvent)="receiveMessage($event)" [showChooseWallImagesModalPartially]="showChooseWallImagesModal"></app-wall-images>

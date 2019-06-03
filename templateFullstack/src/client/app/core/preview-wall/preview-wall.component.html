@@ -1,0 +1,11 @@
+<div *ngIf="shapesService.editMode" id="preview-wall" [ngStyle]="shapesService.setWallBorderStyle()">
+    <div [ngStyle]="previewWall.getWallStyle()">
+        <div *ngFor="let frame of previewWall.frames; let i = index" [ngStyle]="shapesService.setFrameBorderStyle(i)" style="position:absolute">
+            <div [ngStyle]="frame.getFrameStyle()" style="position:absolute">
+                <ng-template [ngIf]="frame.images.length >= 1">
+                    <img [ngStyle]="frame.getImageStyle()" src="{{getImageSRC(frame.images[frame.displayedImageIndex])}}">
+                </ng-template>
+            </div>
+        </div>
+    </div>
+</div>

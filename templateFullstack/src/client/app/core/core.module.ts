@@ -7,7 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { NewWallComponent } from './new-wall/new-wall.component';
 import { LoadWallComponent } from './load-wall/load-wall.component';
-import { UploadImagesComponent } from './upload-images/upload-images.component';
+import { PreviewWallComponent } from './preview-wall/preview-wall.component';
 import { MaterialsComponent } from './materials/materials.component';
 import { WallpapersComponent } from './wallpapers/wallpapers.component';
 import { GalleryComponent } from './gallery/gallery.component';
@@ -33,7 +33,7 @@ import { WallImageDBService } from '../wallImageDB.service';
         FooterComponent,
         NewWallComponent,
         LoadWallComponent,
-        UploadImagesComponent,
+        PreviewWallComponent,
         MaterialsComponent,
         GalleryComponent,
         WorkspaceComponent,
