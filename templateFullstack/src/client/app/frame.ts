@@ -80,6 +80,40 @@ export class Frame {
         return style;
     }
 
+    timeFontSize() {
+        var minValue = ((this.height < this.width ? this.height : this.width) - this.padding * 2 -
+                        (this.hasMaterial ? this.borderSize * 2 : 0)) / 10;
+        let style = {
+            'font-size': minValue + 'px'
+        };
+
+        return style;
+    }
+
+    dayFontSize() {
+        var minValue = ((this.height < this.width ? this.height : this.width) - this.padding * 2 -
+                        (this.hasMaterial ? this.borderSize * 2 : 0)) / 2;
+        let style = {
+            'font-size': minValue + 'px',
+            'margin': '0 !important',
+            'text-align': 'center'
+        };
+
+        return style;
+    }
+
+    monthFontSize() {
+        var minValue = ((this.height < this.width ? this.height : this.width) - this.padding * 2 -
+                        (this.hasMaterial ? this.borderSize * 2 : 0)) / 5;
+        let style = {
+            'font-size': minValue + 'px',
+            'margin': '0 !important',
+            'text-align': 'center'
+        };
+
+        return style;
+    }
+
     copy() {
         var newFrame = new Frame();
         newFrame.borderRadius = this.borderRadius;

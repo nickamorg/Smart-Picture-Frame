@@ -24,3 +24,19 @@
     padding-top: 20px; background-color: #C4C4C4;
     position:relative;
 }
+
+body {
+    background: black;
+}
+
+.clock, .date {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+    color: #17D4FE;
+    // font-size: 60px;
+    font-family: Orbitron;
+    font-size: 20px;
+    letter-spacing: 7px;
+}

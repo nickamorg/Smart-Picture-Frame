@@ -545,4 +545,16 @@ export class ShapesService {
     selectFrameInteraction(value) {
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].interactionType = value;
     }
+
+    getCurrentDay() {
+        return (new Date()).getDate();
+    }
+
+    getCurrentMonth() {
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                            ];
+
+        return monthNames[(new Date()).getMonth()];
+    }
 }

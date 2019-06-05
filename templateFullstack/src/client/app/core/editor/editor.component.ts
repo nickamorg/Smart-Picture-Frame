@@ -11,9 +11,11 @@ import { GalleryImage } from '../../galleryImage';
 
 export class EditorComponent {
     images: GalleryImage[] = [];
+    currentTime: String;
 
     constructor(private shapesService: ShapesService, private databaseService: DatabaseService) {
         this.getImages();
+        this.showTime();
     }
 
     getImages() {
@@ -34,6 +36,24 @@ export class EditorComponent {
 
     addFrame(type: string) {
         this.shapesService.pushFrame(type);
+    }
+
+    showTime(){
+        var date = new Date();
+        var h = date.getHours(); // 0 - 23
+        var m = date.getMinutes(); // 0 - 59
+        var s = date.getSeconds(); // 0 - 59
+
+        this.currentTime =  ((h < 10) ? '0' + h : h).toString() + ':' +
+                            ((m < 10) ? '0' + m : m).toString() + ':' +
+                            ((s < 10) ? '0' + s : s).toString();
+
+        setInterval(() => { this.showTime(); }, 1000);
+
+    }
+
+    getCurrentTime() {
+        return this.currentTime;
     }
 
 }
