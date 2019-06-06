@@ -8,14 +8,16 @@ export class WallSet {
     target = '';
     title = '';
     description = '';
+    active = false;
 
-    init(_id, creator, type, target, title, description) {
+    init(_id, creator, type, target, title, description, active) {
         this._id = _id;
         this.creator = creator;
         this.type = type;
         this.target = target;
         this.title = title;
         this.description = description;
+        this.active = active;
     }
 
     copy() {
@@ -26,6 +28,7 @@ export class WallSet {
         newWallSet.title = this.title;
         newWallSet.description = this.description;
         newWallSet._id = this._id;
+        newWallSet.active = this.active;
 
         newWallSet.walls = [];
         for (var i = 0; i < this.walls.length; i++) {

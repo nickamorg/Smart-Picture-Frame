@@ -37,21 +37,7 @@ export class WallSimulatorComponent {
         this.wallSetSimulatedIndex = 1;
         this.wallSimulatedIndex = 0;
 
-        if (this.wallSimulated.images.length > 0) {
-            var self = this;
-            setInterval(function() {
-                self.wallSimulated.displayedImageIndex =
-                ++self.wallSimulated.displayedImageIndex % self.wallSimulated.images.length;
-            }, self.wallSimulated.iterateTime * 60000);
-        }
-
-        this.wallSimulated.frames.forEach(frame => {
-            if (frame.images.length > 0 && frame.iterateTime > 0) {
-                setInterval(function() {
-                    frame.displayedImageIndex = ++frame.displayedImageIndex % frame.images.length;
-                }, frame.iterateTime * 60000);
-            }
-        });
+        this.initIterations();
     }
 
     getImages() {
@@ -70,6 +56,24 @@ export class WallSimulatorComponent {
         }
     }
 
+    initIterations() {
+        if (this.wallSimulated.images.length > 0) {
+            var self = this;
+            setInterval(function() {
+                self.wallSimulated.displayedImageIndex =
+                ++self.wallSimulated.displayedImageIndex % self.wallSimulated.images.length;
+            }, self.wallSimulated.iterateTime * 60000);
+        }
+
+        this.wallSimulated.frames.forEach(frame => {
+            if (frame.images.length > 0 && frame.iterateTime > 0) {
+                setInterval(function() {
+                    frame.displayedImageIndex = ++frame.displayedImageIndex % frame.images.length;
+                }, frame.iterateTime * 60000);
+            }
+        });
+    }
+
     applyAction(index) {
         this.lastAction = index;
 
@@ -85,6 +89,18 @@ export class WallSimulatorComponent {
             this.interactionData.brightness = 50;
         } else if (index === 5) {
             // TODO
+
+            for (var i = 0; i < this.shapesService.wallSets.length; i++) {
+                if (this.shapesService.wallSets[i].type === 'Special') { // + active
+                    this.wallSetSimulated = this.shapesService.wallSets[i];
+                    this.wallSimulated = this.wallSetSimulated.walls[0];
+                    this.wallSetSimulatedIndex = i;
+                    this.wallSimulatedIndex = 0;
+                    this.initIterations();
+
+                    return;
+                }
+            }
         }
     }
 

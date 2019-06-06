@@ -16,6 +16,12 @@
                 <li routerLinkActive="active"><a routerLink="/wall-simulator">Wall Simulator</a></li>
 
                 <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active">
+                    <a (click)="toggleActiveWall()">
+                        <img *ngIf="shapesService.loadedWallSet.active" src="./assets/images/active.svg"/> 
+                        <img *ngIf="!shapesService.loadedWallSet.active" src="./assets/images/inactive.svg"/>
+                        Active Wall</a>
+                </li>
+                <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active">
                     <a routerLink="/preview-wall"><img src="./assets/images/preview.png"/> Preview Wall</a>
                 </li>
                 <li *ngIf="shapesService.editMode && this.router.url === '/home'" style="float:right" routerLinkActive="active" (click)="shapesService.saveWall()">

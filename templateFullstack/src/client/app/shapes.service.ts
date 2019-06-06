@@ -297,6 +297,7 @@ export class ShapesService {
         newWallSet.target = target;
         newWallSet.title = title;
         newWallSet.description = description;
+        newWallSet.active = false;
         newWallSet.walls = [];
         newWallSet.walls.push(new Wall());
         this.wallSets.push(newWallSet);
@@ -305,7 +306,7 @@ export class ShapesService {
         this.loadedWallSetIndex = this.wallSets.length - 1;
         this.focusedWallIndex = 0;
 
-        this.wallSetDBService.uploadWallSet(creator, type, target, title, description).subscribe(data => {
+        this.wallSetDBService.uploadWallSet(creator, type, target, title, description, false).subscribe(data => {
             newWallSet._id = data.json()._id;
             this.wallDBService.uploadWall(data.json()._id).subscribe(data => {
                 newWallSet.walls[0]._id = data.json()._id;
@@ -437,8 +438,8 @@ export class ShapesService {
             this.wallSets = [];
             wallsets.forEach(wallset => {
                 var newWallSet = new WallSet();
-                newWallSet.init(wallset._id, wallset.creator, wallset.type,
-                                        wallset.target, wallset.title, wallset.description);
+                newWallSet.init(wallset._id, wallset.creator, wallset.type, wallset.target,
+                                        wallset.title, wallset.description, wallset.active);
                 this.wallSets.push(newWallSet);
 
                 this.wallDBService.getWalls().subscribe(walls => {
@@ -556,5 +557,14 @@ export class ShapesService {
                             ];
 
         return monthNames[(new Date()).getMonth()];
+    }
+
+    updateWallSet(index) {
+        this.wallSetDBService.updateWallSet(
+            this.wallSets[index]._id, this.wallSets[index].creator,
+            this.wallSets[index].type, this.wallSets[index].target,
+            this.wallSets[index].title, this.wallSets[index].description,
+            this.wallSets[index].active
+        );
     }
 }

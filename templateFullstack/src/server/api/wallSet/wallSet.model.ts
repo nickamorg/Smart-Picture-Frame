@@ -12,7 +12,8 @@ var WallSetSchema = new mongoose.Schema({
     type: String,
     target: String,
     title: String,
-    description: String
+    description: String,
+    active: Boolean
 });
 
 registerEvents(WallSetSchema);
