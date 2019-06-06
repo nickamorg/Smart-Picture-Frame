@@ -1,0 +1,32 @@
+<div *ngIf="displayWallSimulator">
+
+    <div id="wall-simulator" [ngStyle]="shapesService.setWallBorderStyle()">
+        <div [ngStyle]="wallSimulated.getWallStyle()">
+            <div *ngFor="let frame of wallSimulated.frames; let i = index" [ngStyle]="shapesService.setFrameBorderStyle(i)" style="position:absolute">
+                <div [ngStyle]="frame.getFrameStyle()" style="position:absolute">
+                    <a *ngIf="frame.interactionType == 'Weather'" target="_blank" href="https://ibooked.gr/weather/irakleion-w644185">
+                        <img [ngStyle]="frame.getImageStyle()" src="https://w.bookcdn.com/weather/picture/30_w644185_1_19_9b59b6_250_8e44ad_ffffff_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=595&anc_id=50070"  alt="booked.net"/>
+                    </a>
+                    <ng-template [ngIf]="frame.images.length >= 1">
+                        <img *ngIf="frame.interactionType == ''" [ngStyle]="frame.getImageStyle()" src="{{getImageSRC(frame.images[frame.displayedImageIndex])}}">
+                    </ng-template>
+
+                    <div *ngIf="frame.interactionType == 'Clock'" [ngStyle]="frame.timeFontSize()" id="MyClockDisplay" class="clock">{{currentTime}}</div>
+                    <div *ngIf="frame.interactionType == 'Date'" id="MyClockDisplay" class="date">
+                        <p [ngStyle]="frame.dayFontSize()" >{{shapesService.getCurrentDay()}}</p>
+                        <p [ngStyle]="frame.monthFontSize()">{{shapesService.getCurrentMonth()}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="position: absolute; right:5px; bottom:5px">
+        <div (click)="applyAction(0)" [ngClass]="{active:lastAction == 0}" class="action">No body home</div>
+        <div (click)="applyAction(1)" [ngClass]="{active:lastAction == 1}" class="action">Family gets back</div>
+        <div (click)="applyAction(2)" [ngClass]="{active:lastAction == 2}" class="action">Mother-in-law visit</div>
+        <div (click)="applyAction(3)" [ngClass]="{active:lastAction == 3}" class="action">Nick stayes alone</div>
+        <div (click)="applyAction(4)" [ngClass]="{active:lastAction == 4}" class="action">The night is coming</div>
+        <div (click)="applyAction(5)" [ngClass]="{active:lastAction == 5}" class="action">Waching some tv</div>
+    </div>
+</div>

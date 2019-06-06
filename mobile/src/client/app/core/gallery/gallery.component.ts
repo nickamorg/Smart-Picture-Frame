@@ -127,6 +127,8 @@ export class GalleryComponent {
     }
 
     displaySelectedImage(selectedImage: GalleryImage, action: string) {
+        document.body.classList.add('modal-open');
+
         if (action === 'display') {
             this.displayImage = true;
         } else {
@@ -141,12 +143,14 @@ export class GalleryComponent {
     }
 
     hideDisplayedImage() {
+        document.body.classList.remove('modal-open');
         this.displayImage = false;
         this.editImage = false;
         this.displayedImage = null;
     }
 
     saveEditedImage(title: string, description: string, type: string, country: string, city: string) {
+        document.body.classList.remove('modal-open');
         this.databaseService.updateImage(this.displayedImage._id, this.displayedImage.src, title, description, type, country, city);
         this.getImages();
         this.hideDisplayedImage();

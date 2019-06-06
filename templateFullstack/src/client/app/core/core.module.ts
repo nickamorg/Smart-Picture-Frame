@@ -25,6 +25,7 @@ import { WallDBService } from '../wallDB.service';
 import { FrameDBService } from '../frameDB.service';
 import { FrameImageDBService } from '../frameImageDB.service';
 import { WallImageDBService } from '../wallImageDB.service';
+import { WallSimulatorComponent } from './wall-simulator/wall-simulator.component';
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import { WallImageDBService } from '../wallImageDB.service';
         EditorComponent,
         FrameImagesComponent,
         WallpapersComponent,
-        WallImagesComponent
+        WallImagesComponent,
+        WallSimulatorComponent
     ],
     imports: [
         CommonModule,

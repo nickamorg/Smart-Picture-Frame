@@ -9,6 +9,7 @@ import { MaterialsComponent } from './materials/materials.component';
 import { WallpapersComponent } from './wallpapers/wallpapers.component';
 import { GalleryComponent } from './gallery/gallery.component';
 import { WorkspaceComponent } from './workspace/workspace.component';
+import { WallSimulatorComponent } from './wall-simulator/wall-simulator.component';
 
 const coreRoutes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -18,7 +19,8 @@ const coreRoutes: Routes = [
   { path: 'materials', component: MaterialsComponent },
   { path: 'wallpapers', component: WallpapersComponent },
   { path: 'gallery', component: GalleryComponent },
-  { path: 'workspace', component: WorkspaceComponent }
+  { path: 'workspace', component: WorkspaceComponent },
+  { path: 'wall-simulator', component: WallSimulatorComponent }
 ];
 
 @NgModule({

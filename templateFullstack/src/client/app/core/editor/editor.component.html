@@ -12,7 +12,8 @@
                 <div *ngIf="frame.interactionType == 'Clock'" [ngStyle]="frame.timeFontSize()" id="MyClockDisplay" class="clock">{{currentTime}}</div>
                 <div *ngIf="frame.interactionType == 'Date'" id="MyClockDisplay" class="date">
                     <p [ngStyle]="frame.dayFontSize()" >{{shapesService.getCurrentDay()}}</p>
-                    <p [ngStyle]="frame.monthFontSize()">{{shapesService.getCurrentMonth()}}</p></div>
+                    <p [ngStyle]="frame.monthFontSize()">{{shapesService.getCurrentMonth()}}</p>
+                </div>
             </div>
         </div>
     </div>

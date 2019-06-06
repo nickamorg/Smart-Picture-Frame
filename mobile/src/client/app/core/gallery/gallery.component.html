@@ -94,7 +94,7 @@
 </div>
 
 <div *ngIf="showUploadedImagesModal" class="modal_overlay">
-    <div id="modal_overlay_content" class="clearfix col-xs-12" style="padding-top:20px; top:0; height:97%; max-height:97%; margin-top:10px; left:2.5%; width:95%">
+    <div id="modal_overlay_content" class="clearfix col-xs-12" style="padding-top:20px; top:0; height:97%; max-height:97%; margin-top:10px; left:2.5%; width:95%; overflow-y:scroll">
         <div style="padding-bottom:10px" >
             <span style="color:#707070">UPLOAD IMAGES</span>
             <img (click)="uploadImages()" style="padding-right:5px; float:right" src="/assets/images/apply.png" width="25" heigh="25">
