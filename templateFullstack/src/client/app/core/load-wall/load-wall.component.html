@@ -23,7 +23,7 @@
                                                 <img [ngStyle]="frame.getImageStyle()" src="https://w.bookcdn.com/weather/picture/30_w644185_1_19_9b59b6_250_8e44ad_ffffff_ffffff_1_2071c9_ffffff_0_6.png?scode=124&domid=595&anc_id=50070"  alt="booked.net"/>
                                             </a>
                                             <ng-template [ngIf]="frame.images.length >= 1">
-                                                <img *ngIf="frame.interactionType == ''" [ngStyle]="frame.getImageStyle()" src="{{getImageSRC(frame.images[frame.displayedImageIndex])}}">
+                                                <img *ngIf="frame.interactionType == '' || frame.interactionType == undefined" [ngStyle]="frame.getImageStyle()" src="{{getImageSRC(frame.images[frame.displayedImageIndex])}}">
                                             </ng-template>
                             
                                             <div *ngIf="frame.interactionType == 'Clock'" [ngStyle]="frame.timeFontSize()" id="MyClockDisplay" class="clock">{{currentTime}}</div>
