@@ -5,9 +5,9 @@
                 <h5 style="padding:10px 10px 10px 20px; margin:0">GENERAL WALL</h5>
             </div>
 
-            <h5 *ngIf="shapesService.editMode" style="padding:10px 10px 10px 20px; margin:0">GENERAL WALL
+            <h5 *ngIf="shapesService.editMode" style="padding:10px 10px 10px 20px; margin:0">{{shapesService.loadedWallSet.title.toUpperCase()}}
+                <img (click)="shapesService.deleteLoadedWallSet()" height="20px" style="float:right" src="./assets/images/delete_black.svg"/>
                 <img (click)="shapesService.addCurrWallSetWall()" style="float:right" src="./assets/images/plus.svg"/>
-                
                 <div class="wall_title_tooltip" style="float:right">
                     <img src="./assets/images/info.svg"/>
                     <span class="wall_title_tooltiptext">

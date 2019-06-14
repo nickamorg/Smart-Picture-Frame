@@ -17,8 +17,8 @@ export class NewWallComponent implements OnInit {
     selectedCreator = 'Home';
     selectedType = 'General';
     selectedTarget = 'Grandparents';
-    title: string;
-    description: string;
+    title = '';
+    description = '';
 
     constructor(private shapesService: ShapesService) {}
 
@@ -33,7 +33,7 @@ export class NewWallComponent implements OnInit {
     }
 
     createNewWall() {
-        if (this.selectedType !== 'personal') {
+        if (this.selectedType !== 'Personal') {
             this.selectedTarget = '';
         }
 

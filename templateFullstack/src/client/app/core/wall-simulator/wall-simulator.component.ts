@@ -5,6 +5,7 @@ import { GalleryImage } from '../../galleryImage';
 import { Wall } from '../../wall';
 import { WallSet } from '../../wallSet';
 import { InteractionData } from '../../InteractionData';
+import { of } from 'rxjs/observable/of';
 
 @Component({
     selector: 'app-wall-simulator',
@@ -32,12 +33,17 @@ export class WallSimulatorComponent {
         this.getImages();
         this.displayWallSimulator = true;
 
-        this.wallSetSimulated = shapesService.wallSets[1];
-        this.wallSimulated = this.wallSetSimulated.walls[0];
-        this.wallSetSimulatedIndex = 1;
-        this.wallSimulatedIndex = 0;
+        for ( var i = 0; i < shapesService.wallSets.length; i++) {
+            if (shapesService.wallSets[i].type === 'General' &&
+            shapesService.wallSets[i].active) {
+                this.wallSetSimulated = shapesService.wallSets[i];
+                this.wallSimulated = this.wallSetSimulated.walls[0];
+                this.wallSetSimulatedIndex = i;
+                this.wallSimulatedIndex = 0;
 
-        this.initIterations();
+                this.initIterations();
+            }
+        }
     }
 
     getImages() {
@@ -79,19 +85,45 @@ export class WallSimulatorComponent {
 
         if (index === 0) {
             this.interactionData.brightness = 0;
+            this.interactionData.interactedDevice = undefined;
+            this.interactionData.people = [];
         } else if (index === 1) {
-            // TODO
+            var familyMembers = ['Mother', 'Father', 'Nick'];
+            for (var i = 0; i < familyMembers.length; i++) {
+                if (this.interactionData.people.indexOf(familyMembers[i]) < 0) {
+                    this.interactionData.people.push(familyMembers[i]);
+                }
+            }
+
+            if (this.interactionData.brightness === 0) {
+                this.interactionData.brightness = 100;
+            }
         } else if (index === 2) {
-            // TODO
+            if (this.interactionData.people.length > 0) {
+                this.interactionData.people.push('Mother-in-law');
+            }
         } else if (index === 3) {
-            // TODO
+            this.interactionData.people = ['Nick'];
         } else if (index === 4) {
             this.interactionData.brightness = 50;
         } else if (index === 5) {
-            // TODO
+            this.interactionData.interactedDevice = 'Couch';
+        } else if (index === 6) {
+            this.interactionData.interactedDevice = undefined;
+        } else if (index === 7) {
+            this.interactionData.brightness = 100;
+        } else if (index === 8) {
+            var motherIndex = this.interactionData.people.indexOf('Mother-in-law');
+            if (motherIndex > -1) {
+                this.interactionData.people.splice(motherIndex);
+            }
+        }
 
+        // triggerEvent
+        if (this.interactionData.interactedDevice !== undefined) {
             for (var i = 0; i < this.shapesService.wallSets.length; i++) {
-                if (this.shapesService.wallSets[i].type === 'Special') { // + active
+                if (this.shapesService.wallSets[i].type === 'Special' &&
+                    this.shapesService.wallSets[i].active) {
                     this.wallSetSimulated = this.shapesService.wallSets[i];
                     this.wallSimulated = this.wallSetSimulated.walls[0];
                     this.wallSetSimulatedIndex = i;
@@ -101,7 +133,53 @@ export class WallSimulatorComponent {
                     return;
                 }
             }
+        } else if (this.interactionData.people.length > 1) {
+            if (this.interactionData.people.indexOf('Mother-in-law') > -1) {
+                for (var i = 0; i < this.shapesService.wallSets.length; i++) {
+                    if (this.shapesService.wallSets[i].type === 'Personal' &&
+                        this.shapesService.wallSets[i].active &&
+                        this.shapesService.wallSets[i].target === 'Mother-in-law') {
+                        this.wallSetSimulated = this.shapesService.wallSets[i];
+                        this.wallSimulated = this.wallSetSimulated.walls[0];
+                        this.wallSetSimulatedIndex = i;
+                        this.wallSimulatedIndex = 0;
+                        this.initIterations();
+                        return;
+                    }
+                }
+            }
+
+            for (var i = 0; i < this.shapesService.wallSets.length; i++) {
+                if (this.shapesService.wallSets[i].type === 'General' &&
+                    this.shapesService.wallSets[i].active) {
+                    this.wallSetSimulated = this.shapesService.wallSets[i];
+                    this.wallSimulated = this.wallSetSimulated.walls[0];
+                    this.wallSetSimulatedIndex = i;
+                    this.wallSimulatedIndex = 0;
+                    this.initIterations();
+
+                    return;
+                }
+            }
+        } else if (this.interactionData.people.length === 1) {
+            for (var i = 0; i < this.shapesService.wallSets.length; i++) {
+                if (this.shapesService.wallSets[i].type === 'Personal' &&
+                    this.shapesService.wallSets[i].active &&
+                    this.shapesService.wallSets[i].target === this.interactionData.people[0]) {
+                    this.wallSetSimulated = this.shapesService.wallSets[i];
+                    this.wallSimulated = this.wallSetSimulated.walls[0];
+                    this.wallSetSimulatedIndex = i;
+                    this.wallSimulatedIndex = 0;
+                    this.initIterations();
+
+                    return;
+                }
+            }
+        } else if (this.interactionData.people.length === 0) {
+            this.interactionData.brightness = 0;
         }
+
+
     }
 
     setWallBorderStyle() {
@@ -110,6 +188,10 @@ export class WallSimulatorComponent {
             'background-color': '#ffffff',
             'filter': 'brightness(' + this.interactionData.brightness + '%)'
         };
+
+        if(this.interactionData.people.length === 0) {
+            style.filter = 'brightness(0%)';
+        }
 
         var wallBorderMaterial = this.wallSimulated.borderMaterial;
         if (wallBorderMaterial !== '' && wallBorderMaterial !== undefined) {

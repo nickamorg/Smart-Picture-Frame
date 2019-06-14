@@ -307,9 +307,9 @@ export class ShapesService {
         this.focusedWallIndex = 0;
 
         this.wallSetDBService.uploadWallSet(creator, type, target, title, description, false).subscribe(data => {
-            newWallSet._id = data.json()._id;
+            this.loadedWallSet._id = data.json()._id;
             this.wallDBService.uploadWall(data.json()._id).subscribe(data => {
-                newWallSet.walls[0]._id = data.json()._id;
+                this.loadedWallSet.walls[0]._id = data.json()._id;
             });
         });
     }
@@ -514,7 +514,19 @@ export class ShapesService {
         this.selectedFrame = this.loadedWallSet.walls[this.focusedWallIndex].frames.length - 1;
     }
 
+    deleteLoadedWallSet() {
+        this.editMode = false;
+        this.wallSetDBService.deleteWallSet(this.loadedWallSet._id);
+        for (var i = 0; i < this.loadedWallSet.walls.length; i++) {
+            this.deleteWall(i);
+        }
+    }
+
     deleteWall(index) {
+        if (this.loadedWallSet.walls.length < 2) {
+            return;
+        }
+
         this.loadedWallSet.walls[index].frames.forEach(frame => {
             frame.images.forEach(image => {
                 this.frameImageDBService.deleteFrameImage(image);

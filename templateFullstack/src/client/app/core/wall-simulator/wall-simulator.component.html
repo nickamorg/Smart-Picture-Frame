@@ -20,12 +20,15 @@
         </div>
     </div>
 
-    <div style="position: absolute; right:5px; bottom:5px">
+    <div style="position: absolute; right:5px; bottom:-75px">
         <div (click)="applyAction(0)" [ngClass]="{active:lastAction == 0}" class="action">No body home</div>
         <div (click)="applyAction(1)" [ngClass]="{active:lastAction == 1}" class="action">Family gets back</div>
         <div (click)="applyAction(2)" [ngClass]="{active:lastAction == 2}" class="action">Mother-in-law visit</div>
-        <div (click)="applyAction(3)" [ngClass]="{active:lastAction == 3}" class="action">Nick stayes alone</div>
+        <div (click)="applyAction(3)" [ngClass]="{active:lastAction == 3}" class="action">Nick stays alone</div>
         <div (click)="applyAction(4)" [ngClass]="{active:lastAction == 4}" class="action">The night is coming</div>
         <div (click)="applyAction(5)" [ngClass]="{active:lastAction == 5}" class="action">Waching some tv</div>
+        <div (click)="applyAction(6)" [ngClass]="{active:lastAction == 6}" class="action">Get up of the Couch</div>
+        <div (click)="applyAction(7)" [ngClass]="{active:lastAction == 7}" class="action">Sun is rising again</div>
+        <div (click)="applyAction(8)" [ngClass]="{active:lastAction == 8}" class="action">Bye bye Mother-in-law</div>
     </div>
 </div>

@@ -29,12 +29,25 @@ export class NavbarComponent {
 
         if (this.shapesService.loadedWallSet.active) {
             for (var i = 0; i < this.shapesService.wallSets.length; i++) {
-                if (this.shapesService.wallSets[i].type === 'Special' &&
-                    this.shapesService.loadedWallSet.type === 'Special' &&
+                if (((this.shapesService.wallSets[i].type === 'Special' &&
+                    this.shapesService.loadedWallSet.type === 'Special') ||
+                    this.shapesService.wallSets[i].type === 'General' &&
+                    this.shapesService.loadedWallSet.type === 'General') &&
                     this.shapesService.wallSets[i]._id !== this.shapesService.loadedWallSet._id) {
 
-                    if (this.shapesService.loadedWallSet.active) {
-                        this.shapesService.loadedWallSet.active = false;
+                    if (this.shapesService.wallSets[i].active) {
+                        this.shapesService.wallSets[i].active = false;
+                        this.shapesService.updateWallSet(i);
+                    }
+                }
+
+                if (this.shapesService.wallSets[i].type === 'Personal' &&
+                    this.shapesService.loadedWallSet.type === 'Personal' &&
+                    this.shapesService.wallSets[i].target === this.shapesService.loadedWallSet.target &&
+                    this.shapesService.wallSets[i]._id !== this.shapesService.loadedWallSet._id) {
+
+                    if (this.shapesService.wallSets[i].active) {
+                        this.shapesService.wallSets[i].active = false;
                         this.shapesService.updateWallSet(i);
                     }
                 }
