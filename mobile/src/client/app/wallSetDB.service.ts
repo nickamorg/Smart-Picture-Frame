@@ -20,24 +20,26 @@ export class WallSetDBService {
         this.http.delete('api/wallSets/' + id).subscribe();
     }
 
-    uploadWallSet(creator, type, target, title, description) {
+    uploadWallSet(creator, type, target, title, description, active) {
         return this.http.post('api/wallSets/', {
             creator: creator,
             type: type,
             target: target,
             title: title,
-            description: description
+            description: description,
+            active: active
         });
     }
 
-    updateWallSet(id, creator, type, target, title, description) {
+    updateWallSet(id, creator, type, target, title, description, active) {
         this.http.put('api/wallSets/' + id, {
             creator: creator,
             type: type,
             target: target,
             title: title,
-            description: description
-            })
+            description: description,
+            active: active
+        })
         .subscribe();
     }
 }

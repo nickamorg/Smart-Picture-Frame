@@ -1,6 +1,6 @@
 <div id="load_wall_page">
     <div style="padding:20px 0 0 0">
-        <div class="container clearfix" *ngFor="let wallSet of shapesService.wallSets; let wallSetIndex = index" style="width:800px; padding-left:0; zoom:45%">
+        <div class="container clearfix" *ngFor="let wallSet of shapesService.wallSets; let wallSetIndex = index" style="zoom:18.1%; width:1980px; padding-left:0">
             <div id="myCarousel{{wallSetIndex}}" class="carousel slide" data-ride="carousel" style="padding-bottom: 20px">
                 <!-- Indicators -->
                 <ol class="carousel-indicators" style="bottom:20px">
@@ -8,9 +8,9 @@
                 </ol>
             
                 <!-- Wrapper for slides -->
-                <div class="carousel-inner" style="width:800px">
-                    <div routerLink="/editor" (click)="loadWall(wallSetIndex, index)" class="item" *ngFor="let wall of wallSet.walls; let index = index" [class.active]="index == 0" style="width:800px">
-                        <div style="top:20px; width: 800px">
+                <div class="carousel-inner" style="width:1980px">
+                    <div routerLink="/editor" (click)="loadWall(wallSetIndex, index)" class="item" *ngFor="let wall of wallSet.walls; let index = index" [class.active]="index == 0" style="width:1980px">
+                        <div style="top:20px; width: 1980px">
                             <div [ngStyle]="wall.getBorderStyle()">
                                 <div [ngStyle]="wall.getWallStyle()">
                                     <div *ngFor="let frame of wall.frames; let i = index" [ngStyle]="frame.getFrameBorderStyle()" style="position:absolute">
@@ -24,8 +24,8 @@
                             </div>
                         </div>
                         <div class="carousel-caption" style="padding-bottom:0">
-                            <h3 style="margin:0; padding:0; font-size:40px">{{wall.title}}</h3>
-                            <p style="font-size:24px">{{wallSet.description}}</p>
+                            <h3 style="margin:0; padding:0; font-size:80px">{{wall.title}}</h3>
+                            <p style="font-size:60px">{{wallSet.description}}</p>
                           </div>
                     </div>
                 </div>

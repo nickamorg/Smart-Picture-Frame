@@ -10,21 +10,27 @@ export class Wall {
     frames: Frame[] = [];
     images: string[] = [];
     displayedImageIndex = 0;
+    iterateTime = 0;
+    isLocked = false;
+    toBeDisplayed = true;
 
-    init(_id, borderMaterial, borderSize, title) {
+    init(_id, borderMaterial, borderSize, title, iterateTime, isLocked, toBeDisplayed) {
         this._id = _id;
         this.borderMaterial = borderMaterial;
+        this.hasMaterial = borderMaterial !== '' ? true : false;
         this.borderSize = borderSize;
         this.title = title;
-        this.hasMaterial = borderMaterial !== '' ? true : false;
+        this.iterateTime = iterateTime;
+        this.isLocked = isLocked;
+        this.toBeDisplayed = toBeDisplayed;
     }
 
     getBorderStyle() {
         let style = {
             'background-size': 'cover',
             'background-color': '#ffffff',
-            'width': '800px',
-            'height': '200px'
+            'width': '1980px',
+            'height': '520px'
         };
 
         if (this.borderMaterial !== '' && this.borderMaterial !== undefined) {
@@ -36,8 +42,8 @@ export class Wall {
 
     getWallStyle() {
         let style = {
-            'width':  (800 - (this.hasMaterial ? this.borderSize : 0)) + 'px',
-            'height': (200 - (this.hasMaterial ? this.borderSize : 0)) + 'px',
+            'width':  (1980 - (this.hasMaterial ? this.borderSize : 0)) + 'px',
+            'height': (520 - (this.hasMaterial ? this.borderSize : 0)) + 'px',
             'top':  ((this.hasMaterial ? this.borderSize : 0) / 2) + 'px',
             'left': ((this.hasMaterial ? this.borderSize : 0) / 2) + 'px',
             'background-color': '#C4C4C4',
@@ -61,6 +67,9 @@ export class Wall {
         newWall.displayedImageIndex = this.displayedImageIndex;
         newWall.title = this.title;
         newWall._id = this._id;
+        newWall.iterateTime = this.iterateTime;
+        newWall.isLocked = this.isLocked;
+        newWall.toBeDisplayed = this.toBeDisplayed;
 
         newWall.images = [];
         for (var i = 0; i < this.images.length; i++) {

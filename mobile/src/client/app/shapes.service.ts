@@ -78,6 +78,55 @@ export class ShapesService {
         this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame][type] = value;
     }
 
+    setFrameWidth(value) {
+        var wallBorder = this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial ?
+                            this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0;
+        var frame = this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame];
+        value < 50 ? frame.width = 50 :
+        value > 1980 - frame.left - wallBorder ? frame.width = 1980 - frame.left - wallBorder : frame.width = value;
+    }
+
+    setFrameHeight(value) {
+        var wallBorder = this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial ?
+                            this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0;
+        var frame = this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame];
+        value < 50 ? frame.height = 50 :
+        value > 520 - frame.top - wallBorder ? frame.height = 520 - frame.top - wallBorder : frame.height = value;
+    }
+
+    setFrameTop(value) {
+        var wallBorder = this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial ?
+                            this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0;
+        var frame = this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame];
+        value < 0 ? frame.top = 0 :
+        value > 520 - frame.height - wallBorder ? frame.top = 520 - frame.height - wallBorder : frame.top = value;
+    }
+
+    setFrameLeft(value) {
+        var wallBorder = this.loadedWallSet.walls[this.focusedWallIndex].hasMaterial ?
+                            this.loadedWallSet.walls[this.focusedWallIndex].borderSize : 0;
+        var frame = this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame];
+        value < 0 ? frame.left = 0 :
+        value > 1980 - frame.width - wallBorder ? frame.left = 1980 - frame.width - wallBorder : frame.left = value;
+    }
+
+    setFramePadding(value) {
+        var frame = this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame];
+        var frameBorder = frame.hasMaterial ? frame.borderSize : 0;
+        var minValue = (frame.width < frame.height ? frame.width : frame.height) / 2 - frameBorder;
+        frame.padding = value > minValue ? minValue : value;
+    }
+
+    setFrameZIndex(value) {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].zIndex = value;
+    }
+
+    setFrameBorderSize(value) {
+        var frame = this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame];
+        var minValue = (frame.width < frame.height ? frame.width : frame.height) / 2;
+        frame.borderSize = value > minValue ? minValue : value;
+    }
+
     returnBorderMaterial() {
         let style = {
             'background-image': 'url(' + this.loadedWallSet.walls[this.focusedWallIndex].
@@ -247,6 +296,7 @@ export class ShapesService {
         newWallSet.target = target;
         newWallSet.title = title;
         newWallSet.description = description;
+        newWallSet.active = false;
         newWallSet.walls = [];
         newWallSet.walls.push(new Wall());
         this.wallSets.push(newWallSet);
@@ -255,10 +305,10 @@ export class ShapesService {
         this.loadedWallSetIndex = this.wallSets.length - 1;
         this.focusedWallIndex = 0;
 
-        this.wallSetDBService.uploadWallSet(creator, type, target, title, description).subscribe(data => {
-            newWallSet._id = data.json()._id;
+        this.wallSetDBService.uploadWallSet(creator, type, target, title, description, false).subscribe(data => {
+            this.loadedWallSet._id = data.json()._id;
             this.wallDBService.uploadWall(data.json()._id).subscribe(data => {
-                newWallSet.walls[0]._id = data.json()._id;
+                this.loadedWallSet.walls[0]._id = data.json()._id;
             });
         });
     }
@@ -298,7 +348,10 @@ export class ShapesService {
         this.loadedWallSet.walls[index].title = title;
         this.wallDBService.updateWall(  this.loadedWallSet.walls[index]._id, this.loadedWallSet._id,
                                         this.loadedWallSet.walls[index].borderMaterial,
-                                        this.loadedWallSet.walls[index].borderSize, title);
+                                        this.loadedWallSet.walls[index].borderSize, title,
+                                        this.loadedWallSet.walls[index].iterateTime,
+                                        this.loadedWallSet.walls[index].isLocked,
+                                        this.loadedWallSet.walls[index].toBeDisplayed);
     }
 
     saveWall(flag) {
@@ -311,7 +364,8 @@ export class ShapesService {
                 }
 
                 this.wallDBService.updateWall(wall._id, wall.wallSetID,
-                    wall.borderMaterial, wall.borderSize, wall.title);
+                    wall.borderMaterial, wall.borderSize, wall.title,
+                    wall.iterateTime, wall.isLocked, wall.toBeDisplayed);
 
                 this.wallImageDBService.getWallImages().subscribe(wallpapers => {
                     wallpapers.forEach(wallpaper => {
@@ -338,14 +392,15 @@ export class ShapesService {
                             this.loadedWallSet.walls[this.focusedWallIndex]._id,
                             frame.borderRadius, frame.borderSize, frame.borderMaterial,
                             frame.borderColor, frame.padding, frame.top, frame.left,
-                            frame.width, frame.height, frame.iterateTime
+                            frame.width, frame.height, frame.iterateTime, frame.interactionType
                         ).subscribe(data => {
                             frame._id = data.json()._id;
                         });
                     } else {
                         this.frameDBService.updateFrame(frame._id, frame.wallID, frame.borderRadius,
                             frame.borderSize, frame.borderMaterial, frame.borderColor, frame.padding,
-                            frame.top, frame.left, frame.width, frame.height, frame.iterateTime);
+                            frame.top, frame.left, frame.width, frame.height, frame.iterateTime,
+                            frame.zIndex, frame.interactionType);
                     }
 
                     this.frameImageDBService.getFrameImages().subscribe(images => {
@@ -382,15 +437,16 @@ export class ShapesService {
             this.wallSets = [];
             wallsets.forEach(wallset => {
                 var newWallSet = new WallSet();
-                newWallSet.init(wallset._id, wallset.creator, wallset.type,
-                                        wallset.target, wallset.title, wallset.description);
+                newWallSet.init(wallset._id, wallset.creator, wallset.type, wallset.target,
+                                        wallset.title, wallset.description, wallset.active);
                 this.wallSets.push(newWallSet);
 
                 this.wallDBService.getWalls().subscribe(walls => {
                     walls.forEach(wall => {
                         if (wall.wallSetID === wallset._id) {
                             var newWall = new Wall();
-                            newWall.init(wall._id, wall.borderMaterial, wall.borderSize, wall.title);
+                            newWall.init(wall._id, wall.borderMaterial, wall.borderSize, wall.title,
+                                                wall.iterateTime, wall.isLocked, wall.toBeDisplayed);
                             var wallImages = [];
                             newWall.images = wallImages;
                             newWallSet.walls.push(newWall);
@@ -398,7 +454,7 @@ export class ShapesService {
                             this.wallImageDBService.getWallImages().subscribe(wallpapers => {
                                 wallpapers.forEach(wallpaper => {
                                     if (wall._id === wallpaper.wallID) {
-                                        this.wallpapersDBService.getWallpaper(wallpaper.imageID).subscribe(data => {
+                                        this.wallpapersDBService.getWallpaper(wallpaper.imageID).subscribe(data=> {
                                             wallImages.push(data.src);
                                         });
                                     }
@@ -410,8 +466,8 @@ export class ShapesService {
                                     if (frame.wallID === wall._id) {
                                         var newFrame = new Frame();
                                         newFrame.init(frame._id, frame.borderRadius, frame.borderSize,
-                                        frame.borderMaterial, 'rgb(34, 0, 78)', frame.padding,
-                                        frame.top, frame.left, frame.width, frame.height, 30);
+                                        frame.borderMaterial, 'rgb(34, 0, 78)', frame.padding, frame.top, frame.left,
+                                        frame.width, frame.height, frame.iterateTime, frame.zIndex, frame.interactionType);
                                         var frameImages = [];
                                         newFrame.images = frameImages;
                                         newWall.frames.push(newFrame);
@@ -448,6 +504,13 @@ export class ShapesService {
         this.selectedFrame = -1;
         this.isFocusedFrame = false;
         this.isFocusedWall = true;
+    }
+
+    duplicateFocusedFrame() {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames.push(
+            this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].copy()
+        );
+        this.selectedFrame = this.loadedWallSet.walls[this.focusedWallIndex].frames.length - 1;
     }
 
     deleteWall(index) {
