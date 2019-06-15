@@ -97,7 +97,7 @@
                 <option value="Date">Date</option>
             </select>
         </div>
-        
+
         <div *ngIf="shapesService.loadedWallSet.type === 'Special'" style="padding:10px 20px; border-bottom: 1px solid #E3E2E2">
             <p style="color:#5C5555">INTERACTION</p>
             <select (change)="shapesService.selectFrameInteraction($event.target.value)" class="form-control" style="width:100% !important">
@@ -203,15 +203,17 @@
 
         <div style="padding:10px 20px 10px 20px">
             <div>
-                <button type="checkbox" id="activate_wall" value="Lock Wall" style="all:unset">
-                    <img src="assets/images/checkbox_unchecked.svg">
+                <button (click)="shapesService.toggleWallToBeDisplayed()" type="checkbox" id="display_wall" value="Display Wall" style="all:unset">
+                    <img *ngIf="shapesService.wallToBeDisplayed()"  src="assets/images/checkbox_unchecked.svg">
+                    <img *ngIf="!shapesService.wallToBeDisplayed()" src="assets/images/checkbox_checked.svg">
                 </button>
-                <label for="activate_wall">Display Wall</label>
+                <label for="display_wall">Display Wall</label>
             </div>
 
             <div style="padding-top:5px">
-                <button type="checkbox" id="activate_wall" value="Lock Wall" style="all:unset">
-                    <img src="assets/images/lock.svg">
+                <button (click)="shapesService.toggleWallLocked()" type="checkbox" id="lock_wall" value="Lock Wall" style="all:unset">
+                    <img *ngIf="shapesService.isWallLocked()"  src="assets/images/lock.svg">
+                    <img *ngIf="!shapesService.isWallLocked()" src="assets/images/unlock.svg">
                 </button>
                 <label for="lock_wall"> Locked Wall</label>
             </div>

@@ -43,14 +43,21 @@
     <app-tools></app-tools>
 
     <div class="mobile_navbar">
-        <div class="col-xs-4" style="padding:5px 0 0 0" (click)="shapesService.saveWallSet()">
-            <a style="padding:0; width:100%; text-align:center"><img src="./assets/images/save_all.png"/> <p>Save WallSet</p></a>
+        <div class="col-xs-3" style="padding:5px 0 0 0" (click)="shapesService.saveWallSet()">
+            <a style="padding:0; width:100%; text-align:center"><img src="./assets/images/save_all.png"/> <p>Save WS</p></a>
         </div>
-        <div class="col-xs-4" style="padding:5px 0 0 0" (click)="shapesService.saveWall()">
-            <a style="padding:0; width:100%; text-align:center"><img src="./assets/images/save.png"/> <p>Save Wall</p></a>
+        <div class="col-xs-3" style="padding:5px 0 0 0" (click)="shapesService.saveWall()">
+            <a style="padding:0; width:100%; text-align:center"><img src="./assets/images/save.png"/> <p>Save W</p></a>
         </div>
-        <div class="col-xs-4" style="padding:5px 0 0 0">
-            <a style="padding:0; width:100%; text-align:center"><img src="./assets/images/preview.png"/> <p>Preview Wall</p></a>
+        <div class="col-xs-3" style="padding:5px 0 0 0">
+            <a style="padding:0; width:100%; text-align:center"><img src="./assets/images/preview.png"/> <p>Preview W</p></a>
+        </div>
+        <div class="col-xs-3" style="padding:5px 0 0 0">
+                <a (click)="toggleActiveWall()" style="padding:0; width:100%; text-align:center">
+                    <img *ngIf="shapesService.loadedWallSet.active" src="./assets/images/active.svg"/> 
+                    <img *ngIf="!shapesService.loadedWallSet.active" src="./assets/images/inactive.svg"/>
+                    <p>Active W</p>
+                </a>
         </div>
       </div>
 

@@ -145,7 +145,8 @@ export class ShapesService {
             'width': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].width + 'px',
             'height': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].height + 'px',
             'top': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].top + 'px',
-            'left': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].left + 'px'
+            'left': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].left + 'px',
+            'z-index': this.loadedWallSet.walls[this.focusedWallIndex].frames[index].zIndex
         };
 
         var frameBorderMaterial = this.loadedWallSet.walls[this.focusedWallIndex].frames[index].borderMaterial;
