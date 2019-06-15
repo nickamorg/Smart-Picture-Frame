@@ -526,4 +526,44 @@ export class ShapesService {
             this.loadedWallSet.walls.indexOf(this.loadedWallSet.walls[index]), 1
         );
     }
+
+    toggleWallLocked() {
+        this.loadedWallSet.walls[this.focusedWallIndex].isLocked = !this.loadedWallSet.walls[this.focusedWallIndex].isLocked;
+    }
+    isWallLocked() {
+        return this.loadedWallSet.walls[this.focusedWallIndex].isLocked;
+    }
+
+    toggleWallToBeDisplayed() {
+        this.loadedWallSet.walls[this.focusedWallIndex].toBeDisplayed = !this.loadedWallSet.walls[this.focusedWallIndex].toBeDisplayed;
+    }
+
+    wallToBeDisplayed() {
+        return this.loadedWallSet.walls[this.focusedWallIndex].toBeDisplayed;
+    }
+
+    selectFrameInteraction(value) {
+        this.loadedWallSet.walls[this.focusedWallIndex].frames[this.selectedFrame].interactionType = value;
+    }
+
+    getCurrentDay() {
+        return (new Date()).getDate();
+    }
+
+    getCurrentMonth() {
+        const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+                            ];
+
+        return monthNames[(new Date()).getMonth()];
+    }
+
+    updateWallSet(index) {
+        this.wallSetDBService.updateWallSet(
+            this.wallSets[index]._id, this.wallSets[index].creator,
+            this.wallSets[index].type, this.wallSets[index].target,
+            this.wallSets[index].title, this.wallSets[index].description,
+            this.wallSets[index].active
+        );
+    }
 }

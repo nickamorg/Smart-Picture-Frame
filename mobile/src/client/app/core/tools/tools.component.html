@@ -87,6 +87,26 @@
             </div>
             <button (click)="toggleChooseFrameImagesModal()" type="button" class="btn" style="outline: none; margin-top: 10px; padding-top: 5px; padding-bottom:5px; border:1px solid #C4C4C4; color:black; background-color:white; width:100%; border-radius: 5px">Choose Images</button>
         </div>
+        
+        <div *ngIf="shapesService.loadedWallSet.type === 'Special'" style="padding:10px 20px; border-bottom: 1px solid #E3E2E2">
+            <p style="color:#5C5555">INTERACTION</p>
+            <select (change)="shapesService.selectFrameInteraction($event.target.value)" class="form-control" style="width:100% !important">
+                <option value="">No Interaction</option>
+                <option value="Clock">Clock</option>
+                <option value="Weather">Weather</option>
+                <option value="Date">Date</option>
+            </select>
+        </div>
+        
+        <div *ngIf="shapesService.loadedWallSet.type === 'Special'" style="padding:10px 20px; border-bottom: 1px solid #E3E2E2">
+            <p style="color:#5C5555">INTERACTION</p>
+            <select (change)="shapesService.selectFrameInteraction($event.target.value)" class="form-control" style="width:100% !important">
+                <option value="">No Interaction</option>
+                <option value="Clock">Clock</option>
+                <option value="Weather">Weather</option>
+                <option value="Date">Date</option>
+            </select>
+        </div>
 
         <div style="padding:10px 20px">
             <div>
